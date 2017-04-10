@@ -60,8 +60,31 @@ public class Book extends Medium {
 				+ super.toString() + "]";
 	}
 
-
 	
+	// todo isbn nummers might have - seperators
+	public boolean checkIsbn() {
+		
+		if (isbn == null)
+			return false;
+		if (isbn.isEmpty())
+			return false;
+		
+		int mod = 10;
+		int sum = 0;
+		for (int i = 0; i < isbn.length(); ++i) {
+			int multi = i%2 == 0 ? 3 : 1;
+			sum += Character.getNumericValue(isbn.charAt(i))*multi;
+		}
+		
+		int div = sum/mod;
+		int remainder = sum%mod;
+		int checkDigit = div - remainder;
+		
+		if (checkDigit == Character.getNumericValue(isbn.charAt(isbn.length()-1)))
+			return true;
+		else
+			return false;
+	}
 	
 	
 	
