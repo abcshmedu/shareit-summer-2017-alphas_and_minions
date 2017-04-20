@@ -1,28 +1,62 @@
 package models;
 
+/**
+ * Book represents a book.
+ * @author Michael Eggers
+ * @author Rebecca Brydon
+ */
 public class Book extends Medium {
 
 	String author;
 	String isbn;
 	
+	/**
+	 * Book creates book only with title.
+	 * @param title
+	 */
 	Book(String title) {
 		super(title);
 	}
 	
+	/**
+	 * Book creates book.
+	 * @param title
+	 * @param author
+	 * @param isbn
+	 */
 	Book(String title, String author, String isbn) {
 		super(title);
 		this.author = author;
 		this.isbn = isbn;
 	}
 	
+	/**
+	 * gets the author.
+	 * @return autor
+	 */
 	public String getAuthor() {
 		return author;
 	}
 	
+	/**
+	 * gets isbn.
+	 * @return isbn
+	 */
 	public String getIsbn() {
 		return isbn;
 	}
+	
+	/* (non-Javadoc)
+	 * @see models.Medium#getTitle()
+	 */
+	@Override
+	public String getTitle() {
+		return super.getTitle();
+	}
 
+	/* (non-Javadoc)
+	 * @see models.Medium#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -32,6 +66,9 @@ public class Book extends Medium {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see models.Medium#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -54,6 +91,9 @@ public class Book extends Medium {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see models.Medium#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Book [author=" + author + ", isbn=" + isbn + ", getTitle()=" + getTitle() + ", toString()="
@@ -61,8 +101,12 @@ public class Book extends Medium {
 	}
 
 	
-	// todo isbn nummers might have - seperators
+	/**
+	 * checks if isbn is valid.
+	 * @return bool
+	 */
 	public boolean checkIsbn() {
+		// todo isbn nummers deal with - seperators in isbn
 		
 		if (isbn == null)
 			return false;

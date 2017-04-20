@@ -11,6 +11,7 @@ public class Copy {
 	}
 
 	/**
+	 * gets the medium.
 	 * @return the medium
 	 */
 	public Medium getMedium() {
@@ -18,6 +19,7 @@ public class Copy {
 	}
 
 	/**
+	 * gets the owner.
 	 * @return the owner
 	 */
 	public String getOwner() {

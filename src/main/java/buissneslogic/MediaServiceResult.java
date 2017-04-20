@@ -6,8 +6,9 @@ package buissneslogic;
 import javax.ws.rs.core.Response.Status;
 
 /**
- * @author rebec
- *
+ * MediaServiceResult enum for diffrent error messages.
+ * @author Michael Eggers
+ * @author Rebecca Brydon
  */
 enum MediaServiceResult {
 
@@ -17,15 +18,24 @@ enum MediaServiceResult {
 	
 	private int errorNum;
 	
+	/**
+	 * MediaServiceResult creates new error message.
+	 * @param errorNum
+	 */
 	private MediaServiceResult(int errorNum){
 		this.setErrorNum(errorNum);
 	}
 	
+	/**
+	 * gets the status of ???.
+	 * @return
+	 */
 	Status getStatus() {
 		return null;
 	}
 
 	/**
+	 * gets the error number.
 	 * @return the errorNum
 	 */
 	public int getErrorNum() {
@@ -33,6 +43,7 @@ enum MediaServiceResult {
 	}
 
 	/**
+	 * sets the error number.
 	 * @param errorNum the errorNum to set
 	 */
 	public void setErrorNum(int errorNum) {

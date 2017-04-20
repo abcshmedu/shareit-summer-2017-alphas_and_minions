@@ -4,19 +4,26 @@
 package models;
 
 /**
- * @author 
- *
+ * Medium class that represent a Medium of some kind.
+ * @author Michael Eggers
+ * @author Rebecca Brydon
  */
 public abstract class Medium {
 	
 	private String title;
 	
+	/**
+	 * Medium creates a Medium with a title.
+	 * @param title
+	 * @return title
+	 */
 	Medium(String title){
 		this.title = title;
 	};
 	
-	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -25,6 +32,9 @@ public abstract class Medium {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -42,11 +52,17 @@ public abstract class Medium {
 		return true;
 	}
 
+	/**
+	 * gets the title.
+	 * @return title
+	 */
 	String getTitle() {
 		return title;
 	}
 
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Medium [title=" + title + "]";

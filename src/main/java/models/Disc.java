@@ -67,6 +67,7 @@ public class Disc extends Medium {
 	}
 
 	/**
+	 * gets the barcode.
 	 * @return the barcode
 	 */
 	public String getBarcode() {
@@ -74,6 +75,7 @@ public class Disc extends Medium {
 	}
 
 	/**
+	 * gets the Director.
 	 * @return the director
 	 */
 	public String getDirector() {
@@ -81,11 +83,22 @@ public class Disc extends Medium {
 	}
 
 	/**
+	 * gets the FKS number of the disk.
 	 * @return the fsk
 	 */
 	public int getFsk() {
 		return fsk;
 	}
+	
+	/**
+	 * gets the title of the disc.
+	 * 
+	 * @return title
+	 */
+	public String getTitle() {
+		return super.getTitle();
+	}
+
 
 	
 

@@ -13,18 +13,26 @@ import javax.ws.rs.core.Response;
 import models.*;
 
 /**
- * @author rebec
- *
+ * @author Michael Eggers
+ * @author Rebecca Brydon
  */
 @Path("/media")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 class MediaResource {
 	
+	/**
+	 * MediaResource creates media resource.
+	 */
 	protected MediaResource() {
 		
 	}
 	
+	/**
+	 * creates a new book.
+	 * @param book
+	 * @return response
+	 */
 	@POST
 	@Path("/books")
 	@Produces("application/json")
@@ -32,6 +40,10 @@ class MediaResource {
 		return null;
 	}
 	
+	/**
+	 * gets a book.
+	 * @return response
+	 */
 	@GET
 	@Path("books") // qestion: "books" or "/books"
 	public Response getBooks() {
@@ -43,6 +55,11 @@ class MediaResource {
 	}
 	
 	
+	/**
+	 * updates book information.
+	 * @param book
+	 * @return response
+	 */
 	@PUT
 	@Path("books/{isbn}")
 	public Response updateBook(Book book) {
