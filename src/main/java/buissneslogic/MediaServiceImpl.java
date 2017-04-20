@@ -6,7 +6,7 @@ package buissneslogic;
 import models.Book;
 import models.Disc;
 import models.Medium;
-import buissneslogic.MediaResource;
+
 
 /**
  * @author Michael Eggers
@@ -15,13 +15,10 @@ import buissneslogic.MediaResource;
 
 class MediaServiceImpl implements MediaService { 
 	
-	MediaResource mediaResource;
-	
 	/**
 	 * MediaServiceImpl implements all buissnes logic.
 	 */
 	protected MediaServiceImpl() {
-		this.mediaResource = new MediaResource();
 	}
 
 	
@@ -36,13 +33,11 @@ class MediaServiceImpl implements MediaService {
 			if (!book.checkIsbn()) {
 				result = MediaServiceResult.INVALID_ISBN;
 			} else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty()) {
-				result = MediaServiceResult.MISSING_BOOK_INFO;
+				result = MediaServiceResult.MISSING_INFO;
 			} else {
-				mediaResource.createBook(book);
 				result = MediaServiceResult.OK;
 			}
 		}
-		
 		return result;
 	}
 
@@ -51,7 +46,18 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult addDisc(Disc disc) {
-		return MediaServiceResult.OK;
+		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
+		if (disc != null) {
+			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty()) {
+				result = MediaServiceResult.MISSING_INFO;
+			} else if (disc.getBarcode().isEmpty()) {
+				result = MediaServiceResult.BARCODE_NOT_FOUND;
+			} else {
+				result = MediaServiceResult.OK;
+			}
+		}
+		
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -59,6 +65,7 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public Medium[] getBooks() {
+		// gets book from Datenzugriffsschicht
 		return null;
 	}
 

@@ -8,7 +8,7 @@ package models;
 public class Book extends Medium {
 
 	String author;
-	String isbn;
+	String isbn; // make final? see MediaResource updateBook
 	
 	/**
 	 * Book creates book only with title.
