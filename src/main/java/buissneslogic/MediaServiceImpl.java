@@ -82,6 +82,9 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateBook(Book book) {
+		
+		// get books from Datenzugriffschciht
+		
 		return MediaServiceResult.OK;
 	}
 

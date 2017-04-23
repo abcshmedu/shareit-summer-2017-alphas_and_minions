@@ -2,17 +2,12 @@
  * 
  */
 package buissneslogic;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import models.*;
 
@@ -20,9 +15,6 @@ import models.*;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
-@Path("/media")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 class MediaResource {
 	
 	MediaServiceImpl mediaServiceImpl;
@@ -38,18 +30,17 @@ class MediaResource {
 	 * @param book
 	 * @return response
 	 */
-	@POST
-	@Path("/books")
-	@Produces("application/json")
-	public Response createBook(@PathParam("book")Book book) {
+	public Response createBook(Book book) {
 		MediaServiceResult result = mediaServiceImpl.addBook(book);
 		JSONObject jsonObj = new JSONObject();
 		
 		if (result == MediaServiceResult.OK) {
-			jsonObj.put(book.getIsbn(), book); // store books with isbn key
+			
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode node = mapper.valueToTree(book);
 			return Response
 					.status(MediaServiceResult.OK.getErrorNum())
-					.entity(jsonObj)
+					.entity(node)
 					.build();
 		} else {
 			jsonObj.put("code", result); // build json with code and error message
@@ -62,13 +53,30 @@ class MediaResource {
 	 * gets a book.
 	 * @return response
 	 */
-	@GET
-	@Path("/books")
 	public Response getBooks() {
-		// todo 
-		Book [] books = (Book [])mediaServiceImpl.getBooks();
 		
-		return null;
+		Book [] books = (Book [])mediaServiceImpl.getBooks();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (books != null) {
+			if (books.length == 0) {
+				ObjectNode node = mapper.valueToTree(books);
+				return Response
+						.status(MediaServiceResult.OK.getErrorNum())
+						.entity(node)
+						.build();
+			} else {
+				MediaServiceResult result = MediaServiceResult.NO_BOOKS;
+				ObjectNode node = mapper.valueToTree(MediaServiceResult.getErrorMessage(result));
+				return Response.status(result.getErrorNum()).entity(node).build();
+			}
+		} else {
+			MediaServiceResult result = MediaServiceResult.BAD_REQUEST;
+			ObjectNode node = mapper.valueToTree(result);
+			return Response.status(result.getErrorNum()).entity(node).build();
+		}
+		
+
 	}
 	
 	
@@ -77,21 +85,25 @@ class MediaResource {
 	 * @param book
 	 * @return response
 	 */
-	@PUT
-	@Path("/books/{isbn}")
-	public Response updateBook(@PathParam("book")Book book) {
+	public Response updateBook(Book book) {
 		
 		// find book and replace book with updated book
-		Book [] books = (Book []) mediaServiceImpl.getBooks();
-		
-		for (Book oldBook : books) { // find book that need to be updated
-			if (oldBook.getIsbn().equals(book.getIsbn())) { // what happens when isbn changes??? or make field final!
-				
-			}
+		MediaServiceResult result = mediaServiceImpl.updateBook(book);
+		ObjectMapper mapper = new ObjectMapper();
+		if (result == MediaServiceResult.OK) {
+			
+			ObjectNode node = mapper.valueToTree(book);
+			return Response
+					.status(MediaServiceResult.OK.getErrorNum())
+					.entity(node)
+					.build();
+		} else {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("code", result);
+			jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
+			return Response.status(result.getErrorNum()).entity(jsonObj.toString()).build();
 		}
 		
-		
-		return null;
 	}
 	
 	
