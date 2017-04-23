@@ -6,6 +6,7 @@ package buissneslogic;
 import models.Book;
 import models.Disc;
 import models.Medium;
+import data.JsonDatabase;
 
 
 /**
@@ -65,7 +66,7 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public Medium[] getBooks() {
-		// gets book from Datenzugriffsschicht
+		
 		return null;
 	}
 
