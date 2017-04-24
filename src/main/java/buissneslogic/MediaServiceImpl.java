@@ -29,7 +29,7 @@ class MediaServiceImpl implements MediaService {
 	 * @return MediaServiceResult
 	 */
 	public MediaServiceResult addBook(Book book) {
-		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
+		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT; // TODO sensible default value
 		if (book != null) {
 			if (!book.checkIsbn()) {
 				result = MediaServiceResult.INVALID_ISBN;
@@ -62,14 +62,24 @@ class MediaServiceImpl implements MediaService {
 	}
 
 	/* (non-Javadoc)
-	 * @see buissneslogic.MediaService#getBooks()
+	 * @see buissneslogic.MediaService#getBook(buissneslogic.MediaServiceResult)
 	 */
-	@Override
-	public Medium[] getBooks() {
+	public Medium getBook(MediaServiceResult result) {
+		
+		
 		
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see buissneslogic.MediaService#getBooks()
+	 */
+	@Override
+	public Medium[] getBooks(MediaServiceResult result) {
+		
+		return null;
+	}
+	
 	/* (non-Javadoc)
 	 * @see buissneslogic.MediaService#getDisc()
 	 */

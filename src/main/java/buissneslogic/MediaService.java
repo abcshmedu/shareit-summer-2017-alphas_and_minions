@@ -23,9 +23,18 @@ interface MediaService {
 	public MediaServiceResult addDisc(Disc disc);
 	
 	/**
+	 * gets a book. If no error result dose not change, otherwise override result with error code.
+	 * @param result
 	 * @return
 	 */
-	public Medium[] getBooks();
+	public Medium getBook(MediaServiceResult result);
+
+
+	/**
+	 * @param result
+	 * @return
+	 */
+	public Medium[] getBooks(MediaServiceResult result);
 	
 	/**
 	 * @return

@@ -2,6 +2,13 @@
  * 
  */
 package buissneslogic;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
@@ -15,6 +22,7 @@ import models.*;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
+@Path("/media")
 class MediaResource {
 	
 	MediaServiceImpl mediaServiceImpl;
@@ -30,12 +38,14 @@ class MediaResource {
 	 * @param book
 	 * @return response
 	 */
+	@POST
+	@Path("/books")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response createBook(Book book) {
 		MediaServiceResult result = mediaServiceImpl.addBook(book);
-		JSONObject jsonObj = new JSONObject();
 		
 		if (result == MediaServiceResult.OK) {
-			
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectNode node = mapper.valueToTree(book);
 			return Response
@@ -43,40 +53,66 @@ class MediaResource {
 					.entity(node)
 					.build();
 		} else {
-			jsonObj.put("code", result); // build json with code and error message
-			jsonObj.put("detail", MediaServiceResult.getErrorMessage(result)); // gives error message back in the form of simpleGeo (see 03-REST p.41)
-			return Response.status(result.getErrorNum()).entity(jsonObj).build();
+			return Response
+					.status(result.getErrorNum())
+					.entity(errorMessageJSON(result).toString())
+					.build();
 		}
 	}
 	
 	/**
-	 * gets a book.
+	 * gets all books.
 	 * @return response
 	 */
+	@GET
+	@Path("/books")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBooks() {
-		
-		Book [] books = (Book [])mediaServiceImpl.getBooks();
+		MediaServiceResult result = MediaServiceResult.OK;
+		Book [] books = (Book [])mediaServiceImpl.getBooks(result);
 		ObjectMapper mapper = new ObjectMapper();
 		
-		if (books != null) {
-			if (books.length == 0) {
-				ObjectNode node = mapper.valueToTree(books);
-				return Response
-						.status(MediaServiceResult.OK.getErrorNum())
-						.entity(node)
-						.build();
-			} else {
-				MediaServiceResult result = MediaServiceResult.NO_BOOKS;
-				ObjectNode node = mapper.valueToTree(MediaServiceResult.getErrorMessage(result));
-				return Response.status(result.getErrorNum()).entity(node).build();
-			}
+		if (result == MediaServiceResult.OK) {
+			ObjectNode node = mapper.valueToTree(books);
+			return Response
+					.status(result.getErrorNum())
+					.entity(node)
+					.build();			
 		} else {
-			MediaServiceResult result = MediaServiceResult.BAD_REQUEST;
-			ObjectNode node = mapper.valueToTree(result);
-			return Response.status(result.getErrorNum()).entity(node).build();
+			JSONObject obj = errorMessageJSON(result);
+			return Response
+					.status(result.getErrorNum())
+					.entity(obj)
+					.build();
 		}
-		
 
+		
+	}
+
+	
+	/**
+	 * gets a book with isbn.
+	 * @return book.
+	 */
+	@GET
+	@Path("/books/{isbn}")
+	public Response getBook(@PathParam("isbn")String isbn) {
+		MediaServiceResult result = MediaServiceResult.OK;
+		Book book = (Book) mediaServiceImpl.getBook(result);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (result == MediaServiceResult.OK) {
+			ObjectNode node = mapper.valueToTree(book);
+			return Response
+					.status(result.getErrorNum())
+					.entity(node)
+					.build();
+		} else {
+			return Response
+					.status(result.getErrorNum())
+					.entity(errorMessageJSON(result).toString())
+					.build();
+		}
 	}
 	
 	
@@ -98,12 +134,21 @@ class MediaResource {
 					.entity(node)
 					.build();
 		} else {
-			JSONObject jsonObj = new JSONObject();
-			jsonObj.put("code", result);
-			jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
-			return Response.status(result.getErrorNum()).entity(jsonObj.toString()).build();
+			return Response.status(result.getErrorNum()).entity(errorMessageJSON(result)).build();
 		}
 		
+	}
+	
+	/**
+	 * Creates a JSON obj with error message the form of simpleGeo (see 03-REST p.41).
+	 * @param result
+	 * @return
+	 */
+	private JSONObject errorMessageJSON(MediaServiceResult result) {
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("code", result);
+		jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
+		return jsonObj;
 	}
 	
 	
