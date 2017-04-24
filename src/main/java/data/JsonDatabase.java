@@ -46,7 +46,6 @@ public class JsonDatabase {
 	public void setDatastorageDiscs(ArrayList<JSONObject> datastorageDiscs) {
 		this.datastorageDiscs = datastorageDiscs;
 	}
-
 	
 	
 }
