@@ -2,8 +2,10 @@ package data;
 
 import java.util.ArrayList;
 
+import buissneslogic.MediaServiceResult;
 import models.Book;
 import models.Disc;
+import models.Medium;
 
 /**
  * Simple Generic database to save JSONobj.
@@ -34,6 +36,58 @@ public class Database {
 	 */
 	public void addDisc(Disc disc) {
 		datastorageDiscs.add(disc);
+	}
+	
+	public boolean isDublicateIsbn(String isbn) {
+		for (Book book : datastorageBooks) {
+			if (book.getIsbn().equals(isbn)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false; // no books jet
+	}
+	
+	public boolean isDublicateBarcode(String barcode) {
+		for (Disc disc : datastorageDiscs) {
+			if (disc.getBarcode().equals(barcode)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false; // no disc jet
+	}
+	
+	/**
+	 * gets book.
+	 * @param isbn
+	 * @return
+	 */
+	public Book getBook(String isbn) {
+		for (Book book : datastorageBooks) {
+			if (book.getIsbn().equals(isbn)) {
+				return book;
+			} else {
+				return null;
+			}
+		}
+	}
+	
+	/**
+	 * gets disc.
+	 * @param barcode
+	 * @return
+	 */
+	public Disc getDisc(String barcode) {
+		for (Disc disk : datastorageDiscs) {
+			if (disk.getBarcode().equals(barcode)) {
+				return disk;
+			} else {
+				return null;
+			}
+		}
 	}
 
 	/**

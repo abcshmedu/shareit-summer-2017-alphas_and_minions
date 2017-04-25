@@ -24,10 +24,11 @@ interface MediaService {
 	
 	/**
 	 * gets a book. If no error result dose not change, otherwise override result with error code.
+	 * @param isbn
 	 * @param result
 	 * @return
 	 */
-	public Medium getBook(MediaServiceResult result);
+	public Medium getBook(String isbn, MediaServiceResult result);
 
 
 	/**
@@ -36,10 +37,19 @@ interface MediaService {
 	 */
 	public Medium[] getBooks(MediaServiceResult result);
 	
+
 	/**
+	 * @param barcode
+	 * @param result
 	 * @return
 	 */
-	public Medium[] getDisc();
+	public Medium getDisc(String barcode, MediaServiceResult result);
+	
+	/**
+	 * @param result
+	 * @return
+	 */
+	public Medium[] getDiscs(MediaServiceResult result);
 	
 	/**
 	 * @param book

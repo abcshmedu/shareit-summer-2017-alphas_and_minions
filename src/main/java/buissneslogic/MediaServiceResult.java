@@ -14,9 +14,9 @@ enum MediaServiceResult {
 
 	// todo should result be more general eg. INVALID_ISBN => INVALID_FIELD
 	OK(200),
-	INVALID_ISBN(300), 		ISBN_RESERVED(301), 	ISBN_NOT_FOUND(302), 	ISBN_NOT_EQUALE(303), 	 // error values for book 3xx
+	INVALID_ISBN(300), 		ISBN_RESERVED(301), 	MISSING_ISBN(302), 	ISBN_NOT_EQUALE(303), 	 // error values for book 3xx
 	NO_BOOKS(304),
-	INVALID_BARCODE(500), 	BARCODE_RESERVED(501), 	BARCODE_NOT_FOUND(502), BARCODE_NOT_EQUALE(503), // error values for discs 5xx
+	INVALID_BARCODE(500), 	BARCODE_RESERVED(501), 	MISSING_BARCODE(502), BARCODE_NOT_EQUALE(503), // error values for discs 5xx
 	NO_DISCS(504),
 	MISSING_INFO(400), 		BAD_REQUEST(401), 		NOT_FOUND(404), 		IM_A_TEAPOT(418);		 // general error values 4xx
 	
@@ -71,7 +71,7 @@ enum MediaServiceResult {
 		case ISBN_RESERVED:
 			message = "Isbn is alread reserved.";
 			break;
-		case ISBN_NOT_FOUND:
+		case MISSING_ISBN:
 			message = "Isbn could not be found.";
 			break;
 		case ISBN_NOT_EQUALE:
@@ -86,7 +86,7 @@ enum MediaServiceResult {
 		case BARCODE_RESERVED:
 			message = "Barcode is already reserved.";
 			break;
-		case BARCODE_NOT_FOUND:
+		case MISSING_BARCODE:
 			message = "Barcode not found.";
 			break;
 		case BARCODE_NOT_EQUALE:
