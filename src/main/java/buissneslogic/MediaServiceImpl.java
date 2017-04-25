@@ -16,10 +16,12 @@ import data.JsonDatabase;
 
 class MediaServiceImpl implements MediaService { 
 	
+	JsonDatabase data;
 	/**
 	 * MediaServiceImpl implements all buissnes logic.
 	 */
 	protected MediaServiceImpl() {
+		this.data = new JsonDatabase();
 	}
 
 	
@@ -36,6 +38,7 @@ class MediaServiceImpl implements MediaService {
 			} else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} else {
+				
 				result = MediaServiceResult.OK;
 			}
 		}
