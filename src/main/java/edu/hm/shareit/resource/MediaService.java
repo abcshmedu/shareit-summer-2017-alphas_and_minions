@@ -1,14 +1,14 @@
 /**
  * 
  */
-package buissneslogic;
-import models.*;
+package edu.hm.shareit.resource;
+import edu.hm.shareit.model.*;
 
 /**
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
-interface MediaService {
+public interface MediaService {
 
 	/**
 	 * adds a book

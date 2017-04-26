@@ -1,4 +1,4 @@
-package models;
+package edu.hm.shareit.model;
 
 /**
  * Book represents a book.
@@ -7,16 +7,24 @@ package models;
  */
 public class Book extends Medium {
 
-	String author;
-	String isbn; // make final? see MediaResource updateBook
+	private final String author;
+	private final String isbn; // make final? see MediaResource updateBook
 	
-	/**
-	 * Book creates book only with title.
-	 * @param title
-	 */
-	Book(String title) {
-		super(title);
+	public Book() {
+		super("");
+		author = "";
+		isbn = "";
 	}
+	
+	// Why ??
+//	/**
+//	 * Book creates book only with title.
+//	 * @param title
+//	 */
+//	public Book(String title, String isbn) {
+//		super(title);
+//		this.isbn = isbn;
+//	}
 	
 	/**
 	 * Book creates book.
@@ -24,7 +32,7 @@ public class Book extends Medium {
 	 * @param author
 	 * @param isbn
 	 */
-	Book(String title, String author, String isbn) {
+	public Book(String title, String author, String isbn) {
 		super(title);
 		this.author = author;
 		this.isbn = isbn;
@@ -46,13 +54,13 @@ public class Book extends Medium {
 		return isbn;
 	}
 	
-	/* (non-Javadoc)
-	 * @see models.Medium#getTitle()
-	 */
-	@Override
-	public String getTitle() {
-		return super.getTitle();
-	}
+//	/* (non-Javadoc)
+//	 * @see models.Medium#getTitle()
+//	 */
+//	@Override
+//	public String getTitle() {
+//		return super.getTitle();
+//	}
 
 	/* (non-Javadoc)
 	 * @see models.Medium#hashCode()

@@ -1,7 +1,12 @@
 /**
  * 
  */
-package buissneslogic;
+package edu.hm.shareit.resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,23 +18,25 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import models.*;
+import edu.hm.shareit.model.*;
 
 /**
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
 @Path("media")
-class MediaResource {
+public class MediaResource {
 	
 	MediaService mediaServiceImpl;
 	/**
 	 * MediaResource creates media resource.
 	 */
-	protected MediaResource() {
+	public MediaResource() {
 		mediaServiceImpl = new MediaServiceImpl();
 	}
 	
@@ -43,16 +50,20 @@ class MediaResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response createBook(Book book) {
+		System.out.println("POST called!");
+		System.out.println(book);
 		MediaServiceResult result = mediaServiceImpl.addBook(book);
 		
 		if (result == MediaServiceResult.OK) {
 			ObjectMapper mapper = new ObjectMapper();
+			//mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 			ObjectNode node = mapper.valueToTree(book);
 			return Response
 					.status(MediaServiceResult.OK.getErrorNum())
 					.entity(node)
 					.build();
-		} else {
+		} 
+		else {
 			return Response
 					.status(result.getErrorNum())
 					.entity(errorMessageJSON(result).toString())
@@ -60,34 +71,47 @@ class MediaResource {
 		}
 	}
 	
-//	/**
-//	 * gets all books.
-//	 * @return response
-//	 */
+	// Tester
 //	@GET
-//	@Path("/books")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response getBooks() {
-//		MediaServiceResult result = MediaServiceResult.OK;
-//		Book [] books = (Book [])mediaServiceImpl.getBooks(result);
-//		ObjectMapper mapper = new ObjectMapper();
-//		
-//		if (result == MediaServiceResult.OK) {
-//			ObjectNode node = mapper.valueToTree(books);
-//			return Response
-//					.status(result.getErrorNum())
-//					.entity(node)
-//					.build();			
-//		} else {
-//			JSONObject obj = errorMessageJSON(result);
-//			return Response
-//					.status(result.getErrorNum())
-//					.entity(obj)
-//					.build();
-//		}
-//
-//		
+//	@Path("books")
+//	@Produces("text/plain")
+//	public Response doGet() {
+//		return Response.status(200).entity("GET called!").build();
 //	}
+	
+	/**
+	 * gets all books.
+	 * @return response
+	 */
+	@GET
+	@Path("books")
+	@Produces("application/json")
+	public Response getBooks() {
+		MediaServiceResult result = MediaServiceResult.OK;
+		Medium[] books = mediaServiceImpl.getBooks();
+		System.out.println("DiNGFS: " + Arrays.toString(books));
+		ObjectMapper mapper = new ObjectMapper();
+		
+		// TODO cannot map an arraylist into jackson node anymore... fuck!
+		if (result == MediaServiceResult.OK) {
+			//Book dummy = new Book("test", "test", "test");
+			Medium dummy = books[1];
+			ArrayList<Medium> booksAsList = new ArrayList<Medium>(Arrays.asList(books)); // doesnt work!
+			ObjectNode node = mapper.valueToTree(dummy);
+			return Response
+					.status(result.getErrorNum())
+					.entity(node)
+					.build();			
+		} else {
+			JSONObject obj = errorMessageJSON(result);
+			return Response
+					.status(result.getErrorNum())
+					.entity(obj)
+					.build();
+		}
+
+		
+	}
 //
 //	
 //	/**

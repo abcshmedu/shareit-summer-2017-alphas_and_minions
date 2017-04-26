@@ -1,7 +1,7 @@
 /**
  * 
  */
-package models;
+package edu.hm.shareit.model;
 
 /**
  * Medium class that represent a Medium of some kind.
@@ -17,7 +17,7 @@ public abstract class Medium {
 	 * @param title
 	 * @return title
 	 */
-	Medium(String title){
+	public Medium(String title){
 		this.title = title;
 	};
 	
@@ -56,7 +56,7 @@ public abstract class Medium {
 	 * gets the title.
 	 * @return title
 	 */
-	String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 

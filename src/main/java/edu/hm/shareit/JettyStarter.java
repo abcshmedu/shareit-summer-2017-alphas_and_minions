@@ -1,4 +1,4 @@
-package edu.hm;
+package edu.hm.shareit;
 
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.webapp.*;

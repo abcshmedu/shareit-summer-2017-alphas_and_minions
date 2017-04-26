@@ -1,19 +1,19 @@
 /**
  * 
  */
-package buissneslogic;
-
-import models.Book;
-import models.Disc;
-import models.Medium;
+package edu.hm.shareit.resource;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.json.JSONObject;
 
-import data.Database;
+import edu.hm.shareit.data.Database;
+import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Disc;
+import edu.hm.shareit.model.Medium;
 
 
 /**
@@ -21,14 +21,14 @@ import data.Database;
  * @author Rebecca Brydon
  */
 
-class MediaServiceImpl implements MediaService { 
+public class MediaServiceImpl implements MediaService { 
 	
-	private final Database data;
+	private Database data = new Database();
 	
 	/**
 	 * MediaServiceImpl implements all buissnes logic.
 	 */
-	protected MediaServiceImpl() {
+	public MediaServiceImpl() {
 		data = new Database();
 	}
 
@@ -44,17 +44,17 @@ class MediaServiceImpl implements MediaService {
 																	// default
 																	// value
 		if (book != null) {
-			if (!book.checkIsbn()) {
+			if (!book.checkIsbn()) { // TODO this doesn't seem to work
 				result = MediaServiceResult.INVALID_ISBN;
 			} 
-			else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty()) {
+			if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} 
 			else {
-				if(data.addMedium(book).isPresent())
-					return MediaServiceResult.ISBN_RESERVED;
+				if(!data.addMedium(book).isPresent())
+					result = MediaServiceResult.ISBN_RESERVED;
 				else
-					return MediaServiceResult.OK;
+					result = MediaServiceResult.OK;
 			}
 		}
 		return result;
@@ -67,7 +67,7 @@ class MediaServiceImpl implements MediaService {
 	public MediaServiceResult addDisc(Disc disc) {
 		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (disc != null) {
-			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty()) {
+			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty() || disc.getBarcode().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} 
 			else if (disc.getBarcode().isEmpty()) {
@@ -75,9 +75,9 @@ class MediaServiceImpl implements MediaService {
 			} 
 			else {
 				if(data.addMedium(disc).isPresent())
-					return MediaServiceResult.BARCODE_RESERVED;
+					result = MediaServiceResult.BARCODE_RESERVED;
 				else
-					return MediaServiceResult.OK;
+					result = MediaServiceResult.OK;
 			}
 		}
 		return result;
@@ -89,10 +89,12 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public Medium[] getBooks() {
-		Book[] result = null;
-		if(data.getBooks().isPresent())
-			data.getBooks().get().toArray(result);
-		
+		Medium[] result = null;
+		if(data.getBooks().isPresent()) {
+			List<Medium> books = data.getBooks().get();
+			result = new Medium[books.size()];
+			result = books.toArray(result);
+		}	
 		return result;
 	}
 	

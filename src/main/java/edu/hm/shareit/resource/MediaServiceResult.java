@@ -1,7 +1,7 @@
 /**
  * 
  */
-package buissneslogic;
+package edu.hm.shareit.resource;
 
 import javax.ws.rs.core.Response.Status;
 

@@ -1,4 +1,4 @@
-package models;
+package edu.hm.shareit.model;
 
 public class Disc extends Medium {
 

@@ -1,4 +1,4 @@
-package data;
+package edu.hm.shareit.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import buissneslogic.MediaServiceResult;
-import models.Book;
-import models.Disc;
-import models.Medium;
+import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Disc;
+import edu.hm.shareit.model.Medium;
+import edu.hm.shareit.resource.MediaServiceResult;
 
 /**
  * Simple Generic database to save JSONobj.
@@ -21,16 +21,14 @@ public class Database {
 
 	
 	private static Map<Integer, Medium> hash2medium = new HashMap<>();
-	
-	public Database() {
 
-	}
 	
 	public Optional<Medium> addMedium(final Medium medium) {
 		if(hash2medium.containsKey(medium.hashCode())) {
-			return Optional.of(null);
+			return Optional.empty();
 		}
-		return Optional.of(hash2medium.put(medium.hashCode(), medium));
+		hash2medium.put(medium.hashCode(), medium);
+		return Optional.of(medium);
 	}
 	
 	public Optional<List<Medium>> getBooks() {
