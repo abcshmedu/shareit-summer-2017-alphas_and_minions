@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response.Status;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
-enum MediaServiceResult {
+public enum MediaServiceResult {
 
 	// todo should result be more general eg. INVALID_ISBN => INVALID_FIELD
 	OK(200),

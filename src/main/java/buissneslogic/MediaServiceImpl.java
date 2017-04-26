@@ -8,6 +8,8 @@ import models.Disc;
 import models.Medium;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Optional;
 
 import org.json.JSONObject;
 
@@ -21,12 +23,13 @@ import data.Database;
 
 class MediaServiceImpl implements MediaService { 
 	
-	Database data;
+	private final Database data;
+	
 	/**
 	 * MediaServiceImpl implements all buissnes logic.
 	 */
 	protected MediaServiceImpl() {
-		this.data = new Database();
+		data = new Database();
 	}
 
 	
@@ -36,19 +39,22 @@ class MediaServiceImpl implements MediaService {
 	 * @return MediaServiceResult
 	 */
 	public MediaServiceResult addBook(Book book) {
-		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT; // TODO sensible default value
+		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT; // TODO
+																	// sensible
+																	// default
+																	// value
 		if (book != null) {
 			if (!book.checkIsbn()) {
 				result = MediaServiceResult.INVALID_ISBN;
-			} else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty()) {
+			} 
+			else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
-			} else {
-				if (data.isDublicateIsbn(book.getIsbn())) {
-					result = MediaServiceResult.ISBN_RESERVED;
-				} else {
-					data.addBook(book);
-					result = MediaServiceResult.OK;	
-				}
+			} 
+			else {
+				if(data.addMedium(book).isPresent())
+					return MediaServiceResult.ISBN_RESERVED;
+				else
+					return MediaServiceResult.OK;
 			}
 		}
 		return result;
@@ -63,72 +69,44 @@ class MediaServiceImpl implements MediaService {
 		if (disc != null) {
 			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
-			} else if (disc.getBarcode().isEmpty()) {
+			} 
+			else if (disc.getBarcode().isEmpty()) {
 				result = MediaServiceResult.MISSING_BARCODE;
-			} else {
-				if (data.isDublicateBarcode(disc.getBarcode())) {
-					result = MediaServiceResult.BARCODE_RESERVED;
-				} else {
-					data.addDisc(disc);
-					result = MediaServiceResult.OK;					
-				}
+			} 
+			else {
+				if(data.addMedium(disc).isPresent())
+					return MediaServiceResult.BARCODE_RESERVED;
+				else
+					return MediaServiceResult.OK;
 			}
 		}
-		
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see buissneslogic.MediaService#getBook(buissneslogic.MediaServiceResult)
-	 */
-	public Medium getBook(String isbn, MediaServiceResult result) {
-		Book book = data.getBook(isbn);
-		if (book == null) {
-			result = MediaServiceResult.NOT_FOUND;
-		}
-		return book; // TODO no book found -> what should be returned??
-	}
 
 	/* (non-Javadoc)
 	 * @see buissneslogic.MediaService#getBooks()
 	 */
 	@Override
-	public Medium[] getBooks(MediaServiceResult result) {
-		Medium[] books = (Medium[]) data.getDatastorageBooks().toArray();
+	public Medium[] getBooks() {
+		Book[] result = null;
+		if(data.getBooks().isPresent())
+			data.getBooks().get().toArray(result);
 		
-		if (books != null){
-			if (books.length == 0) {
-				result = MediaServiceResult.NO_BOOKS;
-			}
-		}
-		return books;
+		return result;
 	}
 	
-	/* (non-Javadoc)
-	 * @see buissneslogic.MediaService#getDisc(java.lang.String, buissneslogic.MediaServiceResult)
-	 */
-	public Medium getDisc(String barcode, MediaServiceResult result) {
-		Medium disc = data.getDisc(barcode);
-		
-		if (disc == null) {
-			result = MediaServiceResult.NOT_FOUND;
-		}
-		return disc;
-	}
 	
 	/* (non-Javadoc)
 	 * @see buissneslogic.MediaService#getDisc()
 	 */
 	@Override
-	public Medium[] getDiscs(MediaServiceResult result) {
-		Medium[] discs = (Medium[]) data.getDatastorageDiscs().toArray();
+	public Medium[] getDiscs() {
+		Disc[] result = null;
+		if(data.getDiscs().isPresent())
+			data.getDiscs().get().toArray(result);
 		
-		if (discs != null) {
-			if (discs.length == 0) {
-				result = MediaServiceResult.NO_DISCS;
-			}
-		}
-		return discs; // TODO review
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -136,12 +114,10 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateBook(Book book) {
+		if(data.update(book).isPresent())
+			return MediaServiceResult.OK;
 		
-		Book oldBook = data.getBook(book.getIsbn());
-		
-		// TODO book only contains information to be changed. What if isbn changes?
-		
-		return MediaServiceResult.OK;
+		return MediaServiceResult.NOT_FOUND;
 	}
 
 	/* (non-Javadoc)
@@ -149,9 +125,10 @@ class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateDisc(Disc disc) {
+		if(data.update(disc).isPresent())
+			return MediaServiceResult.OK;
 		
-		// TODO book only contains information to be changed. What if barcode changes?
-		return MediaServiceResult.OK;
+		return MediaServiceResult.NOT_FOUND;
 	}
 	
 	

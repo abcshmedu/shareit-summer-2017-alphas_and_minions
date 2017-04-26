@@ -1,6 +1,11 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import buissneslogic.MediaServiceResult;
 import models.Book;
@@ -14,109 +19,40 @@ import models.Medium;
  */
 public class Database {
 
-	ArrayList<Book> datastorageBooks;
-	ArrayList<Disc> datastorageDiscs;
+	
+	private static Map<Integer, Medium> hash2medium = new HashMap<>();
 	
 	public Database() {
-		this.datastorageBooks = new ArrayList<Book>();
-		this.datastorageDiscs = new ArrayList<Disc>();
-	}
-	
-	/**
-	 * Adds book to database.
-	 * @param book
-	 */
-	public void addBook(Book book) {
-		datastorageBooks.add(book);
-	}
-	
-	/**
-	 * Adds disc to database.
-	 * @param disc
-	 */
-	public void addDisc(Disc disc) {
-		datastorageDiscs.add(disc);
-	}
-	
-	public boolean isDublicateIsbn(String isbn) {
-		for (Book book : datastorageBooks) {
-			if (book.getIsbn().equals(isbn)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false; // no books jet
-	}
-	
-	public boolean isDublicateBarcode(String barcode) {
-		for (Disc disc : datastorageDiscs) {
-			if (disc.getBarcode().equals(barcode)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false; // no disc jet
-	}
-	
-	/**
-	 * gets book.
-	 * @param isbn
-	 * @return
-	 */
-	public Book getBook(String isbn) {
-		for (Book book : datastorageBooks) {
-			if (book.getIsbn().equals(isbn)) {
-				return book;
-			} else {
-				return null;
-			}
-		}
-	}
-	
-	/**
-	 * gets disc.
-	 * @param barcode
-	 * @return
-	 */
-	public Disc getDisc(String barcode) {
-		for (Disc disk : datastorageDiscs) {
-			if (disk.getBarcode().equals(barcode)) {
-				return disk;
-			} else {
-				return null;
-			}
-		}
-	}
 
-	/**
-	 * @return the datastorageBooks
-	 */
-	public ArrayList<Book> getDatastorageBooks() {
-		return datastorageBooks;
-	}
-
-	/**
-	 * @param datastorageBooks the datastorageBooks to set
-	 */
-	public void setDatastorageBooks(ArrayList<Book> datastorageBooks) {
-		this.datastorageBooks = datastorageBooks;
-	}
-
-	/**
-	 * @return the datastorageDiscs
-	 */
-	public ArrayList<Disc> getDatastorageDiscs() {
-		return datastorageDiscs;
-	}
-
-	/**
-	 * @param datastorageDiscs the datastorageDiscs to set
-	 */
-	public void setDatastorageDiscs(ArrayList<Disc> datastorageDiscs) {
-		this.datastorageDiscs = datastorageDiscs;
 	}
 	
+	public Optional<Medium> addMedium(final Medium medium) {
+		if(hash2medium.containsKey(medium.hashCode())) {
+			return Optional.of(null);
+		}
+		return Optional.of(hash2medium.put(medium.hashCode(), medium));
+	}
 	
+	public Optional<List<Medium>> getBooks() {
+		List<Medium> books = hash2medium.entrySet().stream()
+				.map(entry -> entry.getValue())
+				.filter(type -> type instanceof Book)
+				.collect(Collectors.toList());
+		
+		return Optional.of(books);
+	}
+	
+	public Optional<List<Medium>> getDiscs() {
+		List<Medium> discs = hash2medium.entrySet().stream()
+				.map(entry -> entry.getValue())
+				.filter(type -> type instanceof Disc)
+				.collect(Collectors.toList());
+		
+		return Optional.of(discs);
+	}
+	
+	public Optional<Medium> update(final Medium medium) {
+		return Optional.of(hash2medium.put(medium.hashCode(), medium));
+	}	
 }
+
