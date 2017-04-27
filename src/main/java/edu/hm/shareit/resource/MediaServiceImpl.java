@@ -89,10 +89,10 @@ public class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public Medium[] getBooks() {
-		Medium[] result = null;
+		Book[] result = null;
 		if(data.getBooks().isPresent()) {
 			List<Medium> books = data.getBooks().get();
-			result = new Medium[books.size()];
+			result = new Book[books.size()];
 			result = books.toArray(result);
 		}	
 		return result;

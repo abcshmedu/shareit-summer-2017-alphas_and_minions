@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -82,22 +84,20 @@ public class MediaResource {
 	/**
 	 * gets all books.
 	 * @return response
+	 * @throws JsonProcessingException 
 	 */
 	@GET
 	@Path("books")
 	@Produces("application/json")
-	public Response getBooks() {
+	public Response getBooks() throws JsonProcessingException {
 		MediaServiceResult result = MediaServiceResult.OK;
 		Medium[] books = mediaServiceImpl.getBooks();
-		System.out.println("DiNGFS: " + Arrays.toString(books));
+		//System.out.println("books array: " + Arrays.toString(books));
 		ObjectMapper mapper = new ObjectMapper();
 		
-		// TODO cannot map an arraylist into jackson node anymore... fuck!
 		if (result == MediaServiceResult.OK) {
-			//Book dummy = new Book("test", "test", "test");
-			Medium dummy = books[1];
-			ArrayList<Medium> booksAsList = new ArrayList<Medium>(Arrays.asList(books)); // doesnt work!
-			ObjectNode node = mapper.valueToTree(dummy);
+			List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
+			String node = mapper.writeValueAsString(bookList);
 			return Response
 					.status(result.getErrorNum())
 					.entity(node)

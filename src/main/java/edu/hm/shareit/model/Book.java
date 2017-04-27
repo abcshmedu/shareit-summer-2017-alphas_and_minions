@@ -7,8 +7,8 @@ package edu.hm.shareit.model;
  */
 public class Book extends Medium {
 
-	private final String author;
-	private final String isbn; // make final? see MediaResource updateBook
+	private String author;
+	private String isbn; // make final? see MediaResource updateBook
 	
 	public Book() {
 		super("");

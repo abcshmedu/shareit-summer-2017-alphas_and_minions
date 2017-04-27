@@ -49,6 +49,14 @@ public class Database {
 		return Optional.of(discs);
 	}
 	
+	public Optional<Book> getBook(final String isbn) {
+		Optional<Book> result = getBooks().get().stream()
+				.map(medium -> (Book)medium)
+				.filter(book -> book.getIsbn().equals(isbn))
+				.findFirst();
+		return result;
+	}
+	
 	public Optional<Medium> update(final Medium medium) {
 		return Optional.of(hash2medium.put(medium.hashCode(), medium));
 	}	
