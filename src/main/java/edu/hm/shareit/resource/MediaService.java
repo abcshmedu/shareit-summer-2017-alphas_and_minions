@@ -2,6 +2,8 @@
  * 
  */
 package edu.hm.shareit.resource;
+import java.util.Optional;
+
 import edu.hm.shareit.model.*;
 
 /**
@@ -22,13 +24,13 @@ public interface MediaService {
 	 */
 	public MediaServiceResult addDisc(Disc disc);
 	
-//	/**
-//	 * gets a book. If no error result dose not change, otherwise override result with error code.
-//	 * @param isbn
-//	 * @param result
-//	 * @return
-//	 */
-//	public Medium getBook(String isbn, MediaServiceResult result);
+	/**
+	 * gets a book. If no error result dose not change, otherwise override result with error code.
+	 * @param isbn
+	 * @param result
+	 * @return
+	 */
+	public Optional<Medium> getBook(String isbn);
 
 
 	/**
@@ -38,12 +40,12 @@ public interface MediaService {
 	public Medium[] getBooks();
 	
 
-//	/**
-//	 * @param barcode
-//	 * @param result
-//	 * @return
-//	 */
-//	public Medium getDisc(String barcode, MediaServiceResult result);
+	/**
+	 * @param barcode
+	 * @param result
+	 * @return
+	 */
+	public Optional<Medium> getDisc(String barcode);
 	
 	/**
 	 * @param result

@@ -3,12 +3,8 @@
  */
 package edu.hm.shareit.resource;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import org.json.JSONObject;
 
 import edu.hm.shareit.data.Database;
 import edu.hm.shareit.model.Book;
@@ -39,12 +35,9 @@ public class MediaServiceImpl implements MediaService {
 	 * @return MediaServiceResult
 	 */
 	public MediaServiceResult addBook(Book book) {
-		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT; // TODO
-																	// sensible
-																	// default
-																	// value
+		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (book != null) {
-			if (!book.checkIsbn()) { // TODO this doesn't seem to work
+			if (!book.checkIsbn()) {
 				result = MediaServiceResult.INVALID_ISBN;
 			} 
 			if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
@@ -131,6 +124,25 @@ public class MediaServiceImpl implements MediaService {
 			return MediaServiceResult.OK;
 		
 		return MediaServiceResult.NOT_FOUND;
+	}
+	
+	
+	@Override
+	public Optional<Medium> getBook(String isbn) {
+		Optional<Medium> book = data.getBook(isbn);
+		if (book.isPresent())
+			return book;
+		else
+			return Optional.empty();
+	}
+	
+	@Override
+	public Optional<Medium> getDisc(String barcode) {
+		Optional<Medium> disc = data.getDisc(barcode);
+		if (disc.isPresent())
+			return disc;
+		else 
+			return Optional.empty();
 	}
 	
 	
