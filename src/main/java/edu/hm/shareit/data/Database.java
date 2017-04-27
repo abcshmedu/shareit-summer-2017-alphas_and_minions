@@ -1,6 +1,5 @@
 package edu.hm.shareit.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.stream.Collectors;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
-import edu.hm.shareit.resource.MediaServiceResult;
 
 /**
  * Simple Generic database to save JSONobj.
