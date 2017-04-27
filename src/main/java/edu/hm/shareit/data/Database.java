@@ -47,10 +47,20 @@ public class Database {
 		return Optional.of(discs);
 	}
 	
-	public Optional<Book> getBook(final String isbn) {
-		Optional<Book> result = getBooks().get().stream()
+	public Optional<Medium> getBook(final String isbn) {
+		Optional<Medium> result = getBooks().get().stream()
 				.map(medium -> (Book)medium)
 				.filter(book -> book.getIsbn().equals(isbn))
+				.map(book -> (Medium)book)
+				.findFirst();
+		return result;
+	}
+	
+	public Optional<Medium> getDisc(final String barcode) {
+		Optional<Medium> result = getDiscs().get().stream()
+				.map(medium -> (Disc)medium)
+				.filter(disc -> disc.getBarcode().equals(barcode))
+				.map(disc -> (Medium)disc)
 				.findFirst();
 		return result;
 	}

@@ -112,8 +112,8 @@ public class MediaResource {
 
 		
 	}
-//
-//	
+
+	
 //	/**
 //	 * gets a book with isbn.
 //	 * @return book.
@@ -122,7 +122,7 @@ public class MediaResource {
 //	@Path("/books/{isbn}")
 //	public Response getBook(@PathParam("isbn")String isbn) {
 //		MediaServiceResult result = MediaServiceResult.OK;
-//		Book book = (Book) mediaServiceImpl.getBook(isbn,result);
+//		Book book = (Book) mediaServiceImpl.getBook(isbn);
 //		ObjectMapper mapper = new ObjectMapper();
 //		
 //		if (result == MediaServiceResult.OK) {
