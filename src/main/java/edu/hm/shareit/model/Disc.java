@@ -6,8 +6,10 @@ public class Disc extends Medium {
 	String director;
 	int fsk;
 	
-	Disc(String title) {
-		super(title);
+	public Disc () {
+		super("");
+		barcode = "";
+		director = "";
 	}
 
 	Disc(String barcode, String director, int fsk, String title) {

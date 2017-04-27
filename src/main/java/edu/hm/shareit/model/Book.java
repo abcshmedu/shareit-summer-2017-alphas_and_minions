@@ -16,16 +16,6 @@ public class Book extends Medium {
 		isbn = "";
 	}
 	
-	// Why ??
-//	/**
-//	 * Book creates book only with title.
-//	 * @param title
-//	 */
-//	public Book(String title, String isbn) {
-//		super(title);
-//		this.isbn = isbn;
-//	}
-	
 	/**
 	 * Book creates book.
 	 * @param title
@@ -53,14 +43,6 @@ public class Book extends Medium {
 	public String getIsbn() {
 		return isbn;
 	}
-	
-//	/* (non-Javadoc)
-//	 * @see models.Medium#getTitle()
-//	 */
-//	@Override
-//	public String getTitle() {
-//		return super.getTitle();
-//	}
 
 	/* (non-Javadoc)
 	 * @see models.Medium#hashCode()
@@ -120,17 +102,19 @@ public class Book extends Medium {
 			return false;
 		if (isbn.isEmpty())
 			return false;
+		if (isbn.length() < 13)
+			return false;
 		
 		int mod = 10;
 		int sum = 0;
-		for (int i = 0; i < isbn.length(); ++i) {
-			int multi = i%2 == 0 ? 3 : 1;
+		for (int i = 0; i < isbn.length()-1; ++i) {
+			int multi = (i+1)%2 == 0 ? 3 : 1;
 			sum += Character.getNumericValue(isbn.charAt(i))*multi;
 		}
 		
 		int div = sum/mod;
 		int remainder = sum%mod;
-		int checkDigit = div - remainder;
+		int checkDigit = mod - remainder;
 		
 		if (checkDigit == Character.getNumericValue(isbn.charAt(isbn.length()-1)))
 			return true;
