@@ -49,24 +49,27 @@ public class Database {
 	
 	public Optional<Medium> getBook(final String isbn) {
 		Optional<Medium> result = getBooks().get().stream()
-				.map(medium -> (Book)medium)
-				.filter(book -> book.getIsbn().equals(isbn))
-				.map(book -> (Medium)book)
+				.filter(disc -> ((Book)disc).getIsbn().equals(isbn))
 				.findFirst();
 		return result;
 	}
 	
 	public Optional<Medium> getDisc(final String barcode) {
 		Optional<Medium> result = getDiscs().get().stream()
-				.map(medium -> (Disc)medium)
-				.filter(disc -> disc.getBarcode().equals(barcode))
-				.map(disc -> (Medium)disc)
+				.filter(disc -> ((Disc)disc).getBarcode().equals(barcode))
 				.findFirst();
 		return result;
 	}
 	
+	// TODO do not update the information that is not in the incoming medium (eg title gets lost if not present in json PUT)
 	public Optional<Medium> update(final Medium medium) {
-		return Optional.of(hash2medium.put(medium.hashCode(), medium));
+		Book incomingBook = (Book)medium;
+		Optional<Medium> bookToModify = getBook(incomingBook.getIsbn());
+		if (bookToModify.isPresent()) {
+			hash2medium.remove(bookToModify.get().hashCode());
+			return Optional.of(hash2medium.put(medium.hashCode(), medium));
+		}
+		return Optional.empty();
 	}	
 }
 

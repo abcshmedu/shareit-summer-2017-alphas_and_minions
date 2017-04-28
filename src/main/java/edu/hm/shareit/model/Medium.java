@@ -10,7 +10,7 @@ package edu.hm.shareit.model;
  */
 public abstract class Medium {
 	
-	private String title;
+	private final String title;
 	
 	/**
 	 * Medium creates a Medium with a title.

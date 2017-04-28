@@ -4,12 +4,15 @@
 package edu.hm.shareit.resource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -109,55 +112,59 @@ public class MediaResource {
 	}
 
 	
-//	/**
-//	 * gets a book with isbn.
-//	 * @return book.
-//	 */
-//	@GET
-//	@Path("/books/{isbn}")
-//	public Response getBook(@PathParam("isbn")String isbn) {
-//		MediaServiceResult result = MediaServiceResult.OK;
-//		Book book = (Book) mediaServiceImpl.getBook(isbn);
-//		ObjectMapper mapper = new ObjectMapper();
-//		
-//		if (result == MediaServiceResult.OK) {
-//			ObjectNode node = mapper.valueToTree(book);
-//			return Response
-//					.status(result.getErrorNum())
-//					.entity(node)
-//					.build();
-//		} else {
-//			return Response
-//					.status(result.getErrorNum())
-//					.entity(errorMessageJSON(result).toString())
-//					.build();
-//		}
-//	}
-//	
-//	
-//	/**
-//	 * updates book information.
-//	 * @param book
-//	 * @return response
-//	 */
-//	public Response updateBook(Book book) {
-//		
-//		// find book and replace book with updated book
-//		MediaServiceResult result = mediaServiceImpl.updateBook(book);
-//		ObjectMapper mapper = new ObjectMapper();
-//		if (result == MediaServiceResult.OK) {
-//			
-//			ObjectNode node = mapper.valueToTree(book);
-//			return Response
-//					.status(MediaServiceResult.OK.getErrorNum())
-//					.entity(node)
-//					.build();
-//		} else {
-//			return Response.status(result.getErrorNum()).entity(errorMessageJSON(result)).build();
-//		}
-//		
-//	}
-//	
+	/**
+	 * gets a book with isbn.
+	 * @return book.
+	 */
+	@GET
+	@Consumes({"text/plain", "application/json"})
+	@Produces("application/json")
+	@Path("books/{isbn}")
+	public Response getBook(@PathParam("isbn") String isbn) {
+		System.out.println("kalled get with isbn param");
+		Optional<Medium> book = mediaServiceImpl.getBook(isbn);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (book.isPresent()) {
+			System.out.println("book present!"); // TODO kill debug
+			ObjectNode node = mapper.valueToTree(book.get());
+			return Response
+					.status(MediaServiceResult.OK.getErrorNum())
+					.entity(node)
+					.build();
+		} else {
+			return Response
+					.status(MediaServiceResult.NOT_FOUND.getErrorNum())
+					.entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString())
+					.build();
+		}
+	}
+	
+	
+	/**
+	 * updates book information.
+	 * @param book
+	 * @return response
+	 */
+	@PUT
+	@Consumes("application/json")
+	@Produces("application/json")
+	@Path("books/{isbn}")
+	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
+		Response response = null;
+		if (!isbn.equals(book.getIsbn())) {
+			response = Response.status(MediaServiceResult.ISBN_NOT_EQUALE.getErrorNum())
+			.entity(errorMessageJSON(MediaServiceResult.ISBN_NOT_EQUALE).toString())
+			.build();
+		}
+		else if (mediaServiceImpl.updateBook(book) == MediaServiceResult.OK) {
+			response = Response.status(MediaServiceResult.OK.getErrorNum())
+			.entity(errorMessageJSON(MediaServiceResult.OK).toString())
+			.build();
+		}
+		return response;
+	}
+	
 	/**
 	 * Creates a JSON obj with error message the form of simpleGeo (see 03-REST p.41).
 	 * @param result
