@@ -10,6 +10,9 @@ public class Book extends Medium {
 	private final String author;
 	private final String isbn; // make final? see MediaResource updateBook
 	
+	/**
+	 * Book empty constructor for jackson.
+	 */
 	public Book() {
 		super("");
 		author = "";
