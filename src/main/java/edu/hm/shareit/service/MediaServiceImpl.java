@@ -109,11 +109,25 @@ public class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateBook(Book book) {
-		System.out.println("In MediaServiceImpl: updateBook entered");
-		if(data.update(book).isPresent())
-			return MediaServiceResult.OK;
+		MediaServiceResult result;
+		Optional<Medium> bookToUpdate = data.getBook(book.getIsbn());
+		if (bookToUpdate.isPresent()) {
+			String title = book.getTitle();
+			String author = book.getAuthor();
+			if (title.isEmpty())
+				title = bookToUpdate.get().getTitle();
+			if (author.isEmpty())
+				author = ((Book)(bookToUpdate.get())).getAuthor();
+			Medium updatedBook = new Book(title, author, book.getIsbn());
+			data.remove(bookToUpdate.get());
+			data.addMedium(updatedBook);
+			result = MediaServiceResult.OK;
+		}
+		else {
+			result = MediaServiceResult.NOT_FOUND;
+		}
 		
-		return MediaServiceResult.NOT_FOUND;
+		return result;
 	}
 
 	/* (non-Javadoc)

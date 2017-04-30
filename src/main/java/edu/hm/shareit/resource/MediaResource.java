@@ -151,31 +151,17 @@ public class MediaResource {
 	@Produces({"application/json", "text/plain"})
 	@Path("books/{isbn}")
 	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
-		System.out.println("Entered updateBook");
 		Response response;
+		MediaServiceResult result;
 		if (!isbn.equals(book.getIsbn())) {
-			response = Response.status(MediaServiceResult.ISBN_NOT_EQUAL.getErrorNum())
-			.entity(errorMessageJSON(MediaServiceResult.ISBN_NOT_EQUAL).toString())
-			.build();
+			result = MediaServiceResult.ISBN_NOT_EQUAL;
 		}
 		else {
-			System.out.println("Entered first else");
-			MediaServiceResult result = service.updateBook(book);
-			System.out.println("just got result back");
-			if (result == MediaServiceResult.OK) {
-				response = Response.status(MediaServiceResult.OK.getErrorNum())
-						.entity(errorMessageJSON(MediaServiceResult.OK).toString())
-						.build();
-			}
-			else if (result == MediaServiceResult.NOT_FOUND) {
-				response = Response.status(MediaServiceResult.NOT_FOUND.getErrorNum())
-						.entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString())
-						.build();
-			}
-			else {
-				response = Response.status(MediaServiceResult.BAD_REQUEST.getErrorNum()).entity("ERROR!").build();
-			}			
+			result = service.updateBook(book);
 		}
+		response = Response.status(result.getErrorNum())
+		.entity(errorMessageJSON(result).toString())
+		.build();
 		return response;
 	}
 	
