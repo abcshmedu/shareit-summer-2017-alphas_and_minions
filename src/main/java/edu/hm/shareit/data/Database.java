@@ -63,11 +63,19 @@ public class Database {
 	
 	// TODO do not update the information that is not in the incoming medium (eg title gets lost if not present in json PUT)
 	public Optional<Medium> update(final Medium medium) {
+		System.out.println("In Database: Entered update");
 		Book incomingBook = (Book)medium;
+		System.out.println("Casted medium param to Book");
 		Optional<Medium> bookToModify = getBook(incomingBook.getIsbn());
+		System.out.println("Got the book from database by ISBN: ");
 		if (bookToModify.isPresent()) {
+			System.out.println("trying to remove existing book from DB.");
 			hash2medium.remove(bookToModify.get().hashCode());
-			return Optional.of(hash2medium.put(medium.hashCode(), medium));
+			System.out.println("removed existing book. Now put updated book into DB");
+			hash2medium.put(medium.hashCode(), medium);
+			Medium updatedBook = hash2medium.get(medium.hashCode());
+			System.out.println("put new book into DB: " + updatedBook);
+			return Optional.of(updatedBook);
 		}
 		return Optional.empty();
 	}	

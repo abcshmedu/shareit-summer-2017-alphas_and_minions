@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.hm.shareit.resource;
+package edu.hm.shareit.service;
 import java.util.Optional;
 
 import edu.hm.shareit.model.*;

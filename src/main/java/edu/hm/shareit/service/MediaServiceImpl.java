@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.hm.shareit.resource;
+package edu.hm.shareit.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -109,6 +109,7 @@ public class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateBook(Book book) {
+		System.out.println("In MediaServiceImpl: updateBook entered");
 		if(data.update(book).isPresent())
 			return MediaServiceResult.OK;
 		

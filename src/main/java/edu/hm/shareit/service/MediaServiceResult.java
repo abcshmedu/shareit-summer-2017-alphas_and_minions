@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.hm.shareit.resource;
+package edu.hm.shareit.service;
 
 import javax.ws.rs.core.Response.Status;
 
@@ -14,7 +14,7 @@ public enum MediaServiceResult {
 
 	// todo should result be more general eg. INVALID_ISBN => INVALID_FIELD
 	OK(200),
-	INVALID_ISBN(300), 		ISBN_RESERVED(301), 	MISSING_ISBN(302), 	ISBN_NOT_EQUALE(303), 	 // error values for book 3xx
+	INVALID_ISBN(300), 		ISBN_RESERVED(301), 	MISSING_ISBN(302), 	ISBN_NOT_EQUAL(303), 	 // error values for book 3xx
 	NO_BOOKS(304),
 	INVALID_BARCODE(500), 	BARCODE_RESERVED(501), 	MISSING_BARCODE(502), BARCODE_NOT_EQUALE(503), // error values for discs 5xx
 	NO_DISCS(504),
@@ -74,7 +74,7 @@ public enum MediaServiceResult {
 		case MISSING_ISBN:
 			message = "Isbn could not be found.";
 			break;
-		case ISBN_NOT_EQUALE:
+		case ISBN_NOT_EQUAL:
 			message = "The isbn nummers do not match.";
 			break;
 		case NO_BOOKS:
