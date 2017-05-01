@@ -29,6 +29,7 @@ import edu.hm.shareit.service.MediaService;
 import edu.hm.shareit.service.MediaServiceImpl;
 import edu.hm.shareit.service.MediaServiceResult;
 
+
 /**
  * @author Michael Eggers
  * @author Rebecca Brydon
@@ -152,12 +153,10 @@ public class MediaResource {
 	@Produces("application/json")
 	@Path("books/{isbn}")
 	public Response getBook(@PathParam("isbn") String isbn) {
-		System.out.println("kalled get with isbn param");
 		Optional<Medium> book = service.getBook(isbn);
 		ObjectMapper mapper = new ObjectMapper();
 		
 		if (book.isPresent()) {
-			System.out.println("book present!"); // TODO kill debug
 			ObjectNode node = mapper.valueToTree(book.get());
 			return Response
 					.status(MediaServiceResult.OK.getErrorNum())
@@ -176,12 +175,10 @@ public class MediaResource {
 	@Produces("application/json")
 	@Path("discs/{barcode}")
 	public Response getDisc(@PathParam("barcode") String barcode) {
-		System.out.println("kalled get with isbn param");
 		Optional<Medium> disc = service.getDisc(barcode);
 		ObjectMapper mapper = new ObjectMapper();
 		
 		if (disc.isPresent()) {
-			System.out.println("book present!"); // TODO kill debug
 			ObjectNode node = mapper.valueToTree(disc.get());
 			return Response
 					.status(MediaServiceResult.OK.getErrorNum())
@@ -206,7 +203,6 @@ public class MediaResource {
 	@Produces({"application/json", "text/plain"})
 	@Path("books/{isbn}")
 	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
-		Response response;
 		MediaServiceResult result;
 		if (!isbn.equals(book.getIsbn())) {
 			result = MediaServiceResult.ISBN_NOT_EQUAL;
@@ -214,10 +210,28 @@ public class MediaResource {
 		else {
 			result = service.updateBook(book);
 		}
-		response = Response.status(result.getErrorNum())
-		.entity(errorMessageJSON(result).toString())
-		.build();
-		return response;
+		
+		return Response.status(result.getErrorNum())
+				.entity(errorMessageJSON(result).toString())
+				.build();
+	}
+	
+	@PUT
+	@Consumes("application/json")
+	@Produces({"application/json", "text/plain"})
+	@Path("discs/{barcode}")
+	public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
+		MediaServiceResult result;
+		if (!barcode.equals(disc.getBarcode())) {
+			result = MediaServiceResult.BARCODE_NOT_EQUAL;
+		}
+		else {
+			result = service.updateDisc(disc);
+		}
+		
+		return Response.status(result.getErrorNum())
+				.entity(errorMessageJSON(result).toString())
+				.build();
 	}
 	
 	/**

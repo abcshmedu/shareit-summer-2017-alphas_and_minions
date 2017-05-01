@@ -10,9 +10,10 @@ public class Disc extends Medium {
 		super("");
 		barcode = "";
 		director = "";
+		fsk = -1;
 	}
 
-	Disc(String barcode, String director, int fsk, String title) {
+	public Disc(String barcode, String director, int fsk, String title) {
 		super(title);
 		this.barcode = barcode;
 		this.director = director;

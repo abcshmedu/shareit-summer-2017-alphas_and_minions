@@ -16,7 +16,7 @@ public enum MediaServiceResult {
 	OK(200),
 	INVALID_ISBN(300), 		ISBN_RESERVED(301), 	MISSING_ISBN(302), 	ISBN_NOT_EQUAL(303), 	 // error values for book 3xx
 	NO_BOOKS(304), 
-	INVALID_BARCODE(500), 	BARCODE_RESERVED(501), 	MISSING_BARCODE(502), BARCODE_NOT_EQUALE(503), // error values for discs 5xx
+	INVALID_BARCODE(500), 	BARCODE_RESERVED(501), 	MISSING_BARCODE(502), BARCODE_NOT_EQUAL(503), // error values for discs 5xx
 	NO_DISCS(504), 
 	MISSING_INFO(400), 		BAD_REQUEST(401), 		NOT_FOUND(404), 		IM_A_TEAPOT(418),		 // general error values 4xx
 	MEDIUM_ALREADY_EXISTS(777);
@@ -90,7 +90,7 @@ public enum MediaServiceResult {
 		case MISSING_BARCODE:
 			message = "Barcode not found.";
 			break;
-		case BARCODE_NOT_EQUALE:
+		case BARCODE_NOT_EQUAL:
 			message = "Barcodes do not match.";
 			break;
 		case NO_DISCS:
@@ -104,6 +104,9 @@ public enum MediaServiceResult {
 			break;
 		case NOT_FOUND:
 			message = "Not Found";
+			break;
+		case MEDIUM_ALREADY_EXISTS:
+			message = "the medium already exists in database.";
 			break;
 		case IM_A_TEAPOT:
 			message = "Have a cup of tea and then it will work.";

@@ -69,7 +69,7 @@ public class MediaServiceImpl implements MediaService {
 				result = MediaServiceResult.MISSING_BARCODE;
 			} 
 			else {
-				if(data.addMedium(disc).isPresent())
+				if(!data.addMedium(disc).isPresent())
 					result = MediaServiceResult.MEDIUM_ALREADY_EXISTS;
 				else
 					result = MediaServiceResult.OK;
@@ -141,10 +141,29 @@ public class MediaServiceImpl implements MediaService {
 	 */
 	@Override
 	public MediaServiceResult updateDisc(Disc disc) {
-		if(data.update(disc).isPresent())
-			return MediaServiceResult.OK;
+		MediaServiceResult result;
+		Optional<Medium> discToUpdate = data.getDisc(disc.getBarcode());
+		if (discToUpdate.isPresent()) {
+			String title = disc.getTitle();
+			String director = disc.getDirector();
+			int fsk = disc.getFsk();
+			if (title.isEmpty())
+				title = discToUpdate.get().getTitle();
+			if (director.isEmpty())
+				director = ((Disc)(discToUpdate.get())).getDirector();
+			if (fsk == -1)
+				fsk = ((Disc)(discToUpdate.get())).getFsk();
+			
+			Medium updatedDisc = new Disc(disc.getBarcode(), director, fsk, title);
+			data.remove(discToUpdate.get());
+			data.addMedium(updatedDisc);
+			result = MediaServiceResult.OK;
+		}
+		else {
+			result = MediaServiceResult.NOT_FOUND;
+		}
 		
-		return MediaServiceResult.NOT_FOUND;
+		return result;
 	}
 	
 	
