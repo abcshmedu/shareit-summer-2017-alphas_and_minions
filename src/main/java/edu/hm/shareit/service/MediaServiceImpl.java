@@ -17,7 +17,6 @@ import edu.hm.shareit.model.Medium;
  * @author Rebecca Brydon
  */
 
-//TODO: when POST new medium check if isbn or barcode is already available. 
 
 public class MediaServiceImpl implements MediaService { 
 	
@@ -39,17 +38,17 @@ public class MediaServiceImpl implements MediaService {
 	public MediaServiceResult addBook(Book book) {
 		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (book != null) {
-			if (!book.checkIsbn()) {
-				result = MediaServiceResult.INVALID_ISBN;
-			} 
+//			if (!book.checkIsbn()) {
+//				result = MediaServiceResult.INVALID_ISBN;
+//			} 
 			if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} 
+			else if (data.getBook(book.getIsbn()).isPresent())
+				result = MediaServiceResult.ISBN_RESERVED;
 			else {
-				if(!data.addMedium(book).isPresent())
-					result = MediaServiceResult.MEDIUM_ALREADY_EXISTS;
-				else
-					result = MediaServiceResult.OK;
+				data.addMedium(book);
+				result = MediaServiceResult.OK;
 			}
 		}
 		return result;
@@ -65,14 +64,14 @@ public class MediaServiceImpl implements MediaService {
 			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty() || disc.getBarcode().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} 
+			else if (data.getDisc(disc.getBarcode()).isPresent())
+				result = MediaServiceResult.BARCODE_RESERVED;
 			else if (disc.getBarcode().isEmpty()) {
 				result = MediaServiceResult.MISSING_BARCODE;
 			} 
 			else {
-				if(!data.addMedium(disc).isPresent())
-					result = MediaServiceResult.MEDIUM_ALREADY_EXISTS;
-				else
-					result = MediaServiceResult.OK;
+				data.addMedium(disc);
+				result = MediaServiceResult.OK;
 			}
 		}
 		return result;
