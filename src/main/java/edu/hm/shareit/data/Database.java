@@ -15,6 +15,9 @@ import edu.hm.shareit.model.Medium;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
+
+// TODO: distinct hash-tables for books, discs, ...
+
 public class Database {
 
 	

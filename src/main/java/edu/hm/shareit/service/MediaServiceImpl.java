@@ -17,6 +17,8 @@ import edu.hm.shareit.model.Medium;
  * @author Rebecca Brydon
  */
 
+//TODO: when POST new medium check if isbn or barcode is already available. 
+
 public class MediaServiceImpl implements MediaService { 
 	
 	private Database data = new Database();
@@ -45,7 +47,7 @@ public class MediaServiceImpl implements MediaService {
 			} 
 			else {
 				if(!data.addMedium(book).isPresent())
-					result = MediaServiceResult.ISBN_RESERVED;
+					result = MediaServiceResult.MEDIUM_ALREADY_EXISTS;
 				else
 					result = MediaServiceResult.OK;
 			}
@@ -68,7 +70,7 @@ public class MediaServiceImpl implements MediaService {
 			} 
 			else {
 				if(data.addMedium(disc).isPresent())
-					result = MediaServiceResult.BARCODE_RESERVED;
+					result = MediaServiceResult.MEDIUM_ALREADY_EXISTS;
 				else
 					result = MediaServiceResult.OK;
 			}
@@ -87,7 +89,8 @@ public class MediaServiceImpl implements MediaService {
 			List<Medium> books = data.getBooks().get();
 			result = new Book[books.size()];
 			result = books.toArray(result);
-		}	
+		}
+		
 		return result;
 	}
 	
@@ -98,8 +101,11 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public Medium[] getDiscs() {
 		Disc[] result = null;
-		if(data.getDiscs().isPresent())
-			data.getDiscs().get().toArray(result);
+		if(data.getDiscs().isPresent()) {
+			List<Medium> discs = data.getDiscs().get();
+			result = new Disc[discs.size()];
+			result = discs.toArray(result);
+		}
 		
 		return result;
 	}

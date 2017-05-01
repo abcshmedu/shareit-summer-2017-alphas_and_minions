@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
 import edu.hm.shareit.service.MediaService;
 import edu.hm.shareit.service.MediaServiceImpl;
@@ -32,6 +33,9 @@ import edu.hm.shareit.service.MediaServiceResult;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
+
+
+
 @Path("media")
 public class MediaResource {
 	
@@ -53,25 +57,27 @@ public class MediaResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response createBook(Book book) {
-		System.out.println("POST called!");
-		System.out.println(book);
 		MediaServiceResult result = service.addBook(book);
+
+		return Response
+				.status(result.getErrorNum())
+				.entity(errorMessageJSON(result).toString())
+				.build();
+
+	}
+	
+	@POST
+	@Path("discs")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response createDisc(Disc disc) {
+		MediaServiceResult result = service.addDisc(disc);
 		
-		if (result == MediaServiceResult.OK) {
-			ObjectMapper mapper = new ObjectMapper();
-			//mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-			ObjectNode node = mapper.valueToTree(book);
-			return Response
-					.status(MediaServiceResult.OK.getErrorNum())
-					.entity(node)
-					.build();
-		} 
-		else {
-			return Response
-					.status(result.getErrorNum())
-					.entity(errorMessageJSON(result).toString())
-					.build();
-		}
+		return Response
+				.status(result.getErrorNum())
+				.entity(errorMessageJSON(result).toString())
+				.build();
+		
 	}
 	
 	// Tester
@@ -112,6 +118,31 @@ public class MediaResource {
 		}
 	}
 	
+	@GET
+	@Path("discs")
+	@Produces("application/json")
+	public Response getDiscs() throws JsonProcessingException {
+		MediaServiceResult result = MediaServiceResult.OK;
+		Medium[] discs = service.getDiscs();
+		//System.out.println("books array: " + Arrays.toString(books));
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (result == MediaServiceResult.OK) {
+			List<Medium> bookList = Arrays.stream(discs).collect(Collectors.toList());
+			String node = mapper.writeValueAsString(bookList);
+			return Response
+					.status(result.getErrorNum())
+					.entity(node)
+					.build();			
+		} else {
+			JSONObject obj = errorMessageJSON(result);
+			return Response
+					.status(result.getErrorNum())
+					.entity(obj)
+					.build();
+		}
+	}
+	
 	/**
 	 * gets a book with isbn.
 	 * @return book.
@@ -128,6 +159,30 @@ public class MediaResource {
 		if (book.isPresent()) {
 			System.out.println("book present!"); // TODO kill debug
 			ObjectNode node = mapper.valueToTree(book.get());
+			return Response
+					.status(MediaServiceResult.OK.getErrorNum())
+					.entity(node)
+					.build();
+		} else {
+			return Response
+					.status(MediaServiceResult.NOT_FOUND.getErrorNum())
+					.entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString())
+					.build();
+		}
+	}
+	
+	@GET
+	@Consumes({"text/plain", "application/json"})
+	@Produces("application/json")
+	@Path("discs/{barcode}")
+	public Response getDisc(@PathParam("barcode") String barcode) {
+		System.out.println("kalled get with isbn param");
+		Optional<Medium> disc = service.getDisc(barcode);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (disc.isPresent()) {
+			System.out.println("book present!"); // TODO kill debug
+			ObjectNode node = mapper.valueToTree(disc.get());
 			return Response
 					.status(MediaServiceResult.OK.getErrorNum())
 					.entity(node)
