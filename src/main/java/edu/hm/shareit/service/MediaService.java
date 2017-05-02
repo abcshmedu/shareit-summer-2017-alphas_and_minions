@@ -2,6 +2,7 @@
  * 
  */
 package edu.hm.shareit.service;
+
 import java.util.Optional;
 
 import edu.hm.shareit.model.*;
@@ -13,56 +14,72 @@ import edu.hm.shareit.model.*;
 public interface MediaService {
 
 	/**
-	 * adds a book
-	 * @param book
+	 * adds a book.
+	 * 
+	 * @param book to be added.
+	 * 
+	 * @return result
 	 */
-	public MediaServiceResult addBook(Book book);
-	
-	/**
-	 * adds a disc
-	 * @param disc
-	 */
-	public MediaServiceResult addDisc(Disc disc);
-	
-	/**
-	 * gets a book. If no error result dose not change, otherwise override result with error code.
-	 * @param isbn
-	 * @param result
-	 * @return
-	 */
-	public Optional<Medium> getBook(String isbn);
-
+	MediaServiceResult addBook(Book book);
 
 	/**
-	 * @param result
-	 * @return
+	 * adds a disc.
+	 * 
+	 * @param disc disc to be added.
+	 * 
+	 * @return result
 	 */
-	public Medium[] getBooks();
-	
+	MediaServiceResult addDisc(Disc disc);
 
 	/**
-	 * @param barcode
-	 * @param result
-	 * @return
+	 * gets a book. If no error result dose not change, otherwise override
+	 * result with error code.
+	 * 
+	 * @param isbn number of book.
+	 * 
+	 * @return medium
 	 */
-	public Optional<Medium> getDisc(String barcode);
-	
+	Optional<Medium> getBook(String isbn);
+
 	/**
-	 * @param result
-	 * @return
+	 * gets a book.
+	 * 
+	 * @return book
 	 */
-	public Medium[] getDiscs();
-	
+	Medium[] getBooks();
+
 	/**
-	 * @param book
-	 * @return
+	 * get Discs.
+	 * 
+	 * @param barcode of disc.
+	 * 
+	 * @return disc
 	 */
-	public MediaServiceResult updateBook(Book book);
-	
+	Optional<Medium> getDisc(String barcode);
+
 	/**
-	 * @param disc
-	 * @return
+	 * get discs.
+	 * 
+	 * @return medium
 	 */
-	public MediaServiceResult updateDisc(Disc disc);
-	
+	Medium[] getDiscs();
+
+	/**
+	 * update book.
+	 * 
+	 * @param book update this book.
+	 * 
+	 * @return result
+	 */
+	MediaServiceResult updateBook(Book book);
+
+	/**
+	 * update disc.
+	 * 
+	 * @param disc update this disc
+	 * 
+	 * @return result
+	 */
+	MediaServiceResult updateDisc(Disc disc);
+
 }

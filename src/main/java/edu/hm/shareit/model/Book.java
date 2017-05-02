@@ -10,7 +10,8 @@ public class Book extends Medium {
 
 	private final String author;
 	private final String isbn; // make final? see MediaResource updateBook
-	
+	private final int isbn13 = 13;
+
 	/**
 	 * Book empty constructor for jackson.
 	 */
@@ -19,37 +20,44 @@ public class Book extends Medium {
 		author = "";
 		isbn = "";
 	}
-	
+
 	/**
 	 * Book creates book.
-	 * @param title Title the books shall have.
-	 * @param author Author of the book.
-	 * @param isbn The book's ISBN.
+	 * 
+	 * @param title
+	 *            Title the books shall have.
+	 * @param author
+	 *            Author of the book.
+	 * @param isbn
+	 *            The book's ISBN.
 	 */
 	public Book(String title, String author, String isbn) {
 		super(title);
 		this.author = author;
 		this.isbn = isbn;
 	}
-	
-	
+
 	/**
 	 * Gets the author.
+	 * 
 	 * @return author Author of this book.
 	 */
 	public String getAuthor() {
 		return author;
 	}
-	
+
 	/**
 	 * Gets ISBN.
+	 * 
 	 * @return isbn ISBN of this book.
 	 */
 	public String getIsbn() {
 		return isbn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see models.Medium#hashCode()
 	 */
 	@Override
@@ -61,39 +69,43 @@ public class Book extends Medium {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see models.Medium#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
-			return true;			
+			return true;
 		}
 		if (!super.equals(obj)) {
-			return false;			
+			return false;
 		}
 		if (getClass() != obj.getClass()) {
-			return false;			
+			return false;
 		}
 		Book other = (Book) obj;
 		if (author == null) {
 			if (other.author != null) {
-				return false;				
+				return false;
 			}
 		} else if (!author.equals(other.author)) {
-			return false;			
+			return false;
 		}
 		if (isbn == null) {
 			if (other.isbn != null) {
-				return false;				
+				return false;
 			}
 		} else if (!isbn.equals(other.isbn)) {
-			return false;			
+			return false;
 		}
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see models.Medium#toString()
 	 */
 	@Override
@@ -102,38 +114,39 @@ public class Book extends Medium {
 				+ super.toString() + "]";
 	}
 
-	
-	// TODO : Checkstyle complains about magic numbers and missing {} at if.
 	/**
 	 * checks if isbn is valid.
+	 * 
 	 * @return bool
 	 */
 	public boolean checkIsbn() {
 		// todo isbn nummers deal with - seperators in isbn
 		String isbn = this.isbn.replace("-", "");
-		if (isbn == null)
+		if (isbn == null) {
 			return false;
-		if (isbn.isEmpty())
-			return false;
-		if (isbn.length() < 13)
-			return false;
-		
-		int mod = 10;
-		int sum = 0;
-		for (int i = 0; i < isbn.length()-1; ++i) {
-			int multi = (i+1)%2 == 0 ? 3 : 1;
-			sum += Character.getNumericValue(isbn.charAt(i))*multi;
 		}
-		
-		int remainder = sum%mod;
-		int checkDigit = mod - remainder;
-		
-		if (checkDigit == 10)
-			checkDigit = 0;
-		
-		if (checkDigit == Character.getNumericValue(isbn.charAt(isbn.length()-1)))
-			return true;
-		else
+		if (isbn.isEmpty()) {
 			return false;
+		}
+		if (isbn.length() < isbn13) {
+			return false;
+		}
+		final int mod = 10;
+		final int unevenMultiplier = 3;
+		final int evenMultiplier = 1;
+		int sum = 0;
+		for (int i = 0; i < isbn.length() - 1; ++i) {
+			int multi = (i + 1) % 2 == 0 ? unevenMultiplier : evenMultiplier;
+			sum += Character.getNumericValue(isbn.charAt(i)) * multi;
+		}
+
+		int remainder = sum % mod;
+		int checkDigit = mod - remainder;
+
+		if (checkDigit == mod) {
+			checkDigit = 0;
+		}
+
+		return checkDigit == Character.getNumericValue(isbn.charAt(isbn.length() - 1));
 	}
 }

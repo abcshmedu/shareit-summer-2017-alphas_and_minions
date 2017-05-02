@@ -10,11 +10,14 @@ public class Copy {
 
 	private final Medium medium;
 	private final String owner;
-	
+
 	/**
 	 * Creates a new owner.
-	 * @param owner Name of the owner.
-	 * @param medium The medium he/she owns.
+	 * 
+	 * @param owner
+	 *            Name of the owner.
+	 * @param medium
+	 *            The medium he/she owns.
 	 */
 	Copy(String owner, Medium medium) {
 		this.owner = owner;
@@ -23,6 +26,7 @@ public class Copy {
 
 	/**
 	 * Gets the medium.
+	 * 
 	 * @return the medium.
 	 */
 	public Medium getMedium() {
@@ -31,11 +35,11 @@ public class Copy {
 
 	/**
 	 * gets the owner.
+	 * 
 	 * @return the owner
 	 */
 	public String getOwner() {
 		return owner;
 	}
-	
-	
+
 }
