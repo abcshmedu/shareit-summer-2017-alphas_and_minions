@@ -110,7 +110,7 @@ public class Book extends Medium {
 	 */
 	public boolean checkIsbn() {
 		// todo isbn nummers deal with - seperators in isbn
-		
+		String isbn = this.isbn.replace("-", "");
 		if (isbn == null)
 			return false;
 		if (isbn.isEmpty())
