@@ -21,7 +21,7 @@ public class MediaServiceImpl implements MediaService {
 	private Database data = new Database();
 	
 	/**
-	 * MediaServiceImpl implements all buissnes logic.
+	 * MediaServiceImpl implements all business logic.
 	 */
 	public MediaServiceImpl() {
 		data = new Database();
