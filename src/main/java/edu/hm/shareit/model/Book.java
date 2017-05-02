@@ -125,9 +125,11 @@ public class Book extends Medium {
 			sum += Character.getNumericValue(isbn.charAt(i))*multi;
 		}
 		
-		int div = sum/mod;
 		int remainder = sum%mod;
 		int checkDigit = mod - remainder;
+		
+		if (checkDigit == 10)
+			checkDigit = 0;
 		
 		if (checkDigit == Character.getNumericValue(isbn.charAt(isbn.length()-1)))
 			return true;
