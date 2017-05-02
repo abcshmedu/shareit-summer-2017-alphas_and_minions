@@ -16,8 +16,6 @@ import edu.hm.shareit.model.Medium;
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
-
-
 public class MediaServiceImpl implements MediaService { 
 	
 	private Database data = new Database();

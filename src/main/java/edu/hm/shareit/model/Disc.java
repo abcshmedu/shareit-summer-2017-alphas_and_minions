@@ -1,18 +1,36 @@
 package edu.hm.shareit.model;
 
+/**
+ * Represents a disc.
+ * 
+ * @author Michael Eggers
+ * @author Rebecca Brydon
+ *
+ */
 public class Disc extends Medium {
 
-	String barcode;
-	String director;
-	int fsk;
+	private final String barcode;
+	private final String director;
+	private final int fsk;
 	
+	/**
+	 * Creates an empty disc.
+	 */
 	public Disc () {
 		super("");
 		barcode = "";
 		director = "";
 		fsk = -1;
 	}
-
+	
+	/**
+	 * Creates an actual disc.
+	 * 
+	 * @param barcode Barcode of this disc.
+	 * @param director Director of this disc.
+	 * @param fsk FSK of this disc.
+	 * @param title Title of this disc.
+	 */
 	public Disc(String barcode, String director, int fsk, String title) {
 		super(title);
 		this.barcode = barcode;
@@ -20,6 +38,30 @@ public class Disc extends Medium {
 		this.fsk = fsk;
 	}
 
+	/**
+	 * gets the barcode.
+	 * @return the barcode
+	 */
+	public String getBarcode() {
+		return barcode;
+	}
+	
+	/**
+	 * gets the Director.
+	 * @return the director
+	 */
+	public String getDirector() {
+		return director;
+	}
+	
+	/**
+	 * gets the FKS number of the disk.
+	 * @return the fsk
+	 */
+	public int getFsk() {
+		return fsk;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -68,41 +110,4 @@ public class Disc extends Medium {
 			return false;
 		return true;
 	}
-
-	/**
-	 * gets the barcode.
-	 * @return the barcode
-	 */
-	public String getBarcode() {
-		return barcode;
-	}
-
-	/**
-	 * gets the Director.
-	 * @return the director
-	 */
-	public String getDirector() {
-		return director;
-	}
-
-	/**
-	 * gets the FKS number of the disk.
-	 * @return the fsk
-	 */
-	public int getFsk() {
-		return fsk;
-	}
-	
-	/**
-	 * gets the title of the disc.
-	 * 
-	 * @return title
-	 */
-	public String getTitle() {
-		return super.getTitle();
-	}
-
-
-	
-
 }

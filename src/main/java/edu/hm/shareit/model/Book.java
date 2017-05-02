@@ -2,6 +2,7 @@ package edu.hm.shareit.model;
 
 /**
  * Book represents a book.
+ * 
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
@@ -21,9 +22,9 @@ public class Book extends Medium {
 	
 	/**
 	 * Book creates book.
-	 * @param title
-	 * @param author
-	 * @param isbn
+	 * @param title Title the books shall have.
+	 * @param author Author of the book.
+	 * @param isbn The book's ISBN.
 	 */
 	public Book(String title, String author, String isbn) {
 		super(title);
@@ -33,16 +34,16 @@ public class Book extends Medium {
 	
 	
 	/**
-	 * gets the author.
-	 * @return autor
+	 * Gets the author.
+	 * @return author Author of this book.
 	 */
 	public String getAuthor() {
 		return author;
 	}
 	
 	/**
-	 * gets isbn.
-	 * @return isbn
+	 * Gets ISBN.
+	 * @return isbn ISBN of this book.
 	 */
 	public String getIsbn() {
 		return isbn;
@@ -65,23 +66,30 @@ public class Book extends Medium {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+			return true;			
+		}
+		if (!super.equals(obj)) {
+			return false;			
+		}
+		if (getClass() != obj.getClass()) {
+			return false;			
+		}
 		Book other = (Book) obj;
 		if (author == null) {
-			if (other.author != null)
-				return false;
-		} else if (!author.equals(other.author))
-			return false;
+			if (other.author != null) {
+				return false;				
+			}
+		} else if (!author.equals(other.author)) {
+			return false;			
+		}
 		if (isbn == null) {
-			if (other.isbn != null)
-				return false;
-		} else if (!isbn.equals(other.isbn))
-			return false;
+			if (other.isbn != null) {
+				return false;				
+			}
+		} else if (!isbn.equals(other.isbn)) {
+			return false;			
+		}
 		return true;
 	}
 
@@ -95,6 +103,7 @@ public class Book extends Medium {
 	}
 
 	
+	// TODO : Checkstyle complains about magic numbers and missing {} at if.
 	/**
 	 * checks if isbn is valid.
 	 * @return bool
@@ -125,8 +134,4 @@ public class Book extends Medium {
 		else
 			return false;
 	}
-	
-	
-	
-
 }

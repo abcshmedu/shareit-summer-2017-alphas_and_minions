@@ -5,6 +5,7 @@ package edu.hm.shareit.model;
 
 /**
  * Medium class that represent a Medium of some kind.
+ * 
  * @author Michael Eggers
  * @author Rebecca Brydon
  */

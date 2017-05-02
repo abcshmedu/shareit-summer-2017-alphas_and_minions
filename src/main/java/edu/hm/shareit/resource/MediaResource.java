@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package edu.hm.shareit.resource;
 import java.util.Arrays;
 import java.util.List;
@@ -31,16 +29,19 @@ import edu.hm.shareit.service.MediaServiceResult;
 
 
 /**
+ * The interface that talks to the clients requests. 
+ * 
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
-
-
-
 @Path("media")
 public class MediaResource {
 	
-	MediaService service;
+	/**
+	 * Service does all the logic.
+	 */
+	private final MediaService service;
+	
 	/**
 	 * MediaResource creates media resource.
 	 */
@@ -49,9 +50,17 @@ public class MediaResource {
 	}
 	
 	/**
-	 * creates a new book.
-	 * @param book
-	 * @return response
+	 * Getter for service.
+	 * @return A mediaservice.
+	 */
+	public MediaService getService() {
+		return service;
+	}
+
+	/**
+	 * Creates a new book.
+	 * @param book The book data in json.
+	 * @return response Feedback to caller.
 	 */
 	@POST
 	@Path("books")
@@ -67,6 +76,11 @@ public class MediaResource {
 
 	}
 	
+	/**
+	 * Creates a new Disc.
+	 * @param disc The disc data in json.
+	 * @return response Feedback to caller.
+	 */
 	@POST
 	@Path("discs")
 	@Consumes("application/json")
@@ -81,18 +95,10 @@ public class MediaResource {
 		
 	}
 	
-	// Tester
-//	@GET
-//	@Path("books")
-//	@Produces("text/plain")
-//	public Response doGet() {
-//		return Response.status(200).entity("GET called!").build();
-//	}
-	
 	/**
-	 * gets all books.
-	 * @return response
-	 * @throws JsonProcessingException 
+	 * Gets all books.
+	 * @return response All the books in json.
+	 * @throws JsonProcessingException If object could not be serialized to json file.
 	 */
 	@GET
 	@Path("books")
@@ -119,6 +125,11 @@ public class MediaResource {
 		}
 	}
 	
+	/**
+	 * Gets all discs.
+	 * @return All the discs in json.
+	 * @throws JsonProcessingException If object could not be serialized to json file.
+	 */
 	@GET
 	@Path("discs")
 	@Produces("application/json")
@@ -145,8 +156,9 @@ public class MediaResource {
 	}
 	
 	/**
-	 * gets a book with isbn.
-	 * @return book.
+	 * Gets a book with isbn.
+	 * @param isbn ISBN of the wanted book.
+	 * @return response Response to caller.
 	 */
 	@GET
 	@Consumes({"text/plain", "application/json"})
@@ -170,6 +182,11 @@ public class MediaResource {
 		}
 	}
 	
+	/**
+	 * Gets a disc by its barcode.
+	 * @param barcode Barcode of the wanted disc.
+	 * @return Response to caller.
+	 */
 	@GET
 	@Consumes({"text/plain", "application/json"})
 	@Produces("application/json")
@@ -194,9 +211,10 @@ public class MediaResource {
 	
 	
 	/**
-	 * updates book information.
-	 * @param book
-	 * @return response
+	 * Updates book information.
+	 * @param isbn ISBN of book to update.
+	 * @param book New book data.
+	 * @return response Response to caller.
 	 */
 	@PUT
 	@Consumes("application/json")
@@ -216,6 +234,12 @@ public class MediaResource {
 				.build();
 	}
 	
+	/**
+	 * Updates disc information.
+	 * @param barcode Barcode of disc to update.
+	 * @param disc New disc data.
+	 * @return response Response to caller.
+	 */
 	@PUT
 	@Consumes("application/json")
 	@Produces({"application/json", "text/plain"})
@@ -236,8 +260,8 @@ public class MediaResource {
 	
 	/**
 	 * Creates a JSON obj with error message the form of simpleGeo (see 03-REST p.41).
-	 * @param result
-	 * @return
+	 * @param result The Response to convert.
+	 * @return A JSON object holding the Response data.
 	 */
 	private JSONObject errorMessageJSON(MediaServiceResult result) {
 		JSONObject jsonObj = new JSONObject();
