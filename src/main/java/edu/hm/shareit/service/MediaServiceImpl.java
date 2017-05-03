@@ -37,15 +37,14 @@ public class MediaServiceImpl implements MediaService {
 	public MediaServiceResult addBook(Book book) {
 		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (book != null) {
-			// if (!book.checkIsbn()) {
-			// result = MediaServiceResult.INVALID_ISBN;
-			// }
-			if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
+			if (!book.checkIsbn()) {
+				result = MediaServiceResult.INVALID_ISBN;
+			}
+			else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} else if (data.getBook(book.getIsbn()).isPresent()) {
 				result = MediaServiceResult.ISBN_RESERVED;
-			}
-			else {
+			} else {
 				data.addMedium(book);
 				result = MediaServiceResult.OK;
 			}
@@ -62,12 +61,11 @@ public class MediaServiceImpl implements MediaService {
 	public MediaServiceResult addDisc(Disc disc) {
 		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (disc != null) {
-			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty() || disc.getBarcode().isEmpty()) {
+			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty()) {
 				result = MediaServiceResult.MISSING_INFO;
 			} else if (data.getDisc(disc.getBarcode()).isPresent()) {
 				result = MediaServiceResult.BARCODE_RESERVED;
-			}
-			else if (disc.getBarcode().isEmpty()) {
+			} else if (disc.getBarcode().isEmpty()) {
 				result = MediaServiceResult.MISSING_BARCODE;
 			} else {
 				data.addMedium(disc);
@@ -173,7 +171,9 @@ public class MediaServiceImpl implements MediaService {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.hm.shareit.service.MediaService#getBook(java.lang.String)
 	 */
 	@Override
@@ -186,7 +186,9 @@ public class MediaServiceImpl implements MediaService {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.hm.shareit.service.MediaService#getDisc(java.lang.String)
 	 */
 	@Override

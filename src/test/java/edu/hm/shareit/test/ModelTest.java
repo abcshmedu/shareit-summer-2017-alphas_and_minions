@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import edu.hm.shareit.model.Book;
 
-public class BookTest {
+public class ModelTest {
 	
 	String title = "Calculus";
 	String author = "Adams";
@@ -14,7 +14,7 @@ public class BookTest {
 	String isbn2 = "978-3-16-148410-0";
 	
 	
-	public BookTest() {
+	public ModelTest() {
 	}
 	
 	@Test
