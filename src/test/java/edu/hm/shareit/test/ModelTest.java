@@ -27,4 +27,9 @@ public class ModelTest {
 		
 	}
 	
+	@Test
+	public void discTest() {
+		
+	}
+	
 }

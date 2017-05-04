@@ -261,7 +261,7 @@ public class MediaResource {
 	 */
 	private JSONObject errorMessageJSON(MediaServiceResult result) {
 		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("code", result);
+		jsonObj.put("code", result.getErrorNum());
 		jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
 		return jsonObj;
 	}

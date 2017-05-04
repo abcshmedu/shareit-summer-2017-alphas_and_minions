@@ -61,7 +61,7 @@ public class MediaServiceImpl implements MediaService {
 	public MediaServiceResult addDisc(Disc disc) {
 		MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
 		if (disc != null) {
-			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty()) {
+			if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty() || disc.getFsk() == -1) {
 				result = MediaServiceResult.MISSING_INFO;
 			} else if (data.getDisc(disc.getBarcode()).isPresent()) {
 				result = MediaServiceResult.BARCODE_RESERVED;
