@@ -34,11 +34,6 @@ public class MediaServiceImplTest {
     public MediaServiceImplTest() {
         service = new MediaServiceImpl();
         service.clearDatabase(); // start with empty database for tests
-        initialiseDatabase();
-    }
-
-    public void initialiseDatabase() {
-
     }
 
     @Test
@@ -118,10 +113,6 @@ public class MediaServiceImplTest {
         result = service.addDisc(new Disc("", director, fsk, title3));
         assertEquals(MediaServiceResult.MISSING_BARCODE, result);
 
-        // TODO invalid barcode
-        // result = service.addDisc(new Disc("2",director,fsk,title3));
-        // assertEquals(MediaServiceResult.INVALID_BARCODE,result);
-        // missing info
         result = service.addDisc(new Disc(barcode, "", fsk, title3));
         assertEquals(MediaServiceResult.MISSING_INFO, result);
         // get discs

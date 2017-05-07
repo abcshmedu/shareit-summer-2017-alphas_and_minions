@@ -59,23 +59,6 @@ public class MediaResourceTest {
         resource.clearDatabase(); // start with empty database for tests
     }
 
-    /*
-     * @Test public void testGet() throws Exception {
-     * 
-     * Server server = new Server(PORT); server.setHandler(new
-     * WebAppContext(WEBAPP_DIR, APP_URL));
-     * 
-     * // Start Server server.start();
-     * 
-     * // test GET
-     * 
-     * HttpURLConnection http = (HttpURLConnection) new
-     * URL("http://localhost:8080/").openConnection(); http.connect();
-     * assertEquals(http.getResponseCode(), HttpStatus.OK_200);
-     * 
-     * // stop server server.stop(); }
-     */
-
     @Test
     public void testCasesBook() throws JsonProcessingException {
         Book book1 = new Book(title, author, isbn);
