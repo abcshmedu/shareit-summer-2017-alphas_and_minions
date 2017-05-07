@@ -56,6 +56,7 @@ public class MediaResourceTest {
 
     public MediaResourceTest() {
         resource = new MediaResource();
+        resource.clearDatabase(); // start with empty database for tests
     }
 
     /*

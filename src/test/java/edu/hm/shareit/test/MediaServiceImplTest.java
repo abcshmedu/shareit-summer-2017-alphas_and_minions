@@ -33,6 +33,7 @@ public class MediaServiceImplTest {
 
     public MediaServiceImplTest() {
         service = new MediaServiceImpl();
+        service.clearDatabase(); // start with empty database for tests
         initialiseDatabase();
     }
 
