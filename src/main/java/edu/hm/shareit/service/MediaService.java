@@ -87,5 +87,10 @@ public interface MediaService {
      * @return result
      */
     MediaServiceResult updateDisc(Disc disc);
+    
+    /**
+     * Clears the database.
+     */
+    void clearDatabase();
 
 }

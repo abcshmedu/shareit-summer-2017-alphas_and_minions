@@ -265,5 +265,9 @@ public class MediaResource {
         jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
         return jsonObj;
     }
+    
+    public void clearDatabase() {
+        service.clearDatabase();
+    }
 
 }

@@ -84,9 +84,7 @@ public class Database {
     /**
      * Get a specific disc in database by its barcode.
      * 
-     * @param barcode
-     *            Barcode to look for.
-     * 
+     * @param barcode Barcode to look for.
      * 
      * @return Optional of the medium if found, empty Optional otherwise.
      */
@@ -99,10 +97,17 @@ public class Database {
     /**
      * Remove a medium from the database.
      * 
-     * @param medium
-     *            Medium to remove.
+     * @param medium Medium to remove.
+     *            
      */
     public void remove(final Medium medium) {
         hash2medium.remove(medium.hashCode());
+    }
+    
+    /**
+     * Clear data base.
+     */
+    public void clearDatabse() {
+        hash2medium.clear();
     }
 }

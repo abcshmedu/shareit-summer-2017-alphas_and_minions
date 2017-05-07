@@ -200,5 +200,13 @@ public class MediaServiceImpl implements MediaService {
             return Optional.empty();
         }
     }
+    
+    /* (non-Javadoc)
+     * @see edu.hm.shareit.service.MediaService#clearDatabase()
+     */
+    @Override
+    public void clearDatabase() {
+        data.clearDatabse();
+    }
 
 }
