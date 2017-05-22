@@ -19,6 +19,7 @@ public class MediaServiceImplTest {
     final String author2 = "Strang";
     final String title2 = "Computation Science";
     final String isbn = "978-0-306-40615-7";
+    final String isbnNoDash = "9780306406157";
     final String isbn2 = "978-3-16-148410-0";
     final String invalidISBN = "978-3-16-148410-8";
     final String title3 = "Guardians of the Galaxy";
@@ -35,9 +36,16 @@ public class MediaServiceImplTest {
         service = new MediaServiceImpl();
         service.clearDatabase(); // start with empty database for tests
     }
+    
+    private void resetAll() {
+        service.clearDatabase();
+    }
+    
 
     @Test
     public void bookTest() {
+        resetAll();
+        
         // add book
         result = service.addBook(testB1);
         assertEquals(MediaServiceResult.OK, result);
@@ -91,7 +99,23 @@ public class MediaServiceImplTest {
 
         Optional<Medium> updated = service.getBook("154685312154");
         assertFalse(updated.isPresent());
+        
+        
+        
 
+    }
+    
+    @Test
+    public void checkISBN() {
+        resetAll();
+        
+        Book invalidBook = new Book(title2,author2,isbnNoDash);
+        result = service.addBook(invalidBook);
+        assertEquals(MediaServiceResult.INVALID_ISBN,result);
+        
+        assertEquals(0,service.getBooks().length);
+        
+        
     }
 
     @Test

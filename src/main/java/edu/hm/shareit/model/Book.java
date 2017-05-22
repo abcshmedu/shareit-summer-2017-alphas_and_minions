@@ -115,38 +115,46 @@ public class Book extends Medium {
     }
 
     /**
-     * checks if isbn is valid.
+     * checks if isbn is valid. Only valid with form: 978-0-306-40615-7
      * 
      * @return bool
      */
     public boolean checkIsbn() {
         // todo isbn nummers deal with - seperators in isbn
-        String isbn = this.isbn.replace("-", "");
+        
         if (isbn == null) {
             return false;
         }
-        if (isbn.isEmpty()) {
+        else if (isbn.isEmpty()) {
             return false;
         }
-        if (isbn.length() < isbn13) {
+        else if (isbn.length() < isbn13) {
             return false;
         }
-        final int mod = 10;
-        final int unevenMultiplier = 3;
-        final int evenMultiplier = 1;
-        int sum = 0;
-        for (int i = 0; i < isbn.length() - 1; ++i) {
-            int multi = (i + 1) % 2 == 0 ? unevenMultiplier : evenMultiplier;
-            sum += Character.getNumericValue(isbn.charAt(i)) * multi;
+        else if (!isbn.contains("-")) {
+            return false;
+        } else {
+            String isbn = this.isbn.replace("-", "");
+            
+            
+            final int mod = 10;
+            final int unevenMultiplier = 3;
+            final int evenMultiplier = 1;
+            int sum = 0;
+            for (int i = 0; i < isbn.length() - 1; ++i) {
+                int multi = (i + 1) % 2 == 0 ? unevenMultiplier : evenMultiplier;
+                sum += Character.getNumericValue(isbn.charAt(i)) * multi;
+            }
+            
+            int remainder = sum % mod;
+            int checkDigit = mod - remainder;
+            
+            if (checkDigit == mod) {
+                checkDigit = 0;
+            }
+            
+            return checkDigit == Character.getNumericValue(isbn.charAt(isbn.length() - 1));
         }
-
-        int remainder = sum % mod;
-        int checkDigit = mod - remainder;
-
-        if (checkDigit == mod) {
-            checkDigit = 0;
-        }
-
-        return checkDigit == Character.getNumericValue(isbn.charAt(isbn.length() - 1));
+        
     }
 }
