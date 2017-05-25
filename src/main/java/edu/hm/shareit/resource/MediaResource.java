@@ -1,10 +1,17 @@
 package edu.hm.shareit.resource;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -83,12 +90,26 @@ public class MediaResource {
      *            The disc data in json.
      * 
      * @return response Feedback to caller.
+     * @throws IOException 
      */
     @POST
-    @Path("discs")
+    @Path("discs/{token}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createDisc(Disc disc) {
+    public Response createDisc(Disc disc, @PathParam("token") final String token) throws IOException {
+    	
+    	String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" + token;
+    	URL targetURL = new URL(httpsURL);
+    	HttpsURLConnection connection = (HttpsURLConnection)targetURL.openConnection();
+    	
+    	try (InputStream is = connection.getInputStream(); 
+    		 InputStreamReader isr = new InputStreamReader(is);
+    		 BufferedReader in = new BufferedReader(isr)) {
+    		
+    		in.lines().forEach(System.out::println);
+    		
+    	}
+    	
         MediaServiceResult result = service.addDisc(disc);
 
         return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
