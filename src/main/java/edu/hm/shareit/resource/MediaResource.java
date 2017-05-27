@@ -101,10 +101,18 @@ public class MediaResource {
     	
     	// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" + token;
     	String httpURL = "http://localhost:8080/auth/users/" + token;
-    	URL targetURL = new URL(httpURL);
 //    	HttpsURLConnection connection = (HttpsURLConnection)targetURL.openConnection();
     	
-    	HttpURLConnection connection = (HttpURLConnection) targetURL.openConnection();
+    	HttpURLConnection connection = null;
+    	URL targetURL;
+		try {
+			targetURL = new URL(httpURL);
+			connection = (HttpURLConnection) targetURL.openConnection();
+		} catch (IOException e) {
+			String responseMsg = connection.getResponseMessage();
+			System.out.println(responseMsg);
+		}
+    	
     	
     	try (InputStream is = connection.getInputStream(); 
     		 InputStreamReader isr = new InputStreamReader(is);
