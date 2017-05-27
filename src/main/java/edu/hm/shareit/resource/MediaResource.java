@@ -101,29 +101,25 @@ public class MediaResource {
     	
     	// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" + token;
     	String httpURL = "http://localhost:8080/auth/users/" + token;
+    	URL targetURL = new URL(httpURL);
 //    	HttpsURLConnection connection = (HttpsURLConnection)targetURL.openConnection();
     	
-    	HttpURLConnection connection = null;
-    	URL targetURL;
-		try {
-			targetURL = new URL(httpURL);
-			connection = (HttpURLConnection) targetURL.openConnection();
-		} catch (IOException e) {
-			String responseMsg = connection.getResponseMessage();
-			System.out.println(responseMsg);
-		}
+    	HttpURLConnection connection = (HttpURLConnection) targetURL.openConnection();
     	
+    	MediaServiceResult result;
     	
     	try (InputStream is = connection.getInputStream(); 
     		 InputStreamReader isr = new InputStreamReader(is);
     		 BufferedReader in = new BufferedReader(isr)) {
     		
-    		in.lines().forEach(System.out::println);
+    		if (in.readLine().equals("200")) {
+    			result = service.addDisc(disc);    			
+    		}
+    		else {
+    			result = MediaServiceResult.IM_A_TEAPOT;
+    		}
     		
     	}
-    	
-        MediaServiceResult result = service.addDisc(disc);
-
         return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
     }
