@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -98,9 +99,12 @@ public class MediaResource {
     @Produces("application/json")
     public Response createDisc(Disc disc, @PathParam("token") final String token) throws IOException {
     	
-    	String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" + token;
-    	URL targetURL = new URL(httpsURL);
-    	HttpsURLConnection connection = (HttpsURLConnection)targetURL.openConnection();
+    	// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" + token;
+    	String httpURL = "http://localhost:8080/auth/users/" + token;
+    	URL targetURL = new URL(httpURL);
+//    	HttpsURLConnection connection = (HttpsURLConnection)targetURL.openConnection();
+    	
+    	HttpURLConnection connection = (HttpURLConnection) targetURL.openConnection();
     	
     	try (InputStream is = connection.getInputStream(); 
     		 InputStreamReader isr = new InputStreamReader(is);
