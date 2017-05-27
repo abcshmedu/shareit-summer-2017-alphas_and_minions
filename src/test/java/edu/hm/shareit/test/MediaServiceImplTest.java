@@ -99,10 +99,6 @@ public class MediaServiceImplTest {
 
         Optional<Medium> updated = service.getBook("154685312154");
         assertFalse(updated.isPresent());
-        
-        
-        
-
     }
     
     @Test
@@ -136,7 +132,7 @@ public class MediaServiceImplTest {
         // missing barcode
         result = service.addDisc(new Disc("", director, fsk, title3));
         assertEquals(MediaServiceResult.MISSING_BARCODE, result);
-
+        
         result = service.addDisc(new Disc(barcode, "", fsk, title3));
         assertEquals(MediaServiceResult.MISSING_INFO, result);
         // get discs
