@@ -110,4 +110,14 @@ public class Database {
     public void clearDatabse() {
         hash2medium.clear();
     }
+    
+    
+    public void saveToken(String token, String username) {
+        
+        
+    }
+    
+    public void removeToken() {
+        
+    }
 }
