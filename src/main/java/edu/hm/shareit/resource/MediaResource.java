@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -89,7 +87,7 @@ public class MediaResource {
 		String result = "";
 		// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" +
 		// token;
-		String httpURL = "http://localhost:8080/auth/users/" + token;
+		String httpURL = "http://localhost:9999/auth/users/" + token;
 		URL targetURL = new URL(httpURL);
 		// HttpsURLConnection connection =
 		// (HttpsURLConnection)targetURL.openConnection();
@@ -178,9 +176,16 @@ public class MediaResource {
 	 *             If object could not be serialized to json file.
 	 */
 	@GET
-	@Path("discs")
+	@Path("discs/{token}")
 	@Produces("application/json")
-	public Response getDiscs() throws JsonProcessingException {
+	public Response getDiscs(@PathParam("token") String token) throws JsonProcessingException, IOException {
+	    System.out.println("Shareit says hi from getDiscs");
+	    String authResponse = authenticate(token);
+	    
+	    if (authResponse == "200") {
+	        System.out.println("token is valid");
+	    }
+	    
 		MediaServiceResult result = MediaServiceResult.OK;
 		Medium[] discs = service.getDiscs();
 		// System.out.println("books array: " + Arrays.toString(books));
