@@ -6,10 +6,10 @@ package edu.hm.shareit.service;
 import java.util.List;
 import java.util.Optional;
 
-import edu.hm.shareit.data.Database;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
+import edu.hm.shareit.persistence.Database;
 
 /**
  * @author Michael Eggers
