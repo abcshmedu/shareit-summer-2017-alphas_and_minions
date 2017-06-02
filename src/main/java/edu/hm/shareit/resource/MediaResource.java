@@ -118,15 +118,6 @@ public class MediaResource {
 	@Produces("application/json")
 	public Response createDisc(Disc disc, @PathParam("token") final String token) throws IOException {
 
-		// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" +
-		// token;
-//		String httpURL = "http://localhost:8080/auth/users/" + token;
-//		URL targetURL = new URL(httpURL);
-		// HttpsURLConnection connection =
-		// (HttpsURLConnection)targetURL.openConnection();
-
-//		HttpURLConnection connection = (HttpURLConnection) targetURL.openConnection();
-
 		MediaServiceResult result;
 
 		String authResponse = authenticate(token);
@@ -145,24 +136,28 @@ public class MediaResource {
 	 * Gets all books.
 	 * 
 	 * @return response All the books in json.
-	 * 
-	 * @throws JsonProcessingException
-	 *             If object could not be serialized to json file.
+	 * @throws IOException 
 	 */
 	@GET
-	@Path("books")
+	@Path("books/{token}")
 	@Produces("application/json")
-	public Response getBooks() throws JsonProcessingException {
-		MediaServiceResult result = MediaServiceResult.OK;
-		Medium[] books = service.getBooks();
-		// System.out.println("books array: " + Arrays.toString(books));
-		ObjectMapper mapper = new ObjectMapper();
+	public Response getBooks( @PathParam("token") final String token ) throws IOException {
+		MediaServiceResult result;
+		
+		String authResponse = authenticate(token);
+		Medium[] books = {};
 
-		if (result == MediaServiceResult.OK) {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (authResponse.equals(200)) {
+			books = service.getBooks();
 			List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
 			String node = mapper.writeValueAsString(bookList);
+			result = MediaServiceResult.OK;
 			return Response.status(result.getErrorNum()).entity(node).build();
-		} else {
+		}
+		else {
+			result = MediaServiceResult.IM_A_TEAPOT;
 			JSONObject obj = errorMessageJSON(result);
 			return Response.status(result.getErrorNum()).entity(obj).build();
 		}
