@@ -47,16 +47,16 @@ public class MediaResource {
 	/**
 	 * Service does all the logic.
 	 */
-	private final MediaService service;
+	@Inject
+	private MediaService service;
 
 	/**
 	 * MediaResource creates media resource.
 	 */
-	@Inject
-	public MediaResource(MediaService service) {
-	   
-		this.service = service;
-	}
+//	public MediaResource() {
+//		// service = new MediaServiceImpl();
+//	}
+
 
 	/**
 	 * Getter for service.
