@@ -53,9 +53,10 @@ public class MediaResource {
 	/**
 	 * MediaResource creates media resource.
 	 */
-//	public MediaResource() {
-//		// service = new MediaServiceImpl();
-//	}
+	//@Inject
+	public MediaResource() {
+		ShareitServletContextListener.getInjectorInstance().injectMembers(this);
+	}
 
 
 	/**
