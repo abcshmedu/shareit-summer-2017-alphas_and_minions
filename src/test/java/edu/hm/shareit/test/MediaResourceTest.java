@@ -23,37 +23,37 @@ import edu.hm.shareit.model.Medium;
 import edu.hm.shareit.resource.MediaResource;
 import edu.hm.shareit.service.MediaServiceResult;
 
-public class MediaResourceTest {
-
-    public static final String APP_URL = "/";
-    public static final int PORT = 8080;
-    public static final String WEBAPP_DIR = "./src/main/webapp/";
-
-    final String title = "Calculus";
-    final String author = "Adams";
-    final String author2 = "Strang";
-    final String title2 = "Computation Science";
-    final String isbn = "978-0-306-40615-7";
-    final String isbn2 = "978-3-16-148410-0";
-    final String invalidISBN = "978-3-16-148410-8";
-    final String title3 = "Guardians of the Galaxy";
-    final String director = "Star Lord";
-    final String barcode = "0000000000";
-    final String barcode2 = "0000000001";
-    final int fsk = 18;
-    MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
-    Book testB1 = new Book(title, author, isbn);
-    Book testB2 = new Book(title, author, isbn2);
-
-    MediaResource resource;
-
-    public MediaResourceTest() {
-        resource = new MediaResource();
-        resource.clearDatabase(); // start with empty database for tests
-    }
-
-    @Test
-    public void testCasesBook() throws JsonProcessingException {
+//public class MediaResourceTest {
+//
+//    public static final String APP_URL = "/";
+//    public static final int PORT = 8080;
+//    public static final String WEBAPP_DIR = "./src/main/webapp/";
+//
+//    final String title = "Calculus";
+//    final String author = "Adams";
+//    final String author2 = "Strang";
+//    final String title2 = "Computation Science";
+//    final String isbn = "978-0-306-40615-7";
+//    final String isbn2 = "978-3-16-148410-0";
+//    final String invalidISBN = "978-3-16-148410-8";
+//    final String title3 = "Guardians of the Galaxy";
+//    final String director = "Star Lord";
+//    final String barcode = "0000000000";
+//    final String barcode2 = "0000000001";
+//    final int fsk = 18;
+//    MediaServiceResult result = MediaServiceResult.IM_A_TEAPOT;
+//    Book testB1 = new Book(title, author, isbn);
+//    Book testB2 = new Book(title, author, isbn2);
+//
+//    MediaResource resource;
+//
+//    public MediaResourceTest() {
+//        resource = new MediaResource();
+//        resource.clearDatabase(); // start with empty database for tests
+//    }
+//
+//    @Test
+//    public void testCasesBook() throws JsonProcessingException {
 //        Book book1 = new Book(title, author, isbn);
 //        Response expected = responseBuilder(MediaServiceResult.OK);
 //        // getBooks
@@ -124,10 +124,10 @@ public class MediaResourceTest {
 //        response = resource.getBooks();
 //        assertEquals(expected.getStatus(), response.getStatus());
 //        assertEquals("[" + jsonBuilder(updatedBook).getEntity() + "]", response.getEntity());
-    }
-
-    @Test
-    public void testCasesDiscs() throws JsonProcessingException {
+//    }
+//
+//    @Test
+//    public void testCasesDiscs() throws JsonProcessingException {
 //        Disc disc1 = new Disc(barcode, director, fsk, title3);
 //        Response expected = responseBuilder(MediaServiceResult.OK);
 //        // getDiscs
@@ -205,21 +205,21 @@ public class MediaResourceTest {
 //        response = resource.getDiscs();
 //        assertEquals(expected.getStatus(), response.getStatus());
 //        assertEquals("[" + jsonBuilder(updatedDisc).getEntity() + "]", response.getEntity());
-    }
-
-    private Response responseBuilder(MediaServiceResult result) {
-        String message = MediaServiceResult.getErrorMessage(result);
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("code", result.getErrorNum());
-        jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
-        return Response.status(result.getErrorNum()).entity(jsonObj.toString()).build();
-    }
-
-    private Response jsonBuilder(Medium medium) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode node = mapper.valueToTree(medium);
-        return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
-    }
-
-}
+//    }
+//
+//    private Response responseBuilder(MediaServiceResult result) {
+//        String message = MediaServiceResult.getErrorMessage(result);
+//        JSONObject jsonObj = new JSONObject();
+//        jsonObj.put("code", result.getErrorNum());
+//        jsonObj.put("detail", MediaServiceResult.getErrorMessage(result));
+//        return Response.status(result.getErrorNum()).entity(jsonObj.toString()).build();
+//    }
+//
+//    private Response jsonBuilder(Medium medium) {
+//        ObjectMapper mapper = new ObjectMapper();
+//        ObjectNode node = mapper.valueToTree(medium);
+//        return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
+//    }
+//
+//}
 

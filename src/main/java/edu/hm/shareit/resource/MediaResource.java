@@ -25,6 +25,8 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
@@ -50,8 +52,10 @@ public class MediaResource {
 	/**
 	 * MediaResource creates media resource.
 	 */
-	public MediaResource() {
-		service = new MediaServiceImpl();
+	@Inject
+	public MediaResource(MediaService service) {
+	   
+		this.service = service;
 	}
 
 	/**

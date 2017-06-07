@@ -1,4 +1,4 @@
-package edu.hm.shareit;
+package edu.hm.shareit.resource;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -21,7 +21,7 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
         @Override
         protected void configureServlets() {
             bind(MediaService.class).to(MediaServiceImpl.class);
-            bind(MediaPersistence.class).to(MediaPersistenceImpl.class);
+            //bind(MediaPersistence.class).to(MediaPersistenceImpl.class);
         }
     });
 

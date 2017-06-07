@@ -25,7 +25,7 @@
     
     <listener>
         <listener-class>
-            edu.hm.ShareitServletContextListener
+           edu.hm.shareit.resource.ShareitServletContextListener
         </listener-class>
     </listener>
     
