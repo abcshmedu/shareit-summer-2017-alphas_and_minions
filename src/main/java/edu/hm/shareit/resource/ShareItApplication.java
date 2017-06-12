@@ -23,9 +23,6 @@ public class ShareItApplication extends ResourceConfig {
         guiceBridge.bridgeGuiceInjector(ShareitServletContextListener.getInjectorInstance());
     }
     
-//    
-//    public static void main(String[] args) {
-//        Injector injector = ShareitServletContextListener.getInjectorInstance(); 
-//    }
+
 
 }

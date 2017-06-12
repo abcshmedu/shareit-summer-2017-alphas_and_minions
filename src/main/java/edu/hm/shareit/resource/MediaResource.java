@@ -56,6 +56,13 @@ public class MediaResource {
 	//@Inject
 	public MediaResource() {
 		ShareitServletContextListener.getInjectorInstance().injectMembers(this);
+	    //this.service = service;
+	    
+	}
+	
+	//@Inject
+	public MediaResource(MediaService service) {
+	    this.service = service;
 	}
 
 
@@ -81,6 +88,7 @@ public class MediaResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response createBook(Book book) {
+	    System.out.println("Here");
 		MediaServiceResult result = service.addBook(book);
 
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
