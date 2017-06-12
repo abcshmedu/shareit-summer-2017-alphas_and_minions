@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,14 +26,11 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
 import edu.hm.shareit.service.MediaService;
-import edu.hm.shareit.service.MediaServiceImpl;
 import edu.hm.shareit.service.MediaServiceResult;
 
 /**
@@ -47,22 +45,17 @@ public class MediaResource {
 	/**
 	 * Service does all the logic.
 	 */
-	@Inject
+	//@Inject
 	private MediaService service;
 
 	/**
 	 * MediaResource creates media resource.
 	 */
-	//@Inject
-	public MediaResource() {
-		ShareitServletContextListener.getInjectorInstance().injectMembers(this);
-	    //this.service = service;
-	    
-	}
-	
-	//@Inject
+	@Inject
 	public MediaResource(MediaService service) {
+		//ShareitServletContextListener.getInjectorInstance().injectMembers(this);
 	    this.service = service;
+	    
 	}
 
 
