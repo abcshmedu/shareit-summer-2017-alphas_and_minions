@@ -20,16 +20,35 @@ public class MediaPersistenceImpl implements MediaPersistence {
     
     public MediaPersistenceImpl() {
         try {
-            setFactory(new Configuration().buildSessionFactory());
+//            setFactory(new Configuration().buildSessionFactory());
+        	factory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable e) {
             System.err.println("Failed to create sessionFactory object." + e);
             throw new ExceptionInInitializerError(e); 
+        }
+        
+        // Test Medium
+        Disc disc = new Disc("1", "dings", 12, "bums");
+        Session session = factory.getCurrentSession();
+        Transaction tx = null;
+        try {
+        	tx = session.beginTransaction();
+        	session.save(disc);
+        	tx.commit();
+        }
+        catch (HibernateException e) {
+        	tx.rollback();
+        	e.printStackTrace();
+        }
+        finally {
+        	session.close();
         }
     }
 
     @Override
     public Optional<Medium> addMedium(Medium medium, String id) {
-        Session session = factory.openSession();
+//        Session session = factory.openSession();
+    	Session session = factory.getCurrentSession();
         Transaction tx = null;
         Integer bookID = null;
         Optional<Medium> result = Optional.empty();
@@ -78,7 +97,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
     
     @Override
     public Optional<List<Medium>> getDiscs() {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         List<Medium> mediums = null;
         Optional<List<Medium>> result = Optional.empty();
@@ -102,20 +121,20 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public Optional<Medium> getBook(String isbn) {
-        Session session = factory.openSession();
+        Session entityManager = factory.getCurrentSession();
         Transaction tx = null;
         Medium book = null;
         Optional<Medium> result = Optional.empty();
         
         try {
-            tx = session.beginTransaction();
-            book = session.get(Book.class, isbn);
+            tx = entityManager.beginTransaction();
+            book = entityManager.get(Book.class, isbn);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
-            session.close();
+            entityManager.close();
         }
         
         if (book != null)
@@ -127,20 +146,20 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public Optional<Medium> getDisc(String barcode) {
-        Session session = factory.openSession();
+        Session entityManager = factory.getCurrentSession();
         Transaction tx = null;
         Medium disc = null;
         Optional<Medium> result = Optional.empty();
         
         try {
-            tx = session.beginTransaction();
-            disc = session.get(Disc.class, barcode);
+            tx = entityManager.beginTransaction();
+            disc = entityManager.get(Medium.class, Integer.parseInt(barcode));
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
-            session.close();
+            entityManager.close();
         }
         
         if (disc != null)

@@ -45,7 +45,6 @@ public class MediaResource {
 	/**
 	 * Service does all the logic.
 	 */
-	//@Inject
 	private MediaService service;
 
 	/**
@@ -170,7 +169,7 @@ public class MediaResource {
 	}
 
 	/**
-	 * Gets all discs.
+	 * Gets all discs. // TODO: Doesn't work. Should return all books when token is given but says 404
 	 * 
 	 * @return All the discs in json.
 	 * @throws JsonProcessingException

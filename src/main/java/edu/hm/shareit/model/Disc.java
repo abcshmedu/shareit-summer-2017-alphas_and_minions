@@ -1,5 +1,14 @@
 package edu.hm.shareit.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Represents a disc.
  * 
@@ -7,17 +16,19 @@ package edu.hm.shareit.model;
  * @author Rebecca Brydon
  *
  */
+@Entity
+@Table (name = "TDisc")
 public class Disc extends Medium {
 
-    private final String barcode;
-    private final String director;
-    private final int fsk;
+    private String barcode;
+    @Column private String director;
+    @Column private int fsk;
 
     /**
      * Creates an empty disc.
      */
     public Disc() {
-        super("");
+        super("", -1);
         barcode = "";
         director = "";
         fsk = -1;
@@ -36,7 +47,7 @@ public class Disc extends Medium {
      *            Title of this disc.
      */
     public Disc(String barcode, String director, int fsk, String title) {
-        super(title);
+        super(title, Integer.parseInt(barcode));
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;

@@ -6,10 +6,12 @@ package edu.hm.shareit.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.inject.Inject;
+
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
-import edu.hm.shareit.persistence.Database;
+import edu.hm.shareit.persistence.MediaPersistence;
 
 /**
  * @author Michael Eggers
@@ -17,15 +19,18 @@ import edu.hm.shareit.persistence.Database;
  */
 public class MediaServiceImpl implements MediaService {
 
-    private Database data = new Database();
+//    private Database data = new Database();
+	private MediaPersistence data;
 
     /**
      * 
      * MediaServiceImpl implements all business logic.
      * 
      */
-    public MediaServiceImpl() {
-        data = new Database();
+	@Inject
+    public MediaServiceImpl(MediaPersistence data) {
+//        data = new Database();
+		this.data = data;
     }
 
     /**
@@ -45,7 +50,7 @@ public class MediaServiceImpl implements MediaService {
             } else if (data.getBook(book.getIsbn()).isPresent()) {
                 result = MediaServiceResult.ISBN_RESERVED;
             } else {
-                data.addMedium(book);
+//                data.addMedium(book);
                 result = MediaServiceResult.OK;
             }
         }
@@ -68,7 +73,7 @@ public class MediaServiceImpl implements MediaService {
             } else if (disc.getBarcode().isEmpty()) {
                 result = MediaServiceResult.MISSING_BARCODE;
             } else {
-                data.addMedium(disc);
+//                data.addMedium(disc);
                 result = MediaServiceResult.OK;
             }
         }
@@ -128,8 +133,8 @@ public class MediaServiceImpl implements MediaService {
                 author = ((Book) (bookToUpdate.get())).getAuthor();
             }
             Medium updatedBook = new Book(title, author, book.getIsbn());
-            data.remove(bookToUpdate.get());
-            data.addMedium(updatedBook);
+//            data.remove(bookToUpdate.get());
+//            data.addMedium(updatedBook);
             result = MediaServiceResult.OK;
         } else {
             result = MediaServiceResult.NOT_FOUND;
@@ -161,8 +166,8 @@ public class MediaServiceImpl implements MediaService {
                 fsk = ((Disc) (discToUpdate.get())).getFsk();
             }
             Medium updatedDisc = new Disc(disc.getBarcode(), director, fsk, title);
-            data.remove(discToUpdate.get());
-            data.addMedium(updatedDisc);
+//            data.remove(discToUpdate.get());
+//            data.addMedium(updatedDisc);
             result = MediaServiceResult.OK;
         } else {
             result = MediaServiceResult.NOT_FOUND;
@@ -206,7 +211,7 @@ public class MediaServiceImpl implements MediaService {
      */
     @Override
     public void clearDatabase() {
-        data.clearDatabse();
+//        data.clearDatabse();
     }
 
 }
