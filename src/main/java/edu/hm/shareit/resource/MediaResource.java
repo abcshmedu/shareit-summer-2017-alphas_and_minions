@@ -138,22 +138,24 @@ public class MediaResource {
 	@Path("books/{token}")
 	@Produces("application/json")
 	public Response getBooks( @PathParam("token") final String token ) throws IOException {
-		MediaServiceResult result;
-		
-		String authResponse = authenticate(token);
-		Medium[] books = {};
-
+	    System.out.println("MediaResource says hi from getBooks");
+	    // String authResponse = authenticate(token);
+	    // System.out.println("auth response " + authResponse);
+	    
+//	    if (authResponse.equals("200")) {
+//	        System.out.println("token is valid");
+//	    }
+	    
+		MediaServiceResult result = MediaServiceResult.OK;
+		Medium[] books = service.getBooks();
+		// System.out.println("books array: " + Arrays.toString(books));
 		ObjectMapper mapper = new ObjectMapper();
-		
-		if (authResponse.equals("200")) {
-			books = service.getBooks();
+
+		if (result == MediaServiceResult.OK) {
 			List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
 			String node = mapper.writeValueAsString(bookList);
-			result = MediaServiceResult.OK;
 			return Response.status(result.getErrorNum()).entity(node).build();
-		}
-		else {
-			result = MediaServiceResult.IM_A_TEAPOT;
+		} else {
 			JSONObject obj = errorMessageJSON(result);
 			return Response.status(result.getErrorNum()).entity(obj).build();
 		}
@@ -170,7 +172,7 @@ public class MediaResource {
 	@Path("discs/{token}")
 	@Produces("application/json")
 	public Response getDiscs(@PathParam("token") String token) throws JsonProcessingException, IOException {
-	    System.out.println("Shareit says hi from getDiscs");
+	    System.out.println("MediaResource says hi from getDiscs");
 	    // String authResponse = authenticate(token);
 	    // System.out.println("auth response " + authResponse);
 	    
@@ -184,8 +186,8 @@ public class MediaResource {
 		ObjectMapper mapper = new ObjectMapper();
 
 		if (result == MediaServiceResult.OK) {
-			List<Medium> bookList = Arrays.stream(discs).collect(Collectors.toList());
-			String node = mapper.writeValueAsString(bookList);
+			List<Medium> discList = Arrays.stream(discs).collect(Collectors.toList());
+			String node = mapper.writeValueAsString(discList);
 			return Response.status(result.getErrorNum()).entity(node).build();
 		} else {
 			JSONObject obj = errorMessageJSON(result);

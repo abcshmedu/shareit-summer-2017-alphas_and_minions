@@ -62,14 +62,15 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public Optional<List<Medium>> getBooks() {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         List<Medium> mediums = null;
         Optional<List<Medium>> result = Optional.empty();
         
         try {
             tx = session.beginTransaction();
-            mediums = session.createQuery("FROM MEDIUM").list(); // XXX database name were to define??
+            mediums = session.createQuery("FROM Book").getResultList();
+            System.out.println(mediums); // debug
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
@@ -92,7 +93,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
         try {
             tx = session.beginTransaction();
             mediums = session.createQuery("FROM Disc").getResultList();
-            System.out.println(mediums);
+            System.out.println(mediums); // debug
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
