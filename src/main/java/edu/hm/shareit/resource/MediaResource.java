@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import edu.hm.shareit.auth.AuthInterface;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
@@ -46,15 +47,15 @@ public class MediaResource {
 	 * Service does all the logic.
 	 */
 	private MediaService service;
+	private AuthInterface auth;
 
 	/**
 	 * MediaResource creates media resource.
 	 */
 	@Inject
-	public MediaResource(MediaService service) {
-		//ShareitServletContextListener.getInjectorInstance().injectMembers(this);
+	public MediaResource(MediaService service, AuthInterface auth) {
 	    this.service = service;
-	    
+	    this.auth = auth;
 	}
 
 
@@ -91,23 +92,7 @@ public class MediaResource {
 	// mvn -Djetty.http.port=9999 jetty:run
 	private String authenticate(final String token) throws IOException {
 
-		String result = "";
-		// String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/" +
-		// token;
-		String httpURL = "http://localhost:9999/auth/users/" + token;
-		URL targetURL = new URL(httpURL);
-		// HttpsURLConnection connection =
-		// (HttpsURLConnection)targetURL.openConnection();
-		HttpURLConnection connection = (HttpURLConnection) targetURL.openConnection();
-
-		try (InputStream is = connection.getInputStream();
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader in = new BufferedReader(isr)) {
-
-			result = in.readLine();
-		}
-
-		return result;
+		return auth.authenticate(token);
 	}
 
 	/**
@@ -128,6 +113,7 @@ public class MediaResource {
 		MediaServiceResult result;
 
 		String authResponse = authenticate(token);
+		System.out.println(authResponse);
 
 		if (authResponse.equals("200")) {
 			result = service.addDisc(disc);
@@ -157,7 +143,7 @@ public class MediaResource {
 
 		ObjectMapper mapper = new ObjectMapper();
 		
-		if (authResponse.equals(200)) {
+		if (authResponse.equals("200")) {
 			books = service.getBooks();
 			List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
 			String node = mapper.writeValueAsString(bookList);
@@ -184,8 +170,9 @@ public class MediaResource {
 	public Response getDiscs(@PathParam("token") String token) throws JsonProcessingException, IOException {
 	    System.out.println("Shareit says hi from getDiscs");
 	    String authResponse = authenticate(token);
+	    System.out.println("auth response " + authResponse);
 	    
-	    if (authResponse == "200") {
+	    if (authResponse.equals("200")) {
 	        System.out.println("token is valid");
 	    }
 	    

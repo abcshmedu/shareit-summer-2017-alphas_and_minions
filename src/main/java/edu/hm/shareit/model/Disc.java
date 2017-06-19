@@ -105,6 +105,11 @@ public class Disc extends Medium {
         result = prime * result + fsk;
         return result;
     }
+    
+    private final int size = 10;
+    public boolean checkBarcode() {
+        return barcode.length() < size;
+    }
 
     /*
      * (non-Javadoc)

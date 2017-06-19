@@ -48,6 +48,7 @@ public class MediaServiceImpl implements MediaService {
             } else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
                 result = MediaServiceResult.MISSING_INFO;
             } else if (data.getBook(book.getIsbn()).isPresent()) {
+                Optional<Medium> tmp = data.getBook(book.getIsbn());
                 result = MediaServiceResult.ISBN_RESERVED;
             } else {
 //                data.addMedium(book);
@@ -70,7 +71,7 @@ public class MediaServiceImpl implements MediaService {
                 result = MediaServiceResult.MISSING_INFO;
             } else if (data.getDisc(disc.getID()).isPresent()) {
                 result = MediaServiceResult.BARCODE_RESERVED;
-            } else if (disc.getBarcode().isEmpty()) {
+            } else if (disc.checkBarcode()) {
                 result = MediaServiceResult.MISSING_BARCODE;
             } else {
                 data.addMedium(disc);

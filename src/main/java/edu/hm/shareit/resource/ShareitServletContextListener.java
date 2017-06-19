@@ -5,6 +5,9 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 
+import edu.hm.shareit.auth.AuthInterface;
+import edu.hm.shareit.auth.HerokuAuth;
+import edu.hm.shareit.auth.JettyAuth;
 import edu.hm.shareit.persistence.MediaPersistence;
 import edu.hm.shareit.persistence.MediaPersistenceImpl;
 import edu.hm.shareit.service.MediaService;
@@ -22,6 +25,8 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
         protected void configureServlets() {
             bind(MediaService.class).to(MediaServiceImpl.class);
             bind(MediaPersistence.class).to(MediaPersistenceImpl.class);
+            bind(AuthInterface.class).to(HerokuAuth.class);
+            //bind(AuthInterface.class).to(JettyAuth.class); for local testing
         }
     });
 

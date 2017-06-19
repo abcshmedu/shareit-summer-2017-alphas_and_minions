@@ -22,7 +22,7 @@ public class Book extends Medium {
      * Book empty constructor for jackson.
      */
     public Book() {
-        super("", "");
+        super("","");
         author = "";
         isbn = "";
     }
