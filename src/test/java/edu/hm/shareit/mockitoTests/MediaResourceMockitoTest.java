@@ -39,9 +39,10 @@ public class MediaResourceMockitoTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     
     
-    
+    private final String token = "0";
+    private final String authResponse = "200";
     @Test
-    public void testGetBook() throws JsonProcessingException {
+    public void testGetBook() throws IOException {
         String isbn = "978-0-306-40615-7";
         Book hobbit = new Book("The Hobbit","JRR Tolkin",isbn);
         
@@ -52,7 +53,8 @@ public class MediaResourceMockitoTest {
                 
         // OK
         when(service.getBook(isbn)).thenReturn(Optional.of(hobbit));
-        Response result = resource.getBook(isbn);
+        when(auth.authenticate(token)).thenReturn(authResponse);
+        Response result = resource.getBook(isbn,token);
         ObjectMapper mapper = new ObjectMapper();
         String node = mapper.writeValueAsString(hobbit);
         assertEquals(result.getStatus(), MediaServiceResult.OK.getErrorNum());        
@@ -60,12 +62,17 @@ public class MediaResourceMockitoTest {
         
         // Not found
         when(service.getBook(isbn)).thenReturn(Optional.empty());
-        result = resource.getBook(isbn);
+        result = resource.getBook(isbn,token);
         assertEquals(result.getStatus(), MediaServiceResult.NOT_FOUND.getErrorNum());
+        
+        // not authenticated
+        when(auth.authenticate(token)).thenReturn("418");
+        result = resource.getBook(isbn,token);
+        assertEquals(result.getStatus(), MediaServiceResult.IM_A_TEAPOT.getErrorNum());
     }
     
     @Test
-    public void testGetDisc() throws JsonProcessingException {
+    public void testGetDisc() throws IOException {
         String barcode = "000000000000";
         Disc twoTowers = new Disc(barcode,"Peter Jackson",12,"The Two Towers");
         
@@ -73,11 +80,11 @@ public class MediaResourceMockitoTest {
         auth = mock(HerokuAuth.class);
         
         MediaResource resource = new MediaResource(service, auth);
-
         
         // Ok
         when(service.getDisc(barcode)).thenReturn(Optional.of(twoTowers));
-        Response result = resource.getDisc(barcode);
+        when(auth.authenticate(token)).thenReturn(authResponse);
+        Response result = resource.getDisc(barcode,token);
         ObjectMapper mapper = new ObjectMapper();
         String node = mapper.writeValueAsString(twoTowers);
         assertEquals(result.getStatus(), MediaServiceResult.OK.getErrorNum());
@@ -85,8 +92,13 @@ public class MediaResourceMockitoTest {
         
         // NOt founrd
         when(service.getDisc(barcode)).thenReturn(Optional.empty());
-        result = resource.getDisc(barcode);
+        result = resource.getDisc(barcode,token);
         assertEquals(result.getStatus(), MediaServiceResult.NOT_FOUND.getErrorNum());
+        
+        // not authenticated
+        when(auth.authenticate(token)).thenReturn("418");
+        result = resource.getDisc(barcode,token);
+        assertEquals(result.getStatus(), MediaServiceResult.IM_A_TEAPOT.getErrorNum());
     }
     
     
@@ -115,9 +127,10 @@ public class MediaResourceMockitoTest {
         when(auth.authenticate("1")).thenReturn("");
         result = resource.getBooks("1");
         assertEquals(MediaServiceResult.IM_A_TEAPOT.getErrorNum(), result.getStatus());
+        
     }
     
-    //@Test
+    @Test
     public void testGetDiscs() throws IOException {
         String barcode = "000000000";
         Disc twoTowers = new Disc(barcode,"Peter Jackson",12,"The Two Towers");
@@ -143,7 +156,7 @@ public class MediaResourceMockitoTest {
     }
     
     @Test
-    public void testCreateBook() throws JsonProcessingException {
+    public void testCreateBook() throws IOException {
         String isbn = "978-0-306-40615-7";
         Book hobbit = new Book("The Hobbit","JRR Tolkin",isbn);
         
@@ -156,27 +169,33 @@ public class MediaResourceMockitoTest {
         
         //OK
         when(service.addBook(hobbit)).thenReturn(MediaServiceResult.OK);
-        Response result = resource.createBook(hobbit);
+        when(auth.authenticate(token)).thenReturn(authResponse);
+        Response result = resource.createBook(hobbit,token);
         assertEquals(MediaServiceResult.OK.getErrorNum(), result.getStatus());
         
         // isbn not valid
         when(service.addBook(hobbit)).thenReturn(MediaServiceResult.INVALID_ISBN);
-        result = resource.createBook(hobbit);
+        result = resource.createBook(hobbit,token);
         assertEquals(MediaServiceResult.INVALID_ISBN.getErrorNum(), result.getStatus());
         
         // info missing
         when(service.addBook(hobbit)).thenReturn(MediaServiceResult.MISSING_INFO);
-        result = resource.createBook(hobbit);
+        result = resource.createBook(hobbit,token);
         assertEquals(MediaServiceResult.MISSING_INFO.getErrorNum(), result.getStatus());
         
         // isbn reserved
         when(service.addBook(hobbit)).thenReturn(MediaServiceResult.ISBN_RESERVED);
-        result = resource.createBook(hobbit);
+        result = resource.createBook(hobbit,token);
         assertEquals(MediaServiceResult.ISBN_RESERVED.getErrorNum(), result.getStatus());
+        
+        // not authenticated
+        when(auth.authenticate(token)).thenReturn("418");
+        result = resource.createBook(hobbit,token);
+        assertEquals(result.getStatus(), MediaServiceResult.IM_A_TEAPOT.getErrorNum());
     }
     
     
-    private final String token = "0";
+
     @Test
     public void testCreateDisc() throws JsonProcessingException, IOException {
         
@@ -218,7 +237,7 @@ public class MediaResourceMockitoTest {
     }
     
     @Test
-    public void testUpdateBook() throws JsonProcessingException {
+    public void testUpdateBook() throws IOException {
         String isbn = "978-0-306-40615-7";
         Book hobbit = new Book("The Hobbit","JRR Tolkin",isbn);
         
@@ -231,21 +250,27 @@ public class MediaResourceMockitoTest {
         
         // Ok
         when(service.updateBook(hobbit)).thenReturn(MediaServiceResult.OK);
-        Response result = resource.updateBook(isbn, hobbit);
+        when(auth.authenticate(token)).thenReturn(authResponse);
+        Response result = resource.updateBook(hobbit, isbn, token);
         assertEquals(MediaServiceResult.OK.getErrorNum(), result.getStatus());
         
         // not found
         when(service.updateBook(hobbit)).thenReturn(MediaServiceResult.NOT_FOUND);
-        result = resource.updateBook(isbn, hobbit);
+        result = resource.updateBook(hobbit, isbn, token);
         assertEquals(MediaServiceResult.NOT_FOUND.getErrorNum(), result.getStatus());
         
         // isbn not equal
-        result = resource.updateBook("978-0-306-40615-8", hobbit);
+        result = resource.updateBook(hobbit,"978-0-306-40615-8",token);
         assertEquals(MediaServiceResult.ISBN_NOT_EQUAL.getErrorNum(), result.getStatus());
+        
+        // invalid token
+        when(auth.authenticate(token)).thenReturn("418");
+        result = resource.updateBook(hobbit,"978-0-306-40615-8",token);
+        assertEquals(MediaServiceResult.IM_A_TEAPOT.getErrorNum(), result.getStatus());
     }
     
     @Test
-    public void testUpdateDisc() throws JsonProcessingException {
+    public void testUpdateDisc() throws IOException {
         String barcode = "000000000";
         Disc twoTowers = new Disc(barcode,"Peter Jackson",12,"The Two Towers");
         
@@ -258,12 +283,18 @@ public class MediaResourceMockitoTest {
         
         // ok
         when(service.updateDisc(twoTowers)).thenReturn(MediaServiceResult.OK);
-        Response result = resource.updateDisc(barcode, twoTowers);
+        when(auth.authenticate(token)).thenReturn(authResponse);
+        Response result = resource.updateDisc(barcode, token, twoTowers);
         assertEquals(MediaServiceResult.OK.getErrorNum(), result.getStatus());
         
         // barcode not equal
-        result = resource.updateDisc(barcode+"0", twoTowers);
-        assertEquals(MediaServiceResult.BARCODE_NOT_EQUAL.getErrorNum(), result.getStatus()); 
+        result = resource.updateDisc(barcode+"0",token, twoTowers);
+        assertEquals(MediaServiceResult.BARCODE_NOT_EQUAL.getErrorNum(), result.getStatus());
+        
+        // invalid token
+        when(auth.authenticate(token)).thenReturn("418");
+        result = resource.updateDisc(barcode,token, twoTowers);
+        assertEquals(MediaServiceResult.IM_A_TEAPOT.getErrorNum(), result.getStatus());
     }
 
 }

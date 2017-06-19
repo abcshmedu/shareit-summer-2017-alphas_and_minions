@@ -30,7 +30,6 @@ public class AuthenticationResource {
     @Path("login")
     @Consumes("application/json")
     public Response login(final LoginDetails login) throws IOException, URISyntaxException {
-        System.out.println("Here Here. Says Shareit");
         String httpURI = "http://localhost:9999/auth/users/login";
         URI redirectURI = new URI(httpURI);
         String jsonString = mapper.writeValueAsString(login);
