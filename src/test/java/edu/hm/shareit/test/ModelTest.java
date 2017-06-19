@@ -40,7 +40,7 @@ public class ModelTest {
         Disc disc1 = new Disc(barcode, director, fsk, title3);
         assertEquals("Disc [" + "barcode=" + barcode + ", " + "director=" + director + ", " + "fsk=" + fsk + ", "
                 + "getTitle()=" + title3 + "]", disc1.toString());
-        assertEquals(barcode, disc1.getBarcode());
+        assertEquals(barcode, disc1.getID());
         assertEquals(director, disc1.getDirector());
         assertEquals(fsk, disc1.getFsk());
         assertEquals(title3, disc1.getTitle());

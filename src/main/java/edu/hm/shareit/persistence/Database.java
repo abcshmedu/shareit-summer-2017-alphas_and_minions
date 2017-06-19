@@ -89,7 +89,7 @@ public class Database {
      * @return Optional of the medium if found, empty Optional otherwise.
      */
     public Optional<Medium> getDisc(final String barcode) {
-        Optional<Medium> result = getDiscs().get().stream().filter(disc -> ((Disc) disc).getBarcode().equals(barcode))
+        Optional<Medium> result = getDiscs().get().stream().filter(disc -> ((Disc) disc).getID().equals(barcode))
                 .findFirst();
         return result;
     }
