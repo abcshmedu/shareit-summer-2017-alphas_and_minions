@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table (name = "TDisc")
 public class Disc extends Medium {
 
-    private String barcode;
+    @Column private String barcode;
     @Column private String director;
     @Column private int fsk;
 
@@ -28,7 +28,7 @@ public class Disc extends Medium {
      * Creates an empty disc.
      */
     public Disc() {
-        super("", -1);
+        super("", ""); // title, ID ( = barcode)
         barcode = "";
         director = "";
         fsk = -1;
@@ -47,7 +47,7 @@ public class Disc extends Medium {
      *            Title of this disc.
      */
     public Disc(String barcode, String director, int fsk, String title) {
-        super(title, Integer.parseInt(barcode));
+        super(title, barcode);
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;

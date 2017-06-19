@@ -86,7 +86,9 @@ public class MediaResource {
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
 	}
-
+	
+	// start auth server with:
+	// mvn -Djetty.http.port=9999 jetty:run
 	private String authenticate(final String token) throws IOException {
 
 		String result = "";
@@ -129,6 +131,7 @@ public class MediaResource {
 
 		if (authResponse.equals("200")) {
 			result = service.addDisc(disc);
+//			result = MediaServiceResult.OK; // debug
 		} else {
 			result = MediaServiceResult.IM_A_TEAPOT;
 		}

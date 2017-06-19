@@ -1,22 +1,28 @@
 package edu.hm.shareit.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Book represents a book.
  * 
  * @author Michael Eggers
  * @author Rebecca Brydon
  */
+@Entity
+@Table (name = "TBook")
 public class Book extends Medium {
 
-    private final String author;
-    private final String isbn; // make final? see MediaResource updateBook
+    @Column private String author;
+    @Column private String isbn; 
     private final int isbn13 = 13;
 
     /**
      * Book empty constructor for jackson.
      */
     public Book() {
-        super("");
+        super("", "");
         author = "";
         isbn = "";
     }
@@ -32,7 +38,7 @@ public class Book extends Medium {
      *            The book's ISBN.
      */
     public Book(String title, String author, String isbn) {
-        super(title);
+        super(title, isbn);
         this.author = author;
         this.isbn = isbn;
     }

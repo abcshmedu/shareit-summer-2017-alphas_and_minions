@@ -26,7 +26,7 @@ import javax.persistence.Table;
 public abstract class Medium implements Serializable {
 
     @Id
-    private Integer id;
+    private String id; 
     
 	@Column
     private String title;
@@ -36,7 +36,7 @@ public abstract class Medium implements Serializable {
 	 */
 	public Medium() {
 		title = "";
-		id = -1;
+		id = "";
 	}
 
     /**
@@ -44,10 +44,14 @@ public abstract class Medium implements Serializable {
      * @param title of medium.
      * @return title
      */
-    public Medium(String title, Integer id) {
+    public Medium(String title, String id) {
         this.title = title;
         this.id = id;
     };
+    
+    public String getID() {
+    	return id;
+    }
 
     /*
      * (non-Javadoc)

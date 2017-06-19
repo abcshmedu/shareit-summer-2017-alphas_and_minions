@@ -28,7 +28,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
         }
         
         // Test Medium
-        Disc disc = new Disc("1", "dings", 12, "bums");
+        Medium disc = new Disc("1221", "dings", 12, "bums");
         Session session = factory.getCurrentSession();
         Transaction tx = null;
         try {
@@ -46,26 +46,31 @@ public class MediaPersistenceImpl implements MediaPersistence {
     }
 
     @Override
-    public Optional<Medium> addMedium(Medium medium, String id) {
-//        Session session = factory.openSession();
-    	Session session = factory.getCurrentSession();
+    public Optional<Medium> addMedium(Medium medium) {
+    	Session entityManager = factory.getCurrentSession();
         Transaction tx = null;
-        Integer bookID = null;
+        Medium m = null;
         Optional<Medium> result = Optional.empty();
         
         try {
-            tx = session.beginTransaction();
-            bookID = (Integer) session.save(id, medium); // using isbn as id -> TODO check if it works the way it should
+            tx = entityManager.beginTransaction();
+            // check if medium already exists
+            // m = entityManager.get(Medium.class, medium.getID());
+            //tx.commit();
+            //if (m == null) {
+            Medium disc = new Disc("12", "eins", 12, "zwei");
+                entityManager.save(disc);
+                result = Optional.of(disc);
+                System.out.println("added new Medium: " + result.get()); // debug
+            //}
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
-            session.close();
+            entityManager.close();
         }
         
-        if (bookID != null)
-            result = Optional.of(medium);
         
         return result;
     }
@@ -153,7 +158,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
         
         try {
             tx = entityManager.beginTransaction();
-            disc = entityManager.get(Medium.class, Integer.parseInt(barcode));
+            disc = entityManager.get(Medium.class, barcode);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();

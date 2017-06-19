@@ -9,7 +9,7 @@ import edu.hm.shareit.model.Medium;
 
 public interface MediaPersistence {
  
-    public Optional<Medium> addMedium(Medium medium, String id);
+    public Optional<Medium> addMedium(Medium medium);
     
     public Optional<List<Medium>> getBooks();
     

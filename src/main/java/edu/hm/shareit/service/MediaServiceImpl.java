@@ -68,12 +68,12 @@ public class MediaServiceImpl implements MediaService {
         if (disc != null) {
             if (disc.getTitle().isEmpty() || disc.getDirector().isEmpty() || disc.getFsk() == -1) {
                 result = MediaServiceResult.MISSING_INFO;
-            } else if (data.getDisc(disc.getBarcode()).isPresent()) {
+            } else if (data.getDisc(disc.getID()).isPresent()) {
                 result = MediaServiceResult.BARCODE_RESERVED;
             } else if (disc.getBarcode().isEmpty()) {
                 result = MediaServiceResult.MISSING_BARCODE;
             } else {
-//                data.addMedium(disc);
+                data.addMedium(disc);
                 result = MediaServiceResult.OK;
             }
         }
