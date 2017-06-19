@@ -227,9 +227,9 @@ public class MediaResource {
 	@GET
 	@Consumes({ "text/plain", "application/json" })
 	@Produces("application/json")
-	@Path("discs/{barcode}")
-	public Response getDisc(@PathParam("barcode") String barcode) {
-		Optional<Medium> disc = service.getDisc(barcode);
+	@Path("discs/{blum111}")
+	public Response getDisc(@PathParam("blum111") String blum222) {
+		Optional<Medium> disc = service.getDisc(blum222);
 		ObjectMapper mapper = new ObjectMapper();
 
 		if (disc.isPresent()) {
@@ -284,7 +284,7 @@ public class MediaResource {
 	@Path("discs/{barcode}")
 	public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
 		MediaServiceResult result;
-		if (!barcode.equals(disc.getBarcode())) {
+		if (!barcode.equals(disc.getID())) {
 			result = MediaServiceResult.BARCODE_NOT_EQUAL;
 		} else {
 			result = service.updateDisc(disc);

@@ -19,28 +19,13 @@ public class MediaPersistenceImpl implements MediaPersistence {
     
 
     private static SessionFactory factory;
-    static {
-        factory = new Configuration().configure().buildSessionFactory();
-    }
+//    static {
+//        factory = new Configuration().configure().buildSessionFactory();
+//    }
     
-    //@Inject
-    public MediaPersistenceImpl() {
-        System.out.println("hi from const mediaPersistence");
-//        
-//        // Test Medium
-//        Medium disc = new Disc("1221", "dings", 12, "bums");
-//        Session session = factory.getCurrentSession();
-//        Transaction tx = null;
-//        System.out.println("adding test medium");
-//        try {
-//        	tx = session.beginTransaction();
-//        	session.save(disc);
-//        	tx.commit();
-//        }
-//        catch (HibernateException e) {
-//        	tx.rollback();
-//        	e.printStackTrace();
-//        }
+    @Inject
+    public MediaPersistenceImpl(SessionFactory factory) {
+        this.factory = factory;
     }
 
     @Override
@@ -56,7 +41,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
             // m = entityManager.get(Medium.class, medium.getID());
             //tx.commit();
             //if (m == null) {
-            //Medium disc = new Disc("12", "eins", 12, "zwei");
             String tmp = (String) entityManager.save(medium);
             result = Optional.of(medium);
             System.out.println("added new Medium: " + result.get()); // debug
@@ -68,24 +52,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-        
-        entityManager = factory.getCurrentSession();
-        tx = null;
-        
-        try {
-            tx = entityManager.beginTransaction();
-            // check if medium already exists
-            // m = entityManager.get(Medium.class, medium.getID());
-            //tx.commit();
-            //if (m == null) {
-            Medium tmp = entityManager.get(Medium.class, medium.getID());
-            tx.commit();
-
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        }
-        
         
         return result;
     }

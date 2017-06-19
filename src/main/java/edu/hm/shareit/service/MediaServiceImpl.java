@@ -152,7 +152,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public MediaServiceResult updateDisc(Disc disc) {
         MediaServiceResult result;
-        Optional<Medium> discToUpdate = data.getDisc(disc.getBarcode());
+        Optional<Medium> discToUpdate = data.getDisc(disc.getID());
         if (discToUpdate.isPresent()) {
             String title = disc.getTitle();
             String director = disc.getDirector();
@@ -166,7 +166,7 @@ public class MediaServiceImpl implements MediaService {
             if (fsk == -1) {
                 fsk = ((Disc) (discToUpdate.get())).getFsk();
             }
-            Medium updatedDisc = new Disc(disc.getBarcode(), director, fsk, title);
+            Medium updatedDisc = new Disc(disc.getID(), director, fsk, title);
 //            data.remove(discToUpdate.get());
 //            data.addMedium(updatedDisc);
             result = MediaServiceResult.OK;

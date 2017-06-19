@@ -1,17 +1,7 @@
-/*C5*/SET SCHEMA PUBLIC
-alter table TBook drop constraint FKjq3rq6ncrdybivkd0b2sck9b2
-alter table TDisc drop constraint FKjtk5i94capcre95g0l6jbxbt4
-drop table TBook if exists
-drop table TDisc if exists
-drop table TMedium if exists
-create table TBook (author varchar(255), isbn13 integer not null, id varchar(255) not null, primary key (id))
-create table TDisc (director varchar(255), fsk integer, size integer not null, id varchar(255) not null, primary key (id))
-create table TMedium (id varchar(255) not null, title varchar(255), primary key (id))
-alter table TBook add constraint FKjq3rq6ncrdybivkd0b2sck9b2 foreign key (id) references TMedium
-alter table TDisc add constraint FKjtk5i94capcre95g0l6jbxbt4 foreign key (id) references TMedium
-/*C6*/SET SCHEMA PUBLIC
-alter table TBook drop constraint FKjq3rq6ncrdybivkd0b2sck9b2
-alter table TDisc drop constraint FKjtk5i94capcre95g0l6jbxbt4
+/*C1*/SET SCHEMA SYSTEM_LOBS
+INSERT INTO BLOCKS VALUES(0,2147483647,0)
+COMMIT
+/*C2*/SET SCHEMA PUBLIC
 drop table TBook if exists
 drop table TDisc if exists
 drop table TMedium if exists

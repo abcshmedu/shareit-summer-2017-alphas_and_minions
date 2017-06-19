@@ -10,6 +10,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a disc.
  * 
@@ -52,21 +54,18 @@ public class Disc extends Medium {
     }
 
     /**
-     * gets the barcode.
-     * 
-     * @return the barcode
-     */
-    public String getBarcode() {
-        return super.getID();
-    }
-
-    /**
      * gets the Director.
      * 
      * @return the director
      */
     public String getDirector() {
         return director;
+    }
+    
+    @Override
+    @JsonProperty("barcode")
+    public String getID() {
+        return super.getID();
     }
 
     /**
@@ -85,7 +84,7 @@ public class Disc extends Medium {
      */
     @Override
     public String toString() {
-        return "Disc [barcode=" + getBarcode() + ", director=" + director + ", fsk=" + fsk + ", getTitle()=" + getTitle()
+        return "Disc [barcode=" + getID() + ", director=" + director + ", fsk=" + fsk + ", getTitle()=" + getTitle()
                 + "]";
     }
 
@@ -98,7 +97,7 @@ public class Disc extends Medium {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((getBarcode() == null) ? 0 : getBarcode().hashCode());
+        result = prime * result + ((getID() == null) ? 0 : getID().hashCode());
         result = prime * result + ((director == null) ? 0 : director.hashCode());
         result = prime * result + fsk;
         return result;
@@ -106,7 +105,7 @@ public class Disc extends Medium {
     
     private final int size = 10;
     public boolean checkBarcode() {
-        return getBarcode().length() < size;
+        return getID().length() < size;
     }
 
     /*
@@ -126,11 +125,11 @@ public class Disc extends Medium {
             return false;
         }
         Disc other = (Disc) obj;
-        if (getBarcode() == null) {
-            if (other.getBarcode()!= null) {
+        if (getID() == null) {
+            if (other.getID()!= null) {
                 return false;
             }
-        } else if (!getBarcode().equals(other.getBarcode())) {
+        } else if (!getID().equals(other.getID())) {
             return false;
         }
         if (director == null) {
