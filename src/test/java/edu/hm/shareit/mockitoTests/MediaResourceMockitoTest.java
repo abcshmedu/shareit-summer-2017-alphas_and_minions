@@ -151,7 +151,7 @@ public class MediaResourceMockitoTest {
         String node = mapper.writeValueAsString(hobbit);
         
         service = mock(MediaServiceImpl.class);
-        auth = mock(HerokuAuth.class); 
+        auth = mock(HerokuAuth.class);
         MediaResource resource = new MediaResource(service, auth);
         
         //OK

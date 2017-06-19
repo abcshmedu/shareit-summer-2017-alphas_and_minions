@@ -1,0 +1,23 @@
+/*C3*/SET SCHEMA PUBLIC
+alter table TDisc drop constraint FKjtk5i94capcre95g0l6jbxbt4
+drop table TDisc if exists
+drop table TMedium if exists
+create table TDisc (barcode varchar(255), director varchar(255), fsk integer, size integer not null, id varchar(255) not null, primary key (id))
+create table TMedium (id varchar(255) not null, title varchar(255), primary key (id))
+alter table TDisc add constraint FKjtk5i94capcre95g0l6jbxbt4 foreign key (id) references TMedium
+INSERT INTO TMEDIUM VALUES('1221','bums')
+INSERT INTO TDISC VALUES('1221','dings',12,10,'1221')
+COMMIT
+INSERT INTO TMEDIUM VALUES('12','zwei')
+INSERT INTO TDISC VALUES('12','eins',12,10,'12')
+COMMIT
+/*C4*/SET SCHEMA PUBLIC
+alter table TDisc drop constraint FKjtk5i94capcre95g0l6jbxbt4
+drop table TDisc if exists
+drop table TMedium if exists
+create table TDisc (barcode varchar(255), director varchar(255), fsk integer, size integer not null, id varchar(255) not null, primary key (id))
+create table TMedium (id varchar(255) not null, title varchar(255), primary key (id))
+alter table TDisc add constraint FKjtk5i94capcre95g0l6jbxbt4 foreign key (id) references TMedium
+INSERT INTO TMEDIUM VALUES('1221','bums')
+INSERT INTO TDISC VALUES('1221','dings',12,10,'1221')
+COMMIT

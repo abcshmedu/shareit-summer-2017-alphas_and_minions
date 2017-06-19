@@ -59,11 +59,33 @@ public class MediaPersistenceImpl implements MediaPersistence {
             //tx.commit();
             //if (m == null) {
             Medium disc = new Disc("12", "eins", 12, "zwei");
-                entityManager.save(disc);
-                result = Optional.of(disc);
-                System.out.println("added new Medium: " + result.get()); // debug
+            String tmp = (String) entityManager.save(disc);
+            result = Optional.of(disc);
+            System.out.println("added new Medium: " + result.get()); // debug
             //}
             tx.commit();
+            
+            
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        
+        entityManager = factory.getCurrentSession();
+        tx = null;
+        
+        try {
+            tx = entityManager.beginTransaction();
+            // check if medium already exists
+            // m = entityManager.get(Medium.class, medium.getID());
+            //tx.commit();
+            //if (m == null) {
+            Medium disc = new Disc("12", "eins", 12, "zwei");
+            Medium tmp = entityManager.get(Medium.class, disc.getID());
+            tx.commit();
+
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();

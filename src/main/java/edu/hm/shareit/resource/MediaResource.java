@@ -112,15 +112,15 @@ public class MediaResource {
 
 		MediaServiceResult result;
 
-		String authResponse = authenticate(token);
-		System.out.println(authResponse);
+		//String authResponse = authenticate(token);
+		//System.out.println(authResponse);
 
-		if (authResponse.equals("200")) {
+		//if (authResponse.equals("200")) {
 			result = service.addDisc(disc);
 //			result = MediaServiceResult.OK; // debug
-		} else {
-			result = MediaServiceResult.IM_A_TEAPOT;
-		}
+//		} else {
+//			result = MediaServiceResult.IM_A_TEAPOT;
+//		}
 
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
