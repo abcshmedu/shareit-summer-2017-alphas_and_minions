@@ -166,8 +166,7 @@ public class MediaServiceImpl implements MediaService {
                 fsk = ((Disc) (discToUpdate.get())).getFsk();
             }
             Medium updatedDisc = new Disc(disc.getID(), director, fsk, title);
-//            data.remove(discToUpdate.get());
-//            data.addMedium(updatedDisc);
+            data.update(updatedDisc);
             result = MediaServiceResult.OK;
         } else {
             result = MediaServiceResult.NOT_FOUND;
