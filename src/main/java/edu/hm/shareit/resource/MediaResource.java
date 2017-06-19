@@ -259,7 +259,7 @@ public class MediaResource {
 	@PUT
 	@Consumes("application/json")
 	@Produces({ "application/json", "text/plain" })
-	@Path("books/{isbn}")
+	@Path("book/{isbn}")
 	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
 		MediaServiceResult result;
 		if (!isbn.equals(book.getID())) {
@@ -285,7 +285,7 @@ public class MediaResource {
 	@PUT
 	@Consumes("application/json")
 	@Produces({ "application/json", "text/plain" })
-	@Path("discs/{barcode}")
+	@Path("disc/{barcode}")
 	public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
 		MediaServiceResult result;
 		if (!barcode.equals(disc.getID())) {

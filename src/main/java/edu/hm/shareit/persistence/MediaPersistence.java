@@ -19,7 +19,9 @@ public interface MediaPersistence {
     
     public Optional<Medium> getDisc(final String barcode);
     
-    public void remove(String id);
+    public void remove(final String id);
+    
+    public void update(final Medium medium);
 
     
     

@@ -40,14 +40,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
         
         try {
             tx = entityManager.beginTransaction();
-            // check if medium already exists
-            // m = entityManager.get(Medium.class, medium.getID());
-            //tx.commit();
-            //if (m == null) {
-            String tmp = (String) entityManager.save(medium);
+            String tmp = (String) entityManager.save(medium); // debug
             result = Optional.of(medium);
             System.out.println("added new Medium: " + result.get()); // debug
-            //}
             tx.commit();
             
             
@@ -153,7 +148,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public void remove(String id) {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         
         try {
@@ -165,6 +160,12 @@ public class MediaPersistenceImpl implements MediaPersistence {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public void update(final Medium medium) {
+    	remove(medium.getID());
+    	addMedium(medium);
     }
 
 

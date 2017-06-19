@@ -134,8 +134,7 @@ public class MediaServiceImpl implements MediaService {
                 author = ((Book) (bookToUpdate.get())).getAuthor();
             }
             Medium updatedBook = new Book(title, author, book.getID());
-//            data.remove(bookToUpdate.get());
-//            data.addMedium(updatedBook);
+            data.update(updatedBook);
             result = MediaServiceResult.OK;
         } else {
             result = MediaServiceResult.NOT_FOUND;
