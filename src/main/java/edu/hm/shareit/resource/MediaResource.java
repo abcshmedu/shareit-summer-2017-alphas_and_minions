@@ -75,16 +75,22 @@ public class MediaResource {
 	 *            The book data in json.
 	 * 
 	 * @return response Feedback to caller.
+	 * @throws IOException 
 	 */
 	@POST
 	@Path("books/{token}")
-	@Consumes("application/json")
+	@Consumes({"application/json","text/plain"})
 	@Produces("application/json")
-	public Response createBook(Book book) {
+	public Response createBook(Book book, @PathParam("token") final String token) throws IOException {
 	   
 		MediaServiceResult result;
-		
-		result = service.addBook(book);
+	    String authResponse = authenticate(token);
+	        
+	    if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+	        result = service.addBook(book);
+	    } else {
+	        result = MediaServiceResult.IM_A_TEAPOT;
+	    }
 
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
@@ -93,7 +99,6 @@ public class MediaResource {
 	// start auth server with:
 	// mvn -Djetty.http.port=9999 jetty:run
 	private String authenticate(final String token) throws IOException {
-
 		return auth.authenticate(token);
 	}
 
@@ -113,16 +118,13 @@ public class MediaResource {
 	public Response createDisc(Disc disc, @PathParam("token") final String token) throws IOException {
 
 		MediaServiceResult result;
-
-		//String authResponse = authenticate(token);
-		//System.out.println(authResponse);
-
-		//if (authResponse.equals("200")) {
+		String authResponse = authenticate(token);
+		
+		if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
 			result = service.addDisc(disc);
-//			result = MediaServiceResult.OK; // debug
-//		} else {
-//			result = MediaServiceResult.IM_A_TEAPOT;
-//		}
+		} else {
+			result = MediaServiceResult.IM_A_TEAPOT;
+		}
 
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
@@ -136,33 +138,34 @@ public class MediaResource {
 	 */
 	@GET
 	@Path("books/{token}")
+	@Consumes("text/plain")
 	@Produces("application/json")
 	public Response getBooks( @PathParam("token") final String token ) throws IOException {
-	    System.out.println("MediaResource says hi from getBooks");
-	    // String authResponse = authenticate(token);
-	    // System.out.println("auth response " + authResponse);
+	    String authResponse = authenticate(token);
 	    
-//	    if (authResponse.equals("200")) {
-//	        System.out.println("token is valid");
-//	    }
+	    if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+	        MediaServiceResult result = MediaServiceResult.OK;
+	        Medium[] books = service.getBooks();
+	        ObjectMapper mapper = new ObjectMapper();
+	        
+	        if (result == MediaServiceResult.OK) {
+	            List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
+	            String node = mapper.writeValueAsString(bookList);
+	            return Response.status(result.getErrorNum()).entity(node).build();
+	        } else {
+	            JSONObject obj = errorMessageJSON(result);
+	            return Response.status(result.getErrorNum()).entity(obj).build();
+	        }
+	        
+	    } else {
+	        JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+	    }
 	    
-		MediaServiceResult result = MediaServiceResult.OK;
-		Medium[] books = service.getBooks();
-		// System.out.println("books array: " + Arrays.toString(books));
-		ObjectMapper mapper = new ObjectMapper();
-
-		if (result == MediaServiceResult.OK) {
-			List<Medium> bookList = Arrays.stream(books).collect(Collectors.toList());
-			String node = mapper.writeValueAsString(bookList);
-			return Response.status(result.getErrorNum()).entity(node).build();
-		} else {
-			JSONObject obj = errorMessageJSON(result);
-			return Response.status(result.getErrorNum()).entity(obj).build();
-		}
 	}
 
 	/**
-	 * Gets all discs. // TODO: Doesn't work. Should return all books when token is given but says 404
+	 * Gets all discs.
 	 * 
 	 * @return All the discs in json.
 	 * @throws JsonProcessingException
@@ -172,27 +175,25 @@ public class MediaResource {
 	@Path("discs/{token}")
 	@Produces("application/json")
 	public Response getDiscs(@PathParam("token") String token) throws JsonProcessingException, IOException {
-	    System.out.println("MediaResource says hi from getDiscs");
-	    // String authResponse = authenticate(token);
-	    // System.out.println("auth response " + authResponse);
-	    
-//	    if (authResponse.equals("200")) {
-//	        System.out.println("token is valid");
-//	    }
-	    
-		MediaServiceResult result = MediaServiceResult.OK;
-		Medium[] discs = service.getDiscs();
-		// System.out.println("books array: " + Arrays.toString(books));
-		ObjectMapper mapper = new ObjectMapper();
-
-		if (result == MediaServiceResult.OK) {
-			List<Medium> discList = Arrays.stream(discs).collect(Collectors.toList());
-			String node = mapper.writeValueAsString(discList);
-			return Response.status(result.getErrorNum()).entity(node).build();
-		} else {
-			JSONObject obj = errorMessageJSON(result);
-			return Response.status(result.getErrorNum()).entity(obj).build();
-		}
+	    String authResponse = authenticate(token);
+	    if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+	        MediaServiceResult result = MediaServiceResult.OK;
+	        Medium[] discs = service.getDiscs();
+	        ObjectMapper mapper = new ObjectMapper();
+	        
+	        if (result == MediaServiceResult.OK) {
+	            List<Medium> discList = Arrays.stream(discs).collect(Collectors.toList());
+	            String node = mapper.writeValueAsString(discList);
+	            return Response.status(result.getErrorNum()).entity(node).build();
+	        } else {
+	            JSONObject obj = errorMessageJSON(result);
+	            return Response.status(result.getErrorNum()).entity(obj).build();
+	        }
+	        
+	    } else {
+            JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+	    }
 	}
 
 	/**
@@ -202,22 +203,33 @@ public class MediaResource {
 	 *            ISBN of the wanted book.
 	 * 
 	 * @return response Response to caller.
+	 * @throws IOException 
 	 */
 	@GET
-	@Consumes({ "text/plain", "application/json" })
+	@Consumes({ "text/plain", "text/plain" })
 	@Produces("application/json")
-	@Path("book/{isbn}")
-	public Response getBook(@PathParam("isbn") String isbn) {
-		Optional<Medium> book = service.getBook(isbn);
-		ObjectMapper mapper = new ObjectMapper();
+	@Path("book/{isbn}/{token}")
+	public Response getBook(@PathParam("isbn") String isbn, @PathParam("token") String token) throws IOException {
+	    
+	    String authResponse = authenticate(token);
+	    
+	    if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+	        Optional<Medium> book = service.getBook(isbn);
+	        ObjectMapper mapper = new ObjectMapper();
+	        
+	        if (book.isPresent()) {
+	            ObjectNode node = mapper.valueToTree(book.get());
+	            return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
+	        } else {
+	            return Response.status(MediaServiceResult.NOT_FOUND.getErrorNum())
+	                    .entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString()).build();
+	        }	        
+	    } else {
+	        JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+	    }
 
-		if (book.isPresent()) {
-			ObjectNode node = mapper.valueToTree(book.get());
-			return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
-		} else {
-			return Response.status(MediaServiceResult.NOT_FOUND.getErrorNum())
-					.entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString()).build();
-		}
+	    
 	}
 
 	/**
@@ -227,22 +239,30 @@ public class MediaResource {
 	 *            Barcode of the wanted disc.
 	 * 
 	 * @return Response to caller.
+	 * @throws IOException 
 	 */
 	@GET
-	@Consumes({ "text/plain", "application/json" })
+	@Consumes({ "text/plain", "text/plain"})
 	@Produces("application/json")
-	@Path("disc/{blum111}")
-	public Response getDisc(@PathParam("blum111") String blum222) {
-		Optional<Medium> disc = service.getDisc(blum222);
-		ObjectMapper mapper = new ObjectMapper();
-
-		if (disc.isPresent()) {
-			ObjectNode node = mapper.valueToTree(disc.get());
-			return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
-		} else {
-			return Response.status(MediaServiceResult.NOT_FOUND.getErrorNum())
-					.entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString()).build();
-		}
+	@Path("disc/{barcode}/{token}")
+	public Response getDisc(@PathParam("barcode") String barcode, @PathParam("token") String token) throws IOException {
+	    String authResponse = authenticate(token);
+        if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+            Optional<Medium> disc = service.getDisc(barcode);
+            ObjectMapper mapper = new ObjectMapper();
+            
+            if (disc.isPresent()) {
+                ObjectNode node = mapper.valueToTree(disc.get());
+                return Response.status(MediaServiceResult.OK.getErrorNum()).entity(node).build();
+            } else {
+                return Response.status(MediaServiceResult.NOT_FOUND.getErrorNum())
+                        .entity(errorMessageJSON(MediaServiceResult.NOT_FOUND).toString()).build();
+            }
+        } else {
+            JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+        }
+	    
 	}
 
 	/**
@@ -255,20 +275,31 @@ public class MediaResource {
 	 *            New book data.
 	 * 
 	 * @return response Response to caller.
+	 * @throws IOException 
 	 */
 	@PUT
 	@Consumes("application/json")
-	@Produces({ "application/json", "text/plain" })
-	@Path("book/{isbn}")
-	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
-		MediaServiceResult result;
-		if (!isbn.equals(book.getID())) {
-			result = MediaServiceResult.ISBN_NOT_EQUAL;
-		} else {
-			result = service.updateBook(book);
-		}
-
-		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
+	@Produces("application/json")
+	@Path("book/update/{isbn}/{token}")
+	public Response updateBook(Book book, @PathParam("isbn") String isbn, @PathParam("token") String token) throws IOException {
+	    String authResponse = authenticate(token);
+        System.out.println("here???");
+        if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+            MediaServiceResult result;
+            if (!isbn.equals(book.getID())) {
+                result = MediaServiceResult.ISBN_NOT_EQUAL;
+            } else {
+                result = service.updateBook(book);
+            }
+            
+            return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
+            
+        } else {
+            JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+        }
+	    
+	    
 	}
 
 	/**
@@ -281,20 +312,29 @@ public class MediaResource {
 	 *            New disc data.
 	 * 
 	 * @return response Response to caller.
+	 * @throws IOException 
 	 */
 	@PUT
-	@Consumes("application/json")
-	@Produces({ "application/json", "text/plain" })
-	@Path("disc/{barcode}")
-	public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
-		MediaServiceResult result;
-		if (!barcode.equals(disc.getID())) {
-			result = MediaServiceResult.BARCODE_NOT_EQUAL;
-		} else {
-			result = service.updateDisc(disc);
-		}
-
-		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
+	@Consumes({"text/plain","text/plain","application/json"})
+	@Produces({ "application/json"})
+	@Path("disc/update/{barcode}/{token}")
+	public Response updateDisc(@PathParam("barcode") String barcode, @PathParam("token") String token, Disc disc) throws IOException {
+	    String authResponse = authenticate(token);
+        
+        if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
+            MediaServiceResult result;
+            if (!barcode.equals(disc.getID())) {
+                result = MediaServiceResult.BARCODE_NOT_EQUAL;
+            } else {
+                result = service.updateDisc(disc);
+            }
+            
+            return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();            
+        } else {
+            JSONObject obj = errorMessageJSON(MediaServiceResult.IM_A_TEAPOT);
+            return Response.status(MediaServiceResult.IM_A_TEAPOT.getErrorNum()).entity(obj).build();
+        }
+	    
 	}
 
 	/**
