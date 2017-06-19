@@ -1,5 +1,8 @@
 package edu.hm.shareit.resource;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -24,6 +27,7 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
         @Override
         protected void configureServlets() {
             bind(MediaService.class).to(MediaServiceImpl.class);
+            bind(SessionFactory.class).toInstance(new Configuration().configure().buildSessionFactory());
             bind(MediaPersistence.class).to(MediaPersistenceImpl.class);
             //bind(AuthInterface.class).to(HerokuAuth.class);
             bind(AuthInterface.class).to(JettyAuth.class); // for local testing

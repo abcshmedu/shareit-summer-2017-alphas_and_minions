@@ -3,6 +3,8 @@ package edu.hm.shareit.persistence;
 import java.util.List;
 import java.util.Optional;
 
+import javax.inject.Inject;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,32 +19,28 @@ public class MediaPersistenceImpl implements MediaPersistence {
     
 
     private static SessionFactory factory;
+    static {
+        factory = new Configuration().configure().buildSessionFactory();
+    }
     
+    //@Inject
     public MediaPersistenceImpl() {
-        try {
-//            setFactory(new Configuration().buildSessionFactory());
-        	factory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable e) {
-            System.err.println("Failed to create sessionFactory object." + e);
-            throw new ExceptionInInitializerError(e); 
-        }
-        
-        // Test Medium
-        Medium disc = new Disc("1221", "dings", 12, "bums");
-        Session session = factory.getCurrentSession();
-        Transaction tx = null;
-        try {
-        	tx = session.beginTransaction();
-        	session.save(disc);
-        	tx.commit();
-        }
-        catch (HibernateException e) {
-        	tx.rollback();
-        	e.printStackTrace();
-        }
-        finally {
-        	session.close();
-        }
+        System.out.println("hi from const mediaPersistence");
+//        
+//        // Test Medium
+//        Medium disc = new Disc("1221", "dings", 12, "bums");
+//        Session session = factory.getCurrentSession();
+//        Transaction tx = null;
+//        System.out.println("adding test medium");
+//        try {
+//        	tx = session.beginTransaction();
+//        	session.save(disc);
+//        	tx.commit();
+//        }
+//        catch (HibernateException e) {
+//        	tx.rollback();
+//        	e.printStackTrace();
+//        }
     }
 
     @Override
@@ -58,9 +56,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
             // m = entityManager.get(Medium.class, medium.getID());
             //tx.commit();
             //if (m == null) {
-            Medium disc = new Disc("12", "eins", 12, "zwei");
-            String tmp = (String) entityManager.save(disc);
-            result = Optional.of(disc);
+            //Medium disc = new Disc("12", "eins", 12, "zwei");
+            String tmp = (String) entityManager.save(medium);
+            result = Optional.of(medium);
             System.out.println("added new Medium: " + result.get()); // debug
             //}
             tx.commit();
@@ -69,8 +67,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
         
         entityManager = factory.getCurrentSession();
@@ -82,15 +78,12 @@ public class MediaPersistenceImpl implements MediaPersistence {
             // m = entityManager.get(Medium.class, medium.getID());
             //tx.commit();
             //if (m == null) {
-            Medium disc = new Disc("12", "eins", 12, "zwei");
-            Medium tmp = entityManager.get(Medium.class, disc.getID());
+            Medium tmp = entityManager.get(Medium.class, medium.getID());
             tx.commit();
 
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
         
         
@@ -112,8 +105,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         
         if (mediums != null)
@@ -136,8 +127,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         
         if (mediums != null)
@@ -160,8 +149,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
         
         if (book != null)
@@ -185,8 +172,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
         
         if (disc != null)
@@ -208,23 +193,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
-    /**
-     * @return the factory
-     */
-    public static SessionFactory getFactory() {
-        return factory;
-    }
-
-    /**
-     * @param factory the factory to set
-     */
-    public static void setFactory(SessionFactory factory) {
-        MediaPersistenceImpl.factory = factory;
-    }
 
 }

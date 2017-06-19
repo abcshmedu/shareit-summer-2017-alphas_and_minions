@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Represents a disc.
@@ -20,7 +21,6 @@ import javax.persistence.Table;
 @Table (name = "TDisc")
 public class Disc extends Medium {
 
-    @Column private String barcode;
     @Column private String director;
     @Column private int fsk;
 
@@ -29,7 +29,6 @@ public class Disc extends Medium {
      */
     public Disc() {
         super("", ""); // title, ID ( = barcode)
-        barcode = "";
         director = "";
         fsk = -1;
     }
@@ -48,7 +47,6 @@ public class Disc extends Medium {
      */
     public Disc(String barcode, String director, int fsk, String title) {
         super(title, barcode);
-        this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;
     }
@@ -59,7 +57,7 @@ public class Disc extends Medium {
      * @return the barcode
      */
     public String getBarcode() {
-        return barcode;
+        return super.getID();
     }
 
     /**
@@ -87,7 +85,7 @@ public class Disc extends Medium {
      */
     @Override
     public String toString() {
-        return "Disc [barcode=" + barcode + ", director=" + director + ", fsk=" + fsk + ", getTitle()=" + getTitle()
+        return "Disc [barcode=" + getBarcode() + ", director=" + director + ", fsk=" + fsk + ", getTitle()=" + getTitle()
                 + "]";
     }
 
@@ -100,7 +98,7 @@ public class Disc extends Medium {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((barcode == null) ? 0 : barcode.hashCode());
+        result = prime * result + ((getBarcode() == null) ? 0 : getBarcode().hashCode());
         result = prime * result + ((director == null) ? 0 : director.hashCode());
         result = prime * result + fsk;
         return result;
@@ -108,7 +106,7 @@ public class Disc extends Medium {
     
     private final int size = 10;
     public boolean checkBarcode() {
-        return barcode.length() < size;
+        return getBarcode().length() < size;
     }
 
     /*
@@ -128,11 +126,11 @@ public class Disc extends Medium {
             return false;
         }
         Disc other = (Disc) obj;
-        if (barcode == null) {
-            if (other.barcode != null) {
+        if (getBarcode() == null) {
+            if (other.getBarcode()!= null) {
                 return false;
             }
-        } else if (!barcode.equals(other.barcode)) {
+        } else if (!getBarcode().equals(other.getBarcode())) {
             return false;
         }
         if (director == null) {

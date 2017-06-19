@@ -14,8 +14,10 @@ import javax.persistence.Table;
 @Table (name = "TBook")
 public class Book extends Medium {
 
+    /**
+     * 
+     */
     @Column private String author;
-    @Column private String isbn; 
     private final int isbn13 = 13;
 
     /**
@@ -24,7 +26,6 @@ public class Book extends Medium {
     public Book() {
         super("","");
         author = "";
-        isbn = "";
     }
 
     /**
@@ -40,7 +41,6 @@ public class Book extends Medium {
     public Book(String title, String author, String isbn) {
         super(title, isbn);
         this.author = author;
-        this.isbn = isbn;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Book extends Medium {
      * @return isbn ISBN of this book.
      */
     public String getIsbn() {
-        return isbn;
+        return super.getID();
     }
 
     /*
@@ -71,7 +71,7 @@ public class Book extends Medium {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+        result = prime * result + ((getIsbn() == null) ? 0 : getIsbn().hashCode());
         return result;
     }
 
@@ -99,11 +99,11 @@ public class Book extends Medium {
         } else if (!author.equals(other.author)) {
             return false;
         }
-        if (isbn == null) {
-            if (other.isbn != null) {
+        if (getIsbn() == null) {
+            if (other.getIsbn() != null) {
                 return false;
             }
-        } else if (!isbn.equals(other.isbn)) {
+        } else if (!getIsbn().equals(other.getIsbn())) {
             return false;
         }
         return true;
@@ -116,7 +116,7 @@ public class Book extends Medium {
      */
     @Override
     public String toString() {
-        return "Book [author=" + author + ", isbn=" + isbn + ", getTitle()=" + getTitle() + ", toString()="
+        return "Book [author=" + author + ", isbn=" + getIsbn() + ", getTitle()=" + getTitle() + ", toString()="
                 + super.toString() + "]";
     }
 
@@ -128,19 +128,19 @@ public class Book extends Medium {
     public boolean checkIsbn() {
         // todo isbn nummers deal with - seperators in isbn
         
-        if (isbn == null) {
+        if (getIsbn() == null) {
             return false;
         }
-        else if (isbn.isEmpty()) {
+        else if (getIsbn().isEmpty()) {
             return false;
         }
-        else if (isbn.length() < isbn13) {
+        else if (getIsbn().length() < isbn13) {
             return false;
         }
-        else if (!isbn.contains("-")) {
+        else if (!getIsbn().contains("-")) {
             return false;
         } else {
-            String isbn = this.isbn.replace("-", "");
+            String isbn = this.getIsbn().replace("-", "");
             
             
             final int mod = 10;

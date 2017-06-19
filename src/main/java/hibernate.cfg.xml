@@ -18,6 +18,7 @@
         <property name="transaction.auto_close_session">true</property>
 
         <mapping class="edu.hm.shareit.model.Disc" />
+        <mapping class="edu.hm.shareit.model.Book" />
         <mapping class="edu.hm.shareit.model.Medium" />
 
     </session-factory>
