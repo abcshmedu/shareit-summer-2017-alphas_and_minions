@@ -45,13 +45,13 @@ public class MediaServiceImpl implements MediaService {
         if (book != null) {
             if (!book.checkIsbn()) {
                 result = MediaServiceResult.INVALID_ISBN;
-            } else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getIsbn().isEmpty()) {
+            } else if (book.getAuthor().isEmpty() || book.getTitle().isEmpty() || book.getID().isEmpty()) {
                 result = MediaServiceResult.MISSING_INFO;
-            } else if (data.getBook(book.getIsbn()).isPresent()) {
-                Optional<Medium> tmp = data.getBook(book.getIsbn());
+            } else if (data.getBook(book.getID()).isPresent()) {
+                Optional<Medium> tmp = data.getBook(book.getID());
                 result = MediaServiceResult.ISBN_RESERVED;
             } else {
-//                data.addMedium(book);
+                data.addMedium(book);
                 result = MediaServiceResult.OK;
             }
         }
@@ -123,7 +123,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public MediaServiceResult updateBook(Book book) {
         MediaServiceResult result;
-        Optional<Medium> bookToUpdate = data.getBook(book.getIsbn());
+        Optional<Medium> bookToUpdate = data.getBook(book.getID());
         if (bookToUpdate.isPresent()) {
             String title = book.getTitle();
             String author = book.getAuthor();
@@ -133,7 +133,7 @@ public class MediaServiceImpl implements MediaService {
             if (author.isEmpty()) {
                 author = ((Book) (bookToUpdate.get())).getAuthor();
             }
-            Medium updatedBook = new Book(title, author, book.getIsbn());
+            Medium updatedBook = new Book(title, author, book.getID());
 //            data.remove(bookToUpdate.get());
 //            data.addMedium(updatedBook);
             result = MediaServiceResult.OK;

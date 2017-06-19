@@ -77,12 +77,14 @@ public class MediaResource {
 	 * @return response Feedback to caller.
 	 */
 	@POST
-	@Path("books")
+	@Path("books/{token}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response createBook(Book book) {
-	    System.out.println("Here");
-		MediaServiceResult result = service.addBook(book);
+	   
+		MediaServiceResult result;
+		
+		result = service.addBook(book);
 
 		return Response.status(result.getErrorNum()).entity(errorMessageJSON(result).toString()).build();
 
@@ -258,7 +260,7 @@ public class MediaResource {
 	@Path("books/{isbn}")
 	public Response updateBook(@PathParam("isbn") String isbn, Book book) {
 		MediaServiceResult result;
-		if (!isbn.equals(book.getIsbn())) {
+		if (!isbn.equals(book.getID())) {
 			result = MediaServiceResult.ISBN_NOT_EQUAL;
 		} else {
 			result = service.updateBook(book);

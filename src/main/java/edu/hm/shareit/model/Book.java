@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Book represents a book.
  * 
@@ -18,7 +20,7 @@ public class Book extends Medium {
      * 
      */
     @Column private String author;
-    private final int isbn13 = 13;
+    private final static int ISBN_13 = 13;
 
     /**
      * Book empty constructor for jackson.
@@ -57,7 +59,9 @@ public class Book extends Medium {
      * 
      * @return isbn ISBN of this book.
      */
-    public String getIsbn() {
+    @Override
+    @JsonProperty("isbn")
+    public String getID() {
         return super.getID();
     }
 
@@ -71,7 +75,7 @@ public class Book extends Medium {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result + ((getIsbn() == null) ? 0 : getIsbn().hashCode());
+        result = prime * result + ((getID() == null) ? 0 : getID().hashCode());
         return result;
     }
 
@@ -99,11 +103,11 @@ public class Book extends Medium {
         } else if (!author.equals(other.author)) {
             return false;
         }
-        if (getIsbn() == null) {
-            if (other.getIsbn() != null) {
+        if (getID() == null) {
+            if (other.getID() != null) {
                 return false;
             }
-        } else if (!getIsbn().equals(other.getIsbn())) {
+        } else if (!getID().equals(other.getID())) {
             return false;
         }
         return true;
@@ -116,7 +120,7 @@ public class Book extends Medium {
      */
     @Override
     public String toString() {
-        return "Book [author=" + author + ", isbn=" + getIsbn() + ", getTitle()=" + getTitle() + ", toString()="
+        return "Book [author=" + author + ", isbn=" + getID() + ", getTitle()=" + getTitle() + ", toString()="
                 + super.toString() + "]";
     }
 
@@ -128,19 +132,19 @@ public class Book extends Medium {
     public boolean checkIsbn() {
         // todo isbn nummers deal with - seperators in isbn
         
-        if (getIsbn() == null) {
+        if (getID() == null) {
             return false;
         }
-        else if (getIsbn().isEmpty()) {
+        else if (getID().isEmpty()) {
             return false;
         }
-        else if (getIsbn().length() < isbn13) {
+        else if (getID().length() < ISBN_13) {
             return false;
         }
-        else if (!getIsbn().contains("-")) {
+        else if (!getID().contains("-")) {
             return false;
         } else {
-            String isbn = this.getIsbn().replace("-", "");
+            String isbn = this.getID().replace("-", "");
             
             
             final int mod = 10;

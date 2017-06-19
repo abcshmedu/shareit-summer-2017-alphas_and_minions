@@ -76,7 +76,7 @@ public class Database {
      * @return Optional of the medium if found, empty Optional otherwise.
      */
     public Optional<Medium> getBook(final String isbn) {
-        Optional<Medium> result = getBooks().get().stream().filter(disc -> ((Book) disc).getIsbn().equals(isbn))
+        Optional<Medium> result = getBooks().get().stream().filter(disc -> ((Book) disc).getID().equals(isbn))
                 .findFirst();
         return result;
     }
