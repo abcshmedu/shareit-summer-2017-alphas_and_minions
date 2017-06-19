@@ -171,12 +171,12 @@ public class MediaResource {
 	@Produces("application/json")
 	public Response getDiscs(@PathParam("token") String token) throws JsonProcessingException, IOException {
 	    System.out.println("Shareit says hi from getDiscs");
-	    String authResponse = authenticate(token);
-	    System.out.println("auth response " + authResponse);
+	    // String authResponse = authenticate(token);
+	    // System.out.println("auth response " + authResponse);
 	    
-	    if (authResponse.equals("200")) {
-	        System.out.println("token is valid");
-	    }
+//	    if (authResponse.equals("200")) {
+//	        System.out.println("token is valid");
+//	    }
 	    
 		MediaServiceResult result = MediaServiceResult.OK;
 		Medium[] discs = service.getDiscs();
@@ -204,7 +204,7 @@ public class MediaResource {
 	@GET
 	@Consumes({ "text/plain", "application/json" })
 	@Produces("application/json")
-	@Path("books/{isbn}")
+	@Path("book/{isbn}")
 	public Response getBook(@PathParam("isbn") String isbn) {
 		Optional<Medium> book = service.getBook(isbn);
 		ObjectMapper mapper = new ObjectMapper();
@@ -229,7 +229,7 @@ public class MediaResource {
 	@GET
 	@Consumes({ "text/plain", "application/json" })
 	@Produces("application/json")
-	@Path("discs/{blum111}")
+	@Path("disc/{blum111}")
 	public Response getDisc(@PathParam("blum111") String blum222) {
 		Optional<Medium> disc = service.getDisc(blum222);
 		ObjectMapper mapper = new ObjectMapper();

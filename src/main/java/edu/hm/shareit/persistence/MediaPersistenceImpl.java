@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
@@ -88,7 +91,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
         
         try {
             tx = session.beginTransaction();
-            mediums = session.createQuery("FROM MEDIUM").list(); // XXX database name were to define??
+            mediums = session.createQuery("FROM Disc").getResultList();
+            System.out.println(mediums);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
