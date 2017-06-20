@@ -22,11 +22,11 @@ public class MediaServiceImpl implements MediaService {
 //    private Database data = new Database();
 	private MediaPersistence data;
 
-    /**
-     * 
-     * MediaServiceImpl implements all business logic.
-     * 
-     */
+	/**
+	 * Builds service, using DI for getting concrete DB implementation.
+	 * 
+	 * @param data Inject data.
+	 */
 	@Inject
     public MediaServiceImpl(MediaPersistence data) {
 //        data = new Database();

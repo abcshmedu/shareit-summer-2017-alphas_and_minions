@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -39,16 +37,22 @@ public abstract class Medium implements Serializable {
 		id = "";
 	}
 
-    /**
-     * Medium creates a Medium with a title.
-     * @param title of medium.
-     * @return title
-     */
+	/**
+	 * Base of medium. Useless without concrete derived classe's Ctor.
+	 * 
+	 * @param title This medium's title.
+	 * @param id This medium's ID, which is Barcode for Discs, ISBN for Books.
+	 */
     public Medium(String title, String id) {
         this.title = title;
         this.id = id;
     };
     
+    /**
+     * Getter for ID.
+     * 
+     * @return This ID.
+     */
     public String getID() {
     	return id;
     }

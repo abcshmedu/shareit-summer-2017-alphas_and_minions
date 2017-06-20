@@ -7,11 +7,10 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Application class to enable guice within jersey.
+ * 
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
  */
 public class ShareItApplication extends ResourceConfig {

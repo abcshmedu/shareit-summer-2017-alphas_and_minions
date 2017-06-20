@@ -1,21 +1,45 @@
 Starting audit...
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\data\Database.java:2: error: Comment matches to-do format 'TODO:'.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\model\Medium.java:19: error: Unused Javadoc tag.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:9:8: error: Unused import - javax.ws.rs.PathParam.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:11:8: error: Unused import - javax.ws.rs.core.MediaType.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:30:1: error: File contains tab characters (this is the first instance).
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:31:18: error: Variable 'mediaServiceImpl' must be private and have accessor methods.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:48:37: error: Expected @param tag for 'book'.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:67:5: error: Missing a Javadoc comment.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:71:32: error: '200' is a magic number.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:158: error: Expected an @return tag.
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\RESTLayer\SimpleServlet.java:158:60: error: Expected @param tag for 'result'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\auth\AuthInterface.java:11:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\auth\HerokuAuth.java:18:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\auth\JettyAuth.java:20:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\model\Medium.java:29:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\model\User.java:12:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\Database.java:112:6: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\MediaPersistence.java:15:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\MediaPersistenceImpl.java:27:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\MediaPersistenceImpl.java:34:5: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\MediaPersistenceImpl.java:71: error: 'if' construct must use '{}'s.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\persistence\MediaPersistenceImpl.java:146: error: 'if' construct must use '{}'s.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\AuthenticationResource.java:29:18: error: Variable 'mapper' must be private and have accessor methods.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\AuthenticationResource.java:30:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\AuthenticationResource.java:34:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\AuthenticationResource.java:44:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:41:1: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:51:39: error: Expected @param tag for 'service'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:51:62: error: Expected @param tag for 'auth'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:77:35: error: ',' is not followed by whitespace.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:79:76: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:96:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:113:76: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:113:90: error: Expected @throws tag for 'IOException'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:138:63: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:172:57: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:172:96: error: Expected @throws tag for 'IOException'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:207:88: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:243:94: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:279:102: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:316:97: error: Expected @param tag for 'token'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\MediaResource.java:351:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\ShareItApplication.java:18:5: error: Missing a Javadoc comment.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\ShareitServletContextListener.java:12:8: error: Unused import - edu.hm.shareit.auth.HerokuAuth.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\resource\ShareitServletContextListener.java:26:35: error: Name 'injector' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\java\edu\hm\shareit\service\MediaServiceImpl.java:23:1: error: File contains tab characters (this is the first instance).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\css\shareit.css:2:1: error: File contains tab characters (this is the first instance).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\index.html:15:1: error: File contains tab characters (this is the first instance).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\js\jquery-3.1.1.js:1: error: File length is 10,220 lines (max allowed is 2,000).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\js\jquery-3.1.1.js:16:1: error: File contains tab characters (this is the first instance).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\js\submit.js:12:1: error: File contains tab characters (this is the first instance).
 C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\newbook.partial:1:1: error: File contains tab characters (this is the first instance).
-C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\WEB-INF\web.xml:6:3: error: File contains tab characters (this is the first instance).
+C:\Users\Michael Eggers\Documents\lab02\shareit-summer-2017-alphas_and_minions\.\src\main\webapp\WEB-INF\web.xml:8:3: error: File contains tab characters (this is the first instance).
 Audit done.
-Checkstyle ends with 18 errors.
+Checkstyle ends with 42 errors.

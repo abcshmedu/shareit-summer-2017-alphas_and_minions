@@ -1,14 +1,9 @@
 package edu.hm.shareit.model;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Disc extends Medium {
 
     @Column private String director;
+    
     @Column private int fsk;
 
     /**
@@ -104,6 +100,12 @@ public class Disc extends Medium {
     }
     
     private final int size = 10;
+    
+    /**
+     * Checks if barcode is valid.
+     * 
+     * @return True if barcode is valid, False otherwise.
+     */
     public boolean checkBarcode() {
         return getID().length() < size;
     }
@@ -126,7 +128,7 @@ public class Disc extends Medium {
         }
         Disc other = (Disc) obj;
         if (getID() == null) {
-            if (other.getID()!= null) {
+            if (other.getID() != null) {
                 return false;
             }
         } else if (!getID().equals(other.getID())) {

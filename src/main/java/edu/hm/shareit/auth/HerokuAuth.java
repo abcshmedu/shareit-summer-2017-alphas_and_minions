@@ -4,20 +4,30 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class HerokuAuth implements AuthInterface{
-
+/**
+ * Implementation that uses HTTPS. For deployment on Heroku.
+ * 
+ * @author Rebecca Brydon, Michael Eggers
+ *
+ */
+public class HerokuAuth implements AuthInterface {
+	
     private final String httpsURL = "https://shareit-auth.herokuapp.com/auth/users/";
     
+    /**
+     * Default Ctor.
+     */
     public HerokuAuth() {
         
     }
     
+    /**
+     * See interface.
+     */
     @Override
     public String authenticate(final String token) throws IOException {
         String result = "";

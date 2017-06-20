@@ -1,6 +1,8 @@
 package edu.hm.shareit.model;
 
 /**
+ * Represents a User.
+ * 
  * @author Rebecca Brydon
  * @author Michael Eggers
  *
@@ -12,15 +14,18 @@ public class User {
 	private String username;
 	private String pwd;
 	
+	/**
+	 * Default Ctor.
+	 */
 	public User() {
 	    
 	}
 	
 	/**
-	 * @param forename
-	 * @param surename
-	 * @param username
-	 * @param pwd
+	 * @param forename Forename.
+	 * @param surename Surename.
+	 * @param username Username.
+	 * @param pwd Password.
 	 */
 	public User(final String forename, final String surename, final String username, final String pwd) {
 		this.forename = forename;
@@ -30,35 +35,35 @@ public class User {
 	}
 
 	/**
-	 * @return
+	 * @return This forename.
 	 */
 	public String getForename() {
 		return forename;
 	}
 
 	/**
-	 * @return
+	 * @return This surename.
 	 */
 	public String getSurename() {
 		return surename;
 	}
 
 	/**
-	 * @return
+	 * @return This username.
 	 */
 	public String getUsername() {
 		return username;
 	}
 
     /**
-     * @return the pwt
+     * @return This password.
      */
     public String getPwd() {
         return pwd;
     }
 
     /**
-     * @param pwd the pwt to set
+     * @param pwd Set the password for this user.
      */
     public void setPwd(String pwd) {
         this.pwd = pwd;
