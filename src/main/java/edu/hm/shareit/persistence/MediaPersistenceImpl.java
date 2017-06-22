@@ -4,27 +4,25 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import edu.hm.shareit.model.Book;
-import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
 
+/**
+ * Concrete database using Hibernate.
+ * 
+ * @author Rebecca Brydon, Michael Eggers
+ *
+ */
 public class MediaPersistenceImpl implements MediaPersistence {
     
 
     private static SessionFactory factory;
-//    static {
-//        factory = new Configuration().configure().buildSessionFactory();
-//    }
     
     @Inject
     public MediaPersistenceImpl(SessionFactory factory) {
@@ -47,7 +45,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
             
             
         } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+            	tx.rollback();
+            }
             e.printStackTrace();
         }
         
@@ -72,8 +72,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
             e.printStackTrace();
         }
         
-        if (mediums != null)
-            result = Optional.of(mediums);
+        if (mediums != null) {
+        	result = Optional.of(mediums);        	
+        }
         
         return result;
     }
@@ -91,12 +92,15 @@ public class MediaPersistenceImpl implements MediaPersistence {
             System.out.println(mediums); // debug
             tx.commit();
         } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+            	tx.rollback();
+            }
             e.printStackTrace();
         }
         
-        if (mediums != null)
-            result = Optional.of(mediums);
+        if (mediums != null) {
+        	result = Optional.of(mediums);        	
+        }
         
         return result;
     }
@@ -113,12 +117,15 @@ public class MediaPersistenceImpl implements MediaPersistence {
             book = entityManager.get(Book.class, isbn);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+            	tx.rollback();
+            }
             e.printStackTrace();
         }
         
-        if (book != null)
-            result = Optional.of(book);
+        if (book != null) {
+        	result = Optional.of(book);        	
+        }
         
         return result;
     }
@@ -140,8 +147,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
             e.printStackTrace();
         }
         
-        if (disc != null)
-            result = Optional.of(disc);
+        if (disc != null) {
+        	result = Optional.of(disc);        	
+        }
         
         return result;
     }
@@ -157,7 +165,9 @@ public class MediaPersistenceImpl implements MediaPersistence {
             session.delete(medium);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+            	tx.rollback();
+            }
             e.printStackTrace();
         }
     }

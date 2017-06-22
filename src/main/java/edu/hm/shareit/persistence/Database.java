@@ -1,5 +1,4 @@
 package edu.hm.shareit.persistence;
-// TODO: distinct hash-tables for books, discs, ...
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,7 @@ import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
 
 /**
- * Simple Generic database to save JSONobj.
+ * Naive implementation of a database to store mediums in HashMaps.
  * 
  * @author Michael Eggers
  * @author Rebecca Brydon
@@ -110,14 +109,5 @@ public class Database {
     public void clearDatabse() {
         hash2medium.clear();
     }
-    
-    
-    public void saveToken(String token, String username) {
-        
-        
-    }
-    
-    public void removeToken() {
-        
-    }
+     	
 }

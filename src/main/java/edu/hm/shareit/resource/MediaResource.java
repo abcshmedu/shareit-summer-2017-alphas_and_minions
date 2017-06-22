@@ -1,11 +1,6 @@
 package edu.hm.shareit.resource;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -140,7 +135,7 @@ public class MediaResource {
 	@Path("books/{token}")
 	@Consumes("text/plain")
 	@Produces("application/json")
-	public Response getBooks( @PathParam("token") final String token ) throws IOException {
+	public Response getBooks(@PathParam("token") final String token) throws IOException {
 	    String authResponse = authenticate(token);
 	    
 	    if (authResponse.equals(Integer.toString(MediaServiceResult.OK.getErrorNum()))) {
@@ -315,7 +310,7 @@ public class MediaResource {
 	 * @throws IOException 
 	 */
 	@PUT
-	@Consumes({"text/plain","text/plain","application/json"})
+	@Consumes({"text/plain", "text/plain", "application/json"})
 	@Produces({ "application/json"})
 	@Path("disc/update/{barcode}/{token}")
 	public Response updateDisc(@PathParam("barcode") String barcode, @PathParam("token") String token, Disc disc) throws IOException {

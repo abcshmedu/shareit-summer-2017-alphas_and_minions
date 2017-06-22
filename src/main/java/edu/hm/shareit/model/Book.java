@@ -20,13 +20,13 @@ public class Book extends Medium {
      * 
      */
     @Column private String author;
-    private final static int ISBN_13 = 13;
+    private static final int ISBN_13 = 13;
 
     /**
      * Book empty constructor for jackson.
      */
     public Book() {
-        super("","");
+        super("", "");
         author = "";
     }
 

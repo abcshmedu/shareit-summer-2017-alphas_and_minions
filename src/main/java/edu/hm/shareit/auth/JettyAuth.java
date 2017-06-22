@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Uses HTTP. Use this for local testing. (both auth-ms and main-ms run on localhost).
+ * 
+ * @author Rebecca Brydon, Michael Eggers
+ *
+ */
 public class JettyAuth implements AuthInterface {
 
     private final String httpURL = "http://localhost:9999/auth/users/";
@@ -15,6 +21,9 @@ public class JettyAuth implements AuthInterface {
         
     }
     
+    /**
+     * See interface.
+     */
     @Override
     public String authenticate(final String token) throws IOException {
         String result = "";

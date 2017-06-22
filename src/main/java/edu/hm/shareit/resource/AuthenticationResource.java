@@ -18,7 +18,12 @@ import edu.hm.shareit.model.User;
 import edu.hm.shareit.service.MediaServiceResult;
 
 
-
+/**
+ * Microservice endpoint for authenticate and register users.
+ * 
+ * @author Rebecca Brydon, Michael Eggers
+ *
+ */
 @Path("users")
 public class AuthenticationResource {
     ObjectMapper mapper;
