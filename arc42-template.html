@@ -466,13 +466,45 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div class="sect1">
 <h2 id="section-introduction-and-goals"><a class="anchor" href="#section-introduction-and-goals"></a>1. Introduction and Goals</h2>
+
+ShareIt ist ein REST-gesteuerte Web app für das Verleihen und Ausleihen von Medien. Der Service ist unterteilt in mehere Microservices.
+Der momentane Stand umfässt einen Microservice zum Verwalten von Medien, sowie einen Authentication Service zum Regisieren und ein loggen von Usern.
+
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a>1.1. Requirements Overview</h3>
+<p> Es werden Folgende Anforderungen gestellt: </p>
+<ol>
+<li>User Registierung</li>
+<li>User Loggin </li>
+<li>Verwaltung der Medien 
+	<ol>
+	<li> Anlegen von neuen Medien 
+		<ol>
+			<li> Neues Buch hinzufügen</li>
+			<li> Neue Disc hinzufügen</li>
+		</ol>
+	</li>
+	<li> Ändern von Medien 
+		<ol>
+			<li>Update Book</li>
+			<li>Update Disc</li>
+		
+		</ol>
+	</li>
+	</ol>
+</li>
+</ol>
 
 </div>
 <div class="sect2">
 <h3 id="_quality_goals"><a class="anchor" href="#_quality_goals"></a>1.2. Quality Goals</h3>
+<p> Usere Qualitäts Ziele sind: </p>
+
+<ol>
+<li>Platformunabhängige Software</li>
+<li>Erweiterbarkeit des Systems ohne grosse Kosten</li>
+</ol>
 
 </div>
 <div class="sect2">
@@ -486,20 +518,23 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Role/Name</th>
-<th class="tableblock halign-left valign-top">Contact</th>
 <th class="tableblock halign-left valign-top">Expectations</th>
 </tr>
 </thead>
 <tbody>
+
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-1&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Betreiber des Ausleih Service ShareIt</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Software die Ermöglicht den Verleih von Medien zu realiseren und für möglichst viele User zu geänglich machen. 
+Verlässliche Software, Erweiterungen des Systems sind realiserbar ohne zu grossen Aufwand und Kosten</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Entwikler des Microservices</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Software wird eingesetzt, OpenSource Software zur verfügung stellen</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Studenten (User)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Möglichkeit einfach und kostenlos an Medien zu kommen, Sicherheit der Daten die Gespeichert werden</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -550,119 +585,91 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 <div class="sect1">
 <h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>5. Building Block View</h2>
 <div class="sectionbody">
+
+
 <div class="sect2">
 <h3 id="_whitebox_overall_system"><a class="anchor" href="#_whitebox_overall_system"></a>5.1. Whitebox Overall System</h3>
+
 <div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
+<p><em><strong>Overview of all Microservices</strong></em></p>
+<IMG SRC="shareit.png" ALT="UML Model">
 </div>
+
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p><em>&lt;text explanation&gt;</em></p>
+<p>ShareIt Microservice die alle Interface, Klassen und Struckturen enthält, welche für das Verwalten von Medien notwendig sind. Sowie einen Authentication Service der das Anlegen von Benutzern ermöglicht.</p>
 </dd>
-<dt class="hdlist1">Contained Building Blocks</dt>
+<dt class="hdlist1">Contained Building Blocks:</dt>
 <dd>
-<p><em>&lt;Description of contained building block (black boxes)&gt;</em></p>
+<p>Media Microservice and Authentication Microservice</p>
 </dd>
-<dt class="hdlist1">Important Interfaces</dt>
 <dd>
-<p><em>&lt;Description of important interfaces&gt;</em></p>
 </dd>
+
 </dl>
 </div>
-<div class="sect3">
-<h4 id="__name_black_box_1"><a class="anchor" href="#__name_black_box_1"></a>5.1.1. &lt;Name black box 1&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;Purpose/Responsibility&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;Interface(s)&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Quality/Performance Characteristics&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Directory/File Location&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Fulfilled Requirements&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(optional) Open Issues/Problems/Risks&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__name_black_box_2"><a class="anchor" href="#__name_black_box_2"></a>5.1.2. &lt;Name black box 2&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__name_black_box_n"><a class="anchor" href="#__name_black_box_n"></a>5.1.3. &lt;Name black box n&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__name_interface_1"><a class="anchor" href="#__name_interface_1"></a>5.1.4. &lt;Name interface 1&gt;</h4>
-<div class="paragraph">
-<p>&#8230;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__name_interface_m"><a class="anchor" href="#__name_interface_m"></a>5.1.5. &lt;Name interface m&gt;</h4>
 
+<div class="sect3">
+<h4 id="__name_black_box_1"><a class="anchor" href="#__name_black_box_1"></a>5.1.1. Media Microservice</h4>
+<div class="paragraph">
+<p><em><strong>Package Diagram for Media Microservice</strong></em></p>
+<IMG SRC="packages.png" ALT="UML Model">
+<p><em>Purpose/Responsibility:</em> Anlegen von Medien und Verwalten von bestehenden Medien, Persistenzierung der Daten</p>
+</div>
+<div class="paragraph">
+<p><em>Interfaces:</em> MediaService, AuthInterface, MediaPersitence</p>
+<div class="paragraph">
+<p><em>Fulfilled Requirements:</em> Erstellen von neuen Büchern und Discs, Updaten von bestehenden Büchern und Discs, Speicherung der Medien in einer Datenbank</p>
+</div>
+<div class="paragraph">
+<p><em>Open Issues/Problems/Risks:</em> Verwendung von ISBN/Barcode als Fachschlüssels als ID für die Datenbank</p>
 </div>
 </div>
+
+
+<div class="sect3">
+<h4 id="__name_black_box_2"><a class="anchor" href="#__name_black_box_2"></a>5.1.2. Authentication Microservice</h4>
+<div class="paragraph">
+<p><em><strong>Package Diagram for Authentication Microservice</strong></em></p>
+<IMG SRC="auth_package.png" ALT="UML Model">
+<p><em>Purpose/Responsibility:</em> Registrierung von Usern mit Name, Username und Passwort, Authentisierung von Usern auf Request des Media Microservice, Verwalten und Senden des zugehörigen Tokens bei Authentisierungs anfrage</p>
+</div>
+<div class="paragraph">
+<p><em>Interfaces:</em> </p>
+<div class="paragraph">
+<p><em>Fulfilled Requirements:</em> Registrierung, Prüfung des Tokens </p>
+</div>
+<div class="paragraph">
+<p><em>Open Issues/Problems/Risks:</em> Übermittlung des Tokens an den User</p>
+</div>
+</div>
+</div>
+</div>
+
 <div class="sect2">
 <h3 id="_level_2"><a class="anchor" href="#_level_2"></a>5.2. Level 2</h3>
 <div class="sect3">
-<h4 id="_white_box_em_building_block_1_em"><a class="anchor" href="#_white_box_em_building_block_1_em"></a>5.2.1. White Box <em>&lt;building block 1&gt;</em></h4>
 <div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<p><em><strong>Class Diagram for Media Microservice</strong></em></p>
+<IMG SRC="model.png" ALT="UML Model">
 </div>
 </div>
+
 <div class="sect3">
-<h4 id="_white_box_em_building_block_2_em"><a class="anchor" href="#_white_box_em_building_block_2_em"></a>5.2.2. White Box <em>&lt;building block 2&gt;</em></h4>
 <div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_em_building_block_m_em"><a class="anchor" href="#_white_box_em_building_block_m_em"></a>5.2.3. White Box <em>&lt;building block m&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<p><em><strong>Class Diagram for Media Microservice</strong></em></p>
+<IMG SRC="model_auth.png" ALT="UML Model">
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_level_3"><a class="anchor" href="#_level_3"></a>5.3. Level 3</h3>
-<div class="sect3">
-<h4 id="_white_box_building_block_x_1"><a class="anchor" href="#_white_box_building_block_x_1"></a>5.3.1. White Box &lt;_building block x.1_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+
+
 </div>
 </div>
-<div class="sect3">
-<h4 id="_white_box_building_block_x_2"><a class="anchor" href="#_white_box_building_block_x_2"></a>5.3.2. White Box &lt;_building block x.2_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_y_1"><a class="anchor" href="#_white_box_building_block_y_1"></a>5.3.3. White Box &lt;_building block y.1_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-</div>
+
+
 <div class="sect1">
 <h2 id="section-runtime-view"><a class="anchor" href="#section-runtime-view"></a>6. Runtime View</h2>
 <div class="sectionbody">
@@ -700,7 +707,9 @@ building block instances depicted in this diagram.&gt;</em></p>
 <div class="sect2">
 <h3 id="_infrastructure_level_1"><a class="anchor" href="#_infrastructure_level_1"></a>7.1. Infrastructure Level 1</h3>
 <div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
+<p><em><strong>Overview Diagram</strong></em></p>
+
+<IMG SRC="DeploymentDiagram1.png" ALT="UML Model">
 </div>
 <div class="dlist">
 <dl>
@@ -719,31 +728,7 @@ building block instances depicted in this diagram.&gt;</em></p>
 </dl>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_infrastructure_level_2"><a class="anchor" href="#_infrastructure_level_2"></a>7.2. Infrastructure Level 2</h3>
-<div class="sect3">
-<h4 id="__em_infrastructure_element_1_em"><a class="anchor" href="#__em_infrastructure_element_1_em"></a>7.2.1. <em>&lt;Infrastructure Element 1&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__em_infrastructure_element_2_em"><a class="anchor" href="#__em_infrastructure_element_2_em"></a>7.2.2. <em>&lt;Infrastructure Element 2&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="__em_infrastructure_element_n_em"><a class="anchor" href="#__em_infrastructure_element_n_em"></a>7.2.3. <em>&lt;Infrastructure Element n&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
+
 </div>
 </div>
 <div class="sect1">
@@ -783,11 +768,76 @@ building block instances depicted in this diagram.&gt;</em></p>
 <h2 id="section-quality-scenarios"><a class="anchor" href="#section-quality-scenarios"></a>10. Quality Requirements</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_quality_tree"><a class="anchor" href="#_quality_tree"></a>10.1. Quality Tree</h3>
+<h3 id="_quality_tree"><a class="anchor" href="#_quality_tree"></a>10.1. Application Scenarios</h3>
+
+<p>
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:50%;">
+<col style="width:50%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regisierung von Usern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Um den ShareIt Service zu nutzten zu können, müssen sich User erst Registrieren. Der Name, Vorname, Benutzername und Passwort wird in einer Datenbank für die
+Benutzerdaten gespeichert. Jedem Benutzer wird beim Regisieren einen Token zu gewiesen und ebenfalls in einer Datenbank gespeichert.
+</p></td>
+</tr>
+
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Login von Usern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Da nur registrierte User Medien verwalten dürfen, muss zur authentizierung der User Token immer mit geschickt werden. Dieser wird nach einem erfolgreichen Login
+an den User geschickt und kann so an alle weiteren Request angehägt werden.
+</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verwalten von Medien</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User möchten neue Medien erstellen. Dabei könnten Sie entweder ein Book oder Disk neu anlegen. Jedes Medium besteht aus Titel und ID. Bei einem Book wird
+die ISBN als ID verwendet, bei einer Disc der Barcode. Diese müssen valide sein. Somit besteht ein Book aus Titel, ISBN, Author und eine Disc aus Titel, Barcode, Director, FSK. 
+Werden die verlangten Informationen nicht korrekt eingegeben, so wird eine entsprechende Fehlermeldung zurück gegeben.</p></td>
+</tr>
+</tbody>
+</table> 
+</p>
 
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios"><a class="anchor" href="#_quality_scenarios"></a>10.2. Quality Scenarios</h3>
+<h3 id="_quality_scenarios"><a class="anchor" href="#_quality_scenarios"></a>10.2. Change Scenarios</h3>
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:50%;">
+<col style="width:50%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Zuordnung von Medien zu Usern</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Jeder User hat eine bestimmte Anzahl an Copys von Medien die Ihm gehören. Diese kann er zum verleih markieren oder wieder löschen.
+	</p></td>
+	</tr>
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Ausleihen von Medien anderer User</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Um den Verleih von Medien zu realiseren muss ein Kontakt von zwei Usern über das System hergestellt werden. 
+		Dazu müssten ein Message Microservices erstellt werden, über welchen User sich gegenseitig kontaktieren können um Verleih und Rückgabe der Medien zu klären.
+	</p></td>
+	</tr>
+
+</tbody>
+</table> 
+
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -796,6 +846,52 @@ building block instances depicted in this diagram.&gt;</em></p>
 <h2 id="section-technical-risks"><a class="anchor" href="#section-technical-risks"></a>11. Risks and Technical Debts</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
+
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:50%;">
+<col style="width:50%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Risks/Debts</th>
+<th class="tableblock halign-left valign-top">Analysis</th>
+<th class="tableblock halign-left valign-top">Assesment of Debt Level</th>
+</tr>
+</thead>
+<tbody>
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Design- und Architekturschulden</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Schichten sind getrennt durch Interfaces, DI: Dependencys können aus getauscht werden oder neu implementiert werden ohne grosse änderungen in den darüber liegenen Schichten </p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Low </p></td>
+	</tr>
+	
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Implementationsschulden</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Keine Verschlüsselung der User Daten</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Hoch </p></td>
+	</tr>
+
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Tests</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">
+		Wichtigen Klassen haben hohe Testabdeckung: MediaResource 93.1%, MediaServiceImpl 99.6%, MediaServiceResult 93.0%. 
+		Im Package Model ist die Testabdeckung noch zu niedrig, hier werden nur die wichtigen Funktionen getestet. 
+		Methoden wie hash, equal, ects werden nicht ausführlich getestet was die Testabdeckung herunter stuft.
+		</p></td>
+		<td class="tableblock halign-left valign-top"><p class="tableblock"> Medium </p></td>
+	</tr>
+
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Dokumentationsschulden</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Dokumentation ist vorhanden aber wurde nicht im Entwicklungsprozess mit gezogen sondern erst im nachhinein erstellt.</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock"> Medium</p></td>
+	</tr>
+
+</tbody>
+</table> 
+
 </div>
 </div>
 <div class="sect1">
