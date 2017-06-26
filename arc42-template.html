@@ -384,6 +384,17 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
+
+
+
+
+
+
+
+
+
+
+
 <li><a href="#section-building-block-view">5. Building Block View</a></li>
 <li>
 <ul class="sectlevel2">
@@ -580,11 +591,85 @@ Verlässliche Software, Erweiterungen des Systems sind realiserbar ohne zu gross
 <h2 id="section-solution-strategy"><a class="anchor" href="#section-solution-strategy"></a>4. Solution Strategy</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
+
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:50%;">
+<col style="width:50%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Aufgabe/Problem</th>
+<th class="tableblock halign-left valign-top">Lösungsansatz</th>
+</tr>
+</thead>
+<tbody>
+
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Persistenzierung</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Hibernate Framework, um Medien zur Laufzeit zu speichern. 
+	</p></td>
+	</tr>
+	<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Serialisierung von JSON <-> POJO</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Jackson Framework
+	</p></td>
+	</tr>
+		<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Definition von GET/POST/PUT Methoden</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Jersey Framework
+	</p></td>
+	</tr>
+		<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Versionskontrolle</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Git. Projekt gehostet auf GitHub
+	</p></td>
+	</tr>
+		<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Projektorganisation</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Maven
+	</p></td>
+	</tr>
+			<tr>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">Tests</p></td>
+	<td class="tableblock halign-left valign-top"><p class="tableblock">JUnit 4 bzw. Mockito
+	</p></td>
+	</tr>
+
+
+</tbody>
+</table> 
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Prägende Architekturen bzw. Entwurfsmuster</dt>
+<dd>
+<p>Der Microservice ist in eine Schichtenarchitektur eingeteilt. Die jeweiligen Schichten werden mittels Dependency Injection in die nächst höhere Schicht
+mit eingebunden. Jackson nutzt intern Reflection mit Annotations, um die Fachklassen zu serialisieren.</p>
+</dd>
+<dt class="hdlist1">Erreichen Qualitätsanforderungen</dt>
+<dd>
+<p>JUnit-Tests wurden mit jeder Iteration mitgezogen und später wurde Mocking eingeführt.</p>
+</dd>
+<dd>
+</dd>
+
+</dl>
 </div>
+
+
+</div>
+
+
+
+
 </div>
 <div class="sect1">
 <h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>5. Building Block View</h2>
 <div class="sectionbody">
+
+
 
 
 <div class="sect2">
