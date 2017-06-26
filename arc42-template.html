@@ -847,6 +847,42 @@ building block instances depicted in this diagram.&gt;</em></p>
 <h2 id="section-design-decisions"><a class="anchor" href="#section-design-decisions"></a>9. Design Decisions</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
+
+
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Problemstellung</dt>
+<dd>
+<p>Der User soll in der Lage sein via Web-Oberfläche Medien, dazu gehören Bücher und DVDs (Discs) auszuleihen und
+einzutragen. Ein User muss sich zunächst an einem dafür vorgesehenen Microservice mit Username und Password 
+registrieren. Danach ist es ihm Möglich, durch diese Kombination von Username/Password sich einzuloggen und einen
+Token zu erhalten, der fortan bei jedem Request mitgeschickt wird. Der Eigentliche Serivce, welcher die Kontrolle
+über die Medien hat, muss also bei jedem Request die Legitimität des Users überprüfen, indem er an den Token an
+den Auth-Service schickt und ein OK bekommt, falls dieser Token gerade vorliegt.</p>
+</dd>
+<dt class="hdlist1">Alternativen</dt>
+<dd>
+<p>Die Authentifizierung wurde komplett slbst implementiert. Jersey bietet jedoch weitere Hilfsmittel an,
+um diese Sicherzustellen. Ansonsten käme das Spring Framework infrage, was alle erdenklichen Tools
+bereitstellt, um Microservices zu schreiben und diese miteinenader kommunizieren zu lassen.</p>
+</dd>
+<dt class="hdlist1">Entscheidungen</dt>
+<dd>
+<p>Da sie JavaScript-Skills des Teams limitiert sind, wird auf eine Benutzung via Postman simuliert.
+Das Backend ist in Java implementiert, wobei die mit Jersey erzeugten Servlets in einer Jetty umgebung laufen.
+Das Deployment erfolgt auf Heroku.</p>
+</dd>
+<dd>
+</dd>
+
+</dl>
+</div>
+
+
+
+
+
 </div>
 </div>
 <div class="sect1">
