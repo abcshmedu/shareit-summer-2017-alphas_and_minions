@@ -376,6 +376,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#section-architecture-constraints">2. Architecture Constraints</a></li>
+
+
 <li><a href="#section-system-scope-and-context">3. System Scope and Context</a></li>
 <li>
 <ul class="sectlevel2">
@@ -558,6 +560,20 @@ Verlässliche Software, Erweiterungen des Systems sind realiserbar ohne zu gross
 <h2 id="section-architecture-constraints"><a class="anchor" href="#section-architecture-constraints"></a>2. Architecture Constraints</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
+
+<dt class="hdlist1">Technische Randbedingungen</dt>
+<dd>
+<p>Ziel-Plattformen: <br>
+Browser-Basierte Anwendung. Die Software soll alle Plattformen unterstüten, die in der Lage sind HTTP Requests mit JSON Body (Content-Type: application/json) zu schicken und zu empfangen.<br>
+<br>
+Programmiersprachen:<br>
+Java 8<br>
+<br>
+Tools:<br>
+Eclipse, JUnit, Mockito, Jersey, Jackson, Hibernate, Maven, Git, Jetty, Heroku</p>
+</dd>
+
+
 </div>
 </div>
 <div class="sect1">
